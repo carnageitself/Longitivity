@@ -1218,7 +1218,7 @@ export const catalog: CatalogProduct[] = [
       "Quaternary ammonium chloride blend (four active compounds)",
       "Labeled for home, hospital, institutional, and industrial use",
     ],
-    description: "EPA-registered one-step disinfectant cleaner from Amway's institutional-grade Pursue line.",
+    description: "EPA-registered one-step disinfectant cleaner from the institutional-grade Pursue line.",
     hook: "The same one-step disinfectant labeled for hospital and food-service use, not just a household 'antibacterial' claim.",
     madeIn: "USA",
     image: "/Disinfectent cleaner.jpg",
