@@ -2,17 +2,46 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Check } from "lucide-react";
 import { CATEGORY_VISUAL, catalog, type CatalogCategory } from "@/lib/catalog";
 import CategoryVisual from "@/components/CategoryVisual";
-import Product3DVisual from "@/components/Product3DVisual";
 
 const CHAPTERS: CatalogCategory[] = ["Nutrilite", "Artistry", "XS", "Water & Air Treatment"];
 
-// Richer, category-specific photography for chapters that have it, rendered
-// with the 3D floating treatment instead of the generic icon/gradient box.
-const CHAPTER_IMAGE: Partial<Record<CatalogCategory, { src: string; alt: string; width: number; height: number; glow: string }>> = {};
+// Richer, category-specific lifestyle photography for this section only —
+// everywhere else (product cards, FinalCta, etc.) keeps the catalog's
+// regular per-category image via CategoryVisual.
+const CHAPTER_IMAGE: Partial<Record<CatalogCategory, { src: string; alt: string }>> = {
+  Nutrilite: { src: "/Nutralite-1.png", alt: "Nutrilite Double X styled with fresh ingredients" },
+  Artistry: { src: "/Artistry-1.jpg", alt: "Artistry lip gloss lineup" },
+  XS: { src: "/XS-1.png", alt: "XS Energy cans chilling on ice" },
+  "Water & Air Treatment": { src: "/Air-1.png", alt: "Atmosphere air treatment system in a living room" },
+};
+
+function ChapterPhoto({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative h-72 w-56 overflow-hidden rounded-4xl shadow-xl shadow-black/40 sm:h-80 sm:w-64 lg:h-96 lg:w-72">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(min-width: 1024px) 288px, (min-width: 640px) 256px, 224px"
+        style={{ objectFit: "cover" }}
+      />
+      {/* Vignette: darkens the edges so the product stays the focal point
+          instead of competing with the photo's own set dressing. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 65% 65% at 50% 45%, transparent 30%, rgba(0,0,0,0.8) 100%)",
+        }}
+      />
+    </div>
+  );
+}
 
 // Fresh, marketing-specific copy for this section (distinct from the generic
 // one-liners reused elsewhere on the page), grounded in facts already backed
@@ -36,7 +65,7 @@ const CHAPTER_COPY: Record<CatalogCategory, { eyebrow: string; points: string[] 
     eyebrow: "Low-sugar energy, built for a crash-free lift",
     points: [
       "Zero sugar, 114 mg of caffeine per can: a real lift without the spike and crash.",
-      "Six flavors, from classic citrus to sparkling dragon fruit.",
+      "Six flavors, from classic citrus to sparkling pink grapefruit.",
     ],
   },
   "Personal Care": {
@@ -89,39 +118,21 @@ function Chapter({
   const { start, end, inPoint, outPoint } = useChapterRange(index, total);
 
   const opacity = useTransform(scrollYProgress, [start, inPoint, outPoint, end], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [start, inPoint, outPoint, end], [0.82, 1, 1, 0.82]);
-  const rotate = useTransform(
-    scrollYProgress,
-    [start, end],
-    [index % 2 === 0 ? -8 : 8, index % 2 === 0 ? 4 : -4]
-  );
-  const textX = useTransform(scrollYProgress, [start, inPoint, outPoint, end], [24, 0, 0, -24]);
-  const numberY = useTransform(scrollYProgress, [start, end], [40, -40]);
-  const numberOpacity = useTransform(scrollYProgress, [start, inPoint, outPoint, end], [0, 0.08, 0.08, 0]);
+  const scale = useTransform(scrollYProgress, [start, inPoint, outPoint, end], [0.88, 1, 1, 0.88]);
+  // Everything travels left-to-right in lockstep: the image leads in from the
+  // right, the copy follows a beat behind, so the whole chapter reads as one
+  // panel sliding through rather than four independent fades.
+  const imageX = useTransform(scrollYProgress, [start, inPoint, outPoint, end], [140, 0, 0, -140]);
+  const textX = useTransform(scrollYProgress, [start, inPoint, outPoint, end], [90, 0, 0, -90]);
 
   return (
     <motion.div
       style={{ opacity }}
       className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-10 px-6 lg:flex-row lg:justify-center lg:gap-20"
     >
-      <motion.span
-        aria-hidden
-        style={{ y: numberY, opacity: numberOpacity }}
-        className="pointer-events-none absolute text-[16rem] font-bold tracking-tighter select-none sm:text-[22rem]"
-      >
-        {String(index + 1).padStart(2, "0")}
-      </motion.span>
-
-      <motion.div style={{ scale, rotate }} className="relative flex items-center justify-center">
+      <motion.div style={{ scale, x: imageX }} className="relative flex items-center justify-center">
         {image ? (
-          <Product3DVisual
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
-            glow={image.glow}
-            floatDuration={7}
-          />
+          <ChapterPhoto src={image.src} alt={image.alt} />
         ) : (
           <>
             <div
@@ -212,7 +223,7 @@ export default function ScrollShowcase() {
 
   return (
     <section ref={ref} className="relative" style={{ height: `${CHAPTERS.length * 90}vh` }}>
-      <div className="sticky top-0 h-screen overflow-hidden border-y border-border bg-surface">
+      <div className="sticky top-0 h-screen overflow-hidden border-y border-border bg-black">
         <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" />
         <div className="pointer-events-none absolute top-8 left-1/2 -translate-x-1/2 text-center">
           <p className="text-xs font-medium tracking-wide text-muted uppercase">
