@@ -4,9 +4,22 @@ import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
 import { SITE_NAME } from "@/lib/site-config";
 
+const DESCRIPTION = "Get in touch for pricing, availability, and personalized product recommendations.";
+
 export const metadata: Metadata = {
   title: `Contact | ${SITE_NAME}`,
-  description: "Get in touch for pricing, availability, and personalized product recommendations.",
+  description: DESCRIPTION,
+  keywords: ["contact", "get pricing", "product recommendations", "wellness consultation"],
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    url: "/contact",
+    title: `Contact | ${SITE_NAME}`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    title: `Contact | ${SITE_NAME}`,
+    description: DESCRIPTION,
+  },
 };
 
 export default function ContactPage() {

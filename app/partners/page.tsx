@@ -4,10 +4,31 @@ import Footer from "@/components/Footer";
 import PartnersGrid from "@/components/PartnersGrid";
 import { SITE_NAME } from "@/lib/site-config";
 
+const DESCRIPTION =
+  "The brands behind every product: Nutrilite, Artistry, Satinique, XS, eSpring, and SA8/L.O.C.";
+
 export const metadata: Metadata = {
   title: `Brand Partners | ${SITE_NAME}`,
-  description:
-    "The brands behind every product: Nutrilite, Artistry, Satinique, XS, eSpring, and SA8/L.O.C.",
+  description: DESCRIPTION,
+  keywords: [
+    "Nutrilite brand",
+    "Artistry brand",
+    "Satinique brand",
+    "Glister brand",
+    "XS energy brand",
+    "eSpring brand",
+    "SA8 L.O.C. home care brand",
+  ],
+  alternates: { canonical: "/partners" },
+  openGraph: {
+    url: "/partners",
+    title: `Brand Partners | ${SITE_NAME}`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    title: `Brand Partners | ${SITE_NAME}`,
+    description: DESCRIPTION,
+  },
 };
 
 export default function PartnersPage() {

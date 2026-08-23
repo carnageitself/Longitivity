@@ -4,9 +4,28 @@ import Footer from "@/components/Footer";
 import AudienceSegments from "@/components/AudienceSegments";
 import { SITE_NAME } from "@/lib/site-config";
 
+const DESCRIPTION = "Curated product bundles for students, working professionals, women, and families.";
+
 export const metadata: Metadata = {
   title: `For You | ${SITE_NAME}`,
-  description: "Curated product bundles for students, working professionals, women, and families.",
+  description: DESCRIPTION,
+  keywords: [
+    "curated wellness bundles",
+    "product bundles for students",
+    "wellness bundles for professionals",
+    "gift bundles for women",
+    "family wellness bundle",
+  ],
+  alternates: { canonical: "/for-you" },
+  openGraph: {
+    url: "/for-you",
+    title: `For You | ${SITE_NAME}`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    title: `For You | ${SITE_NAME}`,
+    description: DESCRIPTION,
+  },
 };
 
 export default function ForYouPage() {

@@ -22,7 +22,32 @@ const fraunces = Fraunces({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://longitivity.vercel.app";
 const DESCRIPTION =
-  "Nutrilite, Artistry, XS, eSpring, and home care products, delivered with personal service and honest, side-by-side price comparisons against Amazon, Walmart, and Costco.";
+  "Nutrilite, Artistry, Satinique, Glister, XS, eSpring, and home care products, delivered with personal service and honest, side-by-side price comparisons against Amazon, Walmart, and Costco.";
+
+// Broad, brand + category + intent coverage. Individual pages layer on more
+// specific keywords via their own metadata; this is the shared baseline.
+const KEYWORDS = [
+  "Nutrilite vitamins",
+  "Nutrilite supplements",
+  "Nutrilite Double X",
+  "Artistry skincare",
+  "Artistry cosmetics",
+  "Satinique hair care",
+  "Glister toothpaste",
+  "G&H body wash",
+  "XS energy drinks",
+  "eSpring water filter",
+  "eSpring water treatment system",
+  "Atmosphere Sky air purifier",
+  "SA8 laundry detergent",
+  "L.O.C. multi-purpose cleaner",
+  "wellness products online",
+  "home care essentials",
+  "premium skincare and supplements",
+  "buy Nutrilite online",
+  "buy Artistry online",
+  "home business opportunity",
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -31,17 +56,12 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: DESCRIPTION,
-  keywords: [
-    "Nutrilite",
-    "Artistry",
-    "XS energy drinks",
-    "eSpring water filter",
-    "wellness products",
-    "home care essentials",
-  ],
+  keywords: KEYWORDS,
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
+  publisher: SITE_NAME,
   applicationName: SITE_NAME,
+  category: "shopping",
   alternates: {
     canonical: "/",
   },
