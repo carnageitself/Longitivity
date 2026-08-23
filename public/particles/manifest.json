@@ -1,0 +1,526 @@
+{
+  "sourceWidth": 1254,
+  "sourceHeight": 1254,
+  "particles": [
+    {
+      "file": "particle-01.png",
+      "x": 20,
+      "y": 650,
+      "width": 228,
+      "height": 224,
+      "centerX": 134,
+      "centerY": 762,
+      "pixels": 31048
+    },
+    {
+      "file": "particle-02.png",
+      "x": 224,
+      "y": 962,
+      "width": 188,
+      "height": 223,
+      "centerX": 318,
+      "centerY": 1073.5,
+      "pixels": 25715
+    },
+    {
+      "file": "particle-03.png",
+      "x": 881,
+      "y": 40,
+      "width": 201,
+      "height": 193,
+      "centerX": 981.5,
+      "centerY": 136.5,
+      "pixels": 24686
+    },
+    {
+      "file": "particle-04.png",
+      "x": 1068,
+      "y": 1019,
+      "width": 186,
+      "height": 191,
+      "centerX": 1161,
+      "centerY": 1114.5,
+      "pixels": 17748
+    },
+    {
+      "file": "particle-05.png",
+      "x": 604,
+      "y": 1001,
+      "width": 191,
+      "height": 186,
+      "centerX": 699.5,
+      "centerY": 1094,
+      "pixels": 16710
+    },
+    {
+      "file": "particle-06.png",
+      "x": 577,
+      "y": 9,
+      "width": 188,
+      "height": 167,
+      "centerX": 671,
+      "centerY": 92.5,
+      "pixels": 16223
+    },
+    {
+      "file": "particle-07.png",
+      "x": 970,
+      "y": 353,
+      "width": 76,
+      "height": 68,
+      "centerX": 1008,
+      "centerY": 387,
+      "pixels": 2472
+    },
+    {
+      "file": "particle-08.png",
+      "x": 521,
+      "y": 1042,
+      "width": 52,
+      "height": 48,
+      "centerX": 547,
+      "centerY": 1066,
+      "pixels": 715
+    },
+    {
+      "file": "particle-09.png",
+      "x": 831,
+      "y": 1028,
+      "width": 41,
+      "height": 47,
+      "centerX": 851.5,
+      "centerY": 1051.5,
+      "pixels": 520
+    },
+    {
+      "file": "particle-10.png",
+      "x": 50,
+      "y": 1085,
+      "width": 45,
+      "height": 43,
+      "centerX": 72.5,
+      "centerY": 1106.5,
+      "pixels": 514
+    },
+    {
+      "file": "particle-11.png",
+      "x": 1165,
+      "y": 242,
+      "width": 33,
+      "height": 42,
+      "centerX": 1181.5,
+      "centerY": 263,
+      "pixels": 432
+    },
+    {
+      "file": "particle-12.png",
+      "x": 244,
+      "y": 174,
+      "width": 33,
+      "height": 32,
+      "centerX": 260.5,
+      "centerY": 190,
+      "pixels": 392
+    },
+    {
+      "file": "particle-13.png",
+      "x": 326,
+      "y": 53,
+      "width": 36,
+      "height": 33,
+      "centerX": 344,
+      "centerY": 69.5,
+      "pixels": 390
+    },
+    {
+      "file": "particle-14.png",
+      "x": 1025,
+      "y": 1144,
+      "width": 32,
+      "height": 32,
+      "centerX": 1041,
+      "centerY": 1160,
+      "pixels": 382
+    },
+    {
+      "file": "particle-15.png",
+      "x": 780,
+      "y": 981,
+      "width": 30,
+      "height": 32,
+      "centerX": 795,
+      "centerY": 997,
+      "pixels": 361
+    },
+    {
+      "file": "particle-16.png",
+      "x": 993,
+      "y": 272,
+      "width": 31,
+      "height": 30,
+      "centerX": 1008.5,
+      "centerY": 287,
+      "pixels": 359
+    },
+    {
+      "file": "particle-17.png",
+      "x": 842,
+      "y": 132,
+      "width": 32,
+      "height": 31,
+      "centerX": 858,
+      "centerY": 147.5,
+      "pixels": 358
+    },
+    {
+      "file": "particle-18.png",
+      "x": 1084,
+      "y": 142,
+      "width": 30,
+      "height": 29,
+      "centerX": 1099,
+      "centerY": 156.5,
+      "pixels": 350
+    },
+    {
+      "file": "particle-19.png",
+      "x": 664,
+      "y": 180,
+      "width": 30,
+      "height": 30,
+      "centerX": 679,
+      "centerY": 195,
+      "pixels": 349
+    },
+    {
+      "file": "particle-20.png",
+      "x": 1094,
+      "y": 196,
+      "width": 30,
+      "height": 30,
+      "centerX": 1109,
+      "centerY": 211,
+      "pixels": 345
+    },
+    {
+      "file": "particle-21.png",
+      "x": 1089,
+      "y": 283,
+      "width": 31,
+      "height": 31,
+      "centerX": 1104.5,
+      "centerY": 298.5,
+      "pixels": 345
+    },
+    {
+      "file": "particle-22.png",
+      "x": 1104,
+      "y": 94,
+      "width": 29,
+      "height": 29,
+      "centerX": 1118.5,
+      "centerY": 108.5,
+      "pixels": 341
+    },
+    {
+      "file": "particle-23.png",
+      "x": 855,
+      "y": 101,
+      "width": 30,
+      "height": 32,
+      "centerX": 870,
+      "centerY": 117,
+      "pixels": 341
+    },
+    {
+      "file": "particle-24.png",
+      "x": 831,
+      "y": 63,
+      "width": 30,
+      "height": 30,
+      "centerX": 846,
+      "centerY": 78,
+      "pixels": 340
+    },
+    {
+      "file": "particle-25.png",
+      "x": 1080,
+      "y": 92,
+      "width": 30,
+      "height": 32,
+      "centerX": 1095,
+      "centerY": 108,
+      "pixels": 340
+    },
+    {
+      "file": "particle-26.png",
+      "x": 936,
+      "y": 231,
+      "width": 31,
+      "height": 31,
+      "centerX": 951.5,
+      "centerY": 246.5,
+      "pixels": 339
+    },
+    {
+      "file": "particle-27.png",
+      "x": 1180,
+      "y": 473,
+      "width": 31,
+      "height": 29,
+      "centerX": 1195.5,
+      "centerY": 487.5,
+      "pixels": 338
+    },
+    {
+      "file": "particle-28.png",
+      "x": 809,
+      "y": 255,
+      "width": 30,
+      "height": 30,
+      "centerX": 824,
+      "centerY": 270,
+      "pixels": 337
+    },
+    {
+      "file": "particle-29.png",
+      "x": 1020,
+      "y": 975,
+      "width": 31,
+      "height": 30,
+      "centerX": 1035.5,
+      "centerY": 990,
+      "pixels": 337
+    },
+    {
+      "file": "particle-30.png",
+      "x": 1047,
+      "y": 1028,
+      "width": 31,
+      "height": 30,
+      "centerX": 1062.5,
+      "centerY": 1043,
+      "pixels": 337
+    },
+    {
+      "file": "particle-31.png",
+      "x": 1008,
+      "y": 1083,
+      "width": 32,
+      "height": 29,
+      "centerX": 1024,
+      "centerY": 1097.5,
+      "pixels": 336
+    },
+    {
+      "file": "particle-32.png",
+      "x": 1126,
+      "y": 427,
+      "width": 30,
+      "height": 30,
+      "centerX": 1141,
+      "centerY": 442,
+      "pixels": 333
+    },
+    {
+      "file": "particle-33.png",
+      "x": 957,
+      "y": 1147,
+      "width": 29,
+      "height": 31,
+      "centerX": 971.5,
+      "centerY": 1162.5,
+      "pixels": 332
+    },
+    {
+      "file": "particle-34.png",
+      "x": 776,
+      "y": 179,
+      "width": 30,
+      "height": 30,
+      "centerX": 791,
+      "centerY": 194,
+      "pixels": 328
+    },
+    {
+      "file": "particle-35.png",
+      "x": 618,
+      "y": 215,
+      "width": 30,
+      "height": 30,
+      "centerX": 633,
+      "centerY": 230,
+      "pixels": 327
+    },
+    {
+      "file": "particle-36.png",
+      "x": 498,
+      "y": 47,
+      "width": 29,
+      "height": 30,
+      "centerX": 512.5,
+      "centerY": 62,
+      "pixels": 324
+    },
+    {
+      "file": "particle-37.png",
+      "x": 1194,
+      "y": 191,
+      "width": 31,
+      "height": 29,
+      "centerX": 1209.5,
+      "centerY": 205.5,
+      "pixels": 324
+    },
+    {
+      "file": "particle-38.png",
+      "x": 773,
+      "y": 46,
+      "width": 31,
+      "height": 29,
+      "centerX": 788.5,
+      "centerY": 60.5,
+      "pixels": 321
+    },
+    {
+      "file": "particle-39.png",
+      "x": 434,
+      "y": 179,
+      "width": 31,
+      "height": 29,
+      "centerX": 449.5,
+      "centerY": 193.5,
+      "pixels": 321
+    },
+    {
+      "file": "particle-40.png",
+      "x": 808,
+      "y": 159,
+      "width": 30,
+      "height": 30,
+      "centerX": 823,
+      "centerY": 174,
+      "pixels": 319
+    },
+    {
+      "file": "particle-41.png",
+      "x": 941,
+      "y": 285,
+      "width": 30,
+      "height": 30,
+      "centerX": 956,
+      "centerY": 300,
+      "pixels": 316
+    },
+    {
+      "file": "particle-42.png",
+      "x": 811,
+      "y": 1160,
+      "width": 29,
+      "height": 30,
+      "centerX": 825.5,
+      "centerY": 1175,
+      "pixels": 316
+    },
+    {
+      "file": "particle-43.png",
+      "x": 1113,
+      "y": 28,
+      "width": 29,
+      "height": 29,
+      "centerX": 1127.5,
+      "centerY": 42.5,
+      "pixels": 314
+    },
+    {
+      "file": "particle-44.png",
+      "x": 534,
+      "y": 53,
+      "width": 29,
+      "height": 30,
+      "centerX": 548.5,
+      "centerY": 68,
+      "pixels": 313
+    },
+    {
+      "file": "particle-45.png",
+      "x": 1218,
+      "y": 68,
+      "width": 29,
+      "height": 30,
+      "centerX": 1232.5,
+      "centerY": 83,
+      "pixels": 313
+    },
+    {
+      "file": "particle-46.png",
+      "x": 875,
+      "y": 1131,
+      "width": 29,
+      "height": 29,
+      "centerX": 889.5,
+      "centerY": 1145.5,
+      "pixels": 309
+    },
+    {
+      "file": "particle-47.png",
+      "x": 901,
+      "y": 405,
+      "width": 29,
+      "height": 30,
+      "centerX": 915.5,
+      "centerY": 420,
+      "pixels": 301
+    },
+    {
+      "file": "particle-48.png",
+      "x": 962,
+      "y": 418,
+      "width": 29,
+      "height": 29,
+      "centerX": 976.5,
+      "centerY": 432.5,
+      "pixels": 289
+    },
+    {
+      "file": "particle-49.png",
+      "x": 1142,
+      "y": 135,
+      "width": 29,
+      "height": 29,
+      "centerX": 1156.5,
+      "centerY": 149.5,
+      "pixels": 279
+    },
+    {
+      "file": "particle-50.png",
+      "x": 261,
+      "y": 663,
+      "width": 31,
+      "height": 22,
+      "centerX": 276.5,
+      "centerY": 674,
+      "pixels": 219
+    },
+    {
+      "file": "particle-51.png",
+      "x": 709,
+      "y": 312,
+      "width": 23,
+      "height": 24,
+      "centerX": 720.5,
+      "centerY": 324,
+      "pixels": 155
+    },
+    {
+      "file": "particle-52.png",
+      "x": 1086,
+      "y": 390,
+      "width": 31,
+      "height": 37,
+      "centerX": 1101.5,
+      "centerY": 408.5,
+      "pixels": 138
+    }
+  ]
+}

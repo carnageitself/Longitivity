@@ -4,7 +4,23 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-export function ParallaxHeroImage({ className }: { className?: string }) {
+export function ParallaxHeroImage({
+  className,
+  src,
+  alt,
+  sizes = "(min-width: 1024px) 55vw, 90vw",
+  quality = 90,
+  imageClassName = "object-contain drop-shadow-2xl",
+  imageStyle,
+}: {
+  className?: string;
+  src: string;
+  alt: string;
+  sizes?: string;
+  quality?: number;
+  imageClassName?: string;
+  imageStyle?: React.CSSProperties;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -41,12 +57,14 @@ export function ParallaxHeroImage({ className }: { className?: string }) {
       >
         <motion.div style={{ x: fgX, y: fgY, translateZ: 40 }} className="absolute inset-0">
           <Image
-            src="/hero.png"
-            alt="Artistry fragrances"
+            src={src}
+            alt={alt}
             fill
             priority
-            sizes="(min-width: 1024px) 55vw, 90vw"
-            className="object-contain drop-shadow-2xl"
+            sizes={sizes}
+            quality={quality}
+            style={imageStyle}
+            className={imageClassName}
           />
         </motion.div>
       </motion.div>
