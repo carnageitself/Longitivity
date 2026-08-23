@@ -16,6 +16,7 @@ const NAV_COLUMNS: { heading: string; links: { href: string; label: string }[] }
     heading: "Company",
     links: [
       { href: "/partners", label: "Our Brands" },
+      { href: "/opportunity", label: "Business Opportunity" },
       { href: "/contact", label: "Contact" },
     ],
   },

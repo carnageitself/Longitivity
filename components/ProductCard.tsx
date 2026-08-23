@@ -12,25 +12,31 @@ const BADGE_STYLES: Record<string, string> = {
 export default function ProductCard({ product }: { product: CatalogProduct }) {
   const visual = CATEGORY_VISUAL[product.category];
   const Icon = visual.icon;
+  const image = product.image ?? visual.image;
+  const photoStyle = product.image ? product.photoStyle : visual.photoStyle;
 
   return (
     <Link
       href={`/products/${product.slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors hover:border-accent/60"
     >
-      <div
-        className={`relative flex h-32 shrink-0 items-center justify-center ${
-          visual.image && visual.photoStyle === "card" ? "bg-white" : `bg-linear-to-br ${visual.gradient}`
-        }`}
-      >
-        {visual.image ? (
+      <div className={`relative flex h-32 shrink-0 items-center justify-center bg-linear-to-br ${visual.gradient}`}>
+        {image ? (
           <Image
-            src={visual.image}
-            alt={product.category}
+            src={image}
+            alt={product.name}
             fill
             sizes="400px"
-            style={{ objectFit: "contain" }}
-            className={visual.photoStyle === "card" ? "p-4" : "p-3 drop-shadow-2xl"}
+            style={
+              photoStyle === "card"
+                ? {
+                    objectFit: "contain",
+                    maskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+                    WebkitMaskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+                  }
+                : { objectFit: "contain" }
+            }
+            className={photoStyle === "card" ? "p-4" : "p-3 drop-shadow-2xl"}
           />
         ) : (
           <Icon size={40} className="text-foreground/70" strokeWidth={1.25} />

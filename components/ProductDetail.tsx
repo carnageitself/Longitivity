@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Check, ListChecks, Scale } from "lucide-react";
-import { CATEGORY_PLACEHOLDER_IMAGE, catalog, type CatalogProduct } from "@/lib/catalog";
+import { CATEGORY_PLACEHOLDER_IMAGE, CATEGORY_VISUAL, catalog, type CatalogProduct } from "@/lib/catalog";
 import type { CompetitorMatch } from "@/lib/fullCompare";
 import { getReturnPolicy, getRetailerReturnPolicy } from "@/lib/site-config";
 import Carousel from "@/components/ui/carousel";
@@ -24,6 +25,7 @@ export default function ProductDetail({
     button: p.slug === product.slug ? "This product" : "View details",
     src: CATEGORY_PLACEHOLDER_IMAGE[p.category],
   }));
+  const visual = CATEGORY_VISUAL[product.category];
 
   return (
     <div className="mx-auto max-w-4xl px-6 pt-24 pb-16">
@@ -35,16 +37,48 @@ export default function ProductDetail({
         Back to catalog
       </Link>
 
-      <div className="relative overflow-hidden rounded-2xl bg-black pt-10 pb-24">
-        <Carousel slides={slides} />
-        {product.badge && (
-          <span
-            className={`absolute top-4 right-4 z-20 rounded-full px-3 py-1 text-xs font-semibold ${BADGE_STYLES[product.badge]}`}
-          >
-            {product.badge}
-          </span>
-        )}
-      </div>
+      {product.image ? (
+        <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-black">
+          <div
+            aria-hidden
+            className={`absolute inset-0 m-auto h-32 w-32 rounded-full bg-linear-to-br ${visual.gradient} opacity-60 blur-3xl`}
+          />
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(min-width: 1024px) 448px, 90vw"
+            style={
+              product.photoStyle === "card"
+                ? {
+                    objectFit: "contain",
+                    maskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+                    WebkitMaskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+                  }
+                : { objectFit: "contain" }
+            }
+            className={product.photoStyle === "card" ? "p-10" : "p-8 drop-shadow-2xl"}
+          />
+          {product.badge && (
+            <span
+              className={`absolute top-4 right-4 z-20 rounded-full px-3 py-1 text-xs font-semibold ${BADGE_STYLES[product.badge]}`}
+            >
+              {product.badge}
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="relative overflow-hidden rounded-2xl bg-black pt-10 pb-24">
+          <Carousel slides={slides} />
+          {product.badge && (
+            <span
+              className={`absolute top-4 right-4 z-20 rounded-full px-3 py-1 text-xs font-semibold ${BADGE_STYLES[product.badge]}`}
+            >
+              {product.badge}
+            </span>
+          )}
+        </div>
+      )}
 
       <div className="mt-8 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div>

@@ -35,7 +35,7 @@ export default function ArtistrySpotlight() {
               alt="Artistry skincare and cosmetics lineup"
               fill
               sizes="(min-width: 1024px) 400px, 90vw"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         </motion.div>

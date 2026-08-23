@@ -47,7 +47,7 @@ export const partners: Partner[] = [
     achievement: "Zero sugar since day one, years before that became the industry standard.",
     points: [
       "Zero sugar, 114 mg of caffeine per can: a real lift without the crash.",
-      "Six flavors, from classic citrus to sparkling dragon fruit.",
+      "Six flavors, from classic citrus to sparkling pink grapefruit.",
     ],
   },
   {

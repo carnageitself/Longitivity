@@ -341,25 +341,6 @@ export const fullCompare: FullComparison[] = [
     ],
   },
   {
-    slug: "xs-sparkling-dragon-fruit",
-    competitors: [
-      {
-        name: "Celsius Fizz-Free Dragonfruit Lime",
-        retailer: "Amazon",
-        price: "Not publicly confirmed",
-        difference: "No real fruit juice or sugar at all, unlike XS's real 25% fruit juice, and nearly double the caffeine.",
-        madeIn: "USA",
-      },
-      {
-        name: "V8 +Energy",
-        retailer: "Amazon",
-        price: "~$5.42 / 6-pack (8oz cans)",
-        difference: "A smaller can with less caffeine, and its energy comes from green tea instead of the ginseng XS uses.",
-        madeIn: "USA",
-      },
-    ],
-  },
-  {
     slug: "xs-energy-burn-kiwi-strawberry",
     competitors: [
       {

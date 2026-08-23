@@ -83,8 +83,11 @@ export default function FeaturedProducts() {
                   >
                     <CategoryVisual
                       category={product.category}
-                      width={visual.image ? 112 : 80}
-                      height={visual.image ? 112 : 96}
+                      image={product.image}
+                      photoStyle={product.photoStyle}
+                      alt={product.name}
+                      width={product.image ?? visual.image ? 112 : 80}
+                      height={product.image ?? visual.image ? 112 : 96}
                       iconSize={30}
                       rounded="rounded-2xl"
                     />

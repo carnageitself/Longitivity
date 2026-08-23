@@ -7,30 +7,43 @@ export default function CategoryVisual({
   height,
   iconSize,
   rounded = "rounded-3xl",
+  image,
+  photoStyle,
+  alt,
 }: {
   category: CatalogCategory;
   width: number;
   height: number;
   iconSize?: number;
   rounded?: string;
+  // Optional per-product override; falls back to the category-level image.
+  image?: string;
+  photoStyle?: "transparent" | "card";
+  alt?: string;
 }) {
   const visual = CATEGORY_VISUAL[category];
   const Icon = visual.icon;
+  const resolvedImage = image ?? visual.image;
+  const resolvedPhotoStyle = image ? photoStyle : visual.photoStyle;
 
-  if (visual.image) {
-    if (visual.photoStyle === "card") {
+  if (resolvedImage) {
+    if (resolvedPhotoStyle === "card") {
       return (
         <div
           style={{ width, height }}
-          className={`relative flex items-center justify-center ${rounded} bg-white p-3 shadow-xl shadow-black/40`}
+          className={`relative flex items-center justify-center overflow-hidden ${rounded} border border-white/10 bg-linear-to-br ${visual.gradient} shadow-xl shadow-black/40`}
         >
           <Image
-            src={visual.image}
-            alt={category}
+            src={resolvedImage}
+            alt={alt ?? category}
             fill
             sizes={`${width}px`}
-            style={{ objectFit: "contain" }}
-            className="p-2"
+            style={{
+              objectFit: "contain",
+              maskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+              WebkitMaskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+            }}
+            className="p-3"
           />
         </div>
       );
@@ -39,8 +52,8 @@ export default function CategoryVisual({
     return (
       <div style={{ width, height }} className="relative">
         <Image
-          src={visual.image}
-          alt={category}
+          src={resolvedImage}
+          alt={alt ?? category}
           fill
           sizes={`${width}px`}
           style={{ objectFit: "contain" }}
