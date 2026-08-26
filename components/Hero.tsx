@@ -13,7 +13,7 @@ import {
 import { ParticleField, HeroBottles } from "@/components/ui/particle-field";
 
 const FRAME_COUNT = 120;
-const frameSrc = (i: number) => `/perfume-frames/frame-${String(i).padStart(3, "0")}.jpg`;
+const frameSrc = (i: number) => `/perfume-frames/frame-${String(i).padStart(3, "0")}.webp`;
 // The crossfade from the static hero art into the frame sequence happens in
 // this early slice of scroll progress; the rest is the frame scrub.
 const CROSSFADE_END = 0.05;
@@ -193,8 +193,8 @@ export default function Hero() {
   }, [framesReady]);
 
   return (
-    <section ref={sectionRef} id="top" className="relative h-screen bg-black lg:h-[500vh]">
-      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
+    <section ref={sectionRef} id="top" className="relative min-h-screen bg-black lg:h-[500vh]">
+      <div className="flex min-h-screen w-full flex-col lg:sticky lg:top-0 lg:h-screen lg:overflow-hidden">
         <div
           ref={rowRef}
           onMouseMove={handleRowMouseMove}
@@ -208,7 +208,7 @@ export default function Hero() {
                 className="flex items-center gap-3 text-xs font-medium tracking-[0.3em] text-muted uppercase"
               >
                 <span className="h-px w-8 bg-accent" aria-hidden />
-                For people who take this seriously
+                An independent price check, not a pitch
               </FadeInItem>
               <FadeInItem
                 delay={0.27}
@@ -245,7 +245,7 @@ export default function Hero() {
             {/* Particles: not clipped, bleed past the image box, always in front. */}
             <div
               ref={particleLayerRef}
-              className="pointer-events-none absolute -inset-6 z-20 sm:-inset-10 lg:-inset-20"
+              className="pointer-events-none absolute inset-0 z-20 sm:-inset-6 lg:-inset-20"
             >
               <ParticleField x={x} y={y} scrollYProgress={scrollYProgress} className="absolute inset-0" />
             </div>
@@ -266,22 +266,22 @@ export default function Hero() {
           scrollYProgress={scrollYProgress}
           start={0.1}
           end={0.38}
-          eyebrow="Artistry · Unknown"
-          title="Nobody can quite place it."
+          eyebrow="Not the only thing we sell"
+          title="This bottle is one of 70+ products here."
         >
-          Amber and worn leather, blended so it never smells quite the same
-          on two different people.
+          Nutrilite vitamins, Artistry beauty, XS energy, home and water
+          care. Same sourcing, same standards, every single time.
         </ScrollCaption>
 
         <ScrollCaption
           scrollYProgress={scrollYProgress}
           start={0.48}
           end={0.72}
-          eyebrow="What lingers"
-          title={"The compliment starts with “wait—”"}
+          eyebrow="Every single one"
+          title="Every product gets the same scrutiny."
         >
-          Built to get warmer through the day, not weaker. Most people
-          notice it by hour three, not minute three.
+          Real ingredients, real pricing, and someone who&apos;ll actually
+          answer when you ask. Not just for this bottle.
         </ScrollCaption>
       </div>
     </section>
