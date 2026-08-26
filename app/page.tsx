@@ -5,6 +5,7 @@ import ScrollShowcase from "@/components/ScrollShowcase";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import ArtistrySpotlight from "@/components/ArtistrySpotlight";
+import ArtistryNYFWCta from "@/components/ArtistryNYFWCta";
 import ProductCategories from "@/components/ProductCategories";
 import WhyIndependent from "@/components/WhyIndependent";
 import FinalCta from "@/components/FinalCta";
@@ -45,6 +46,7 @@ export default function Home() {
         <FeaturedProducts />
         <ArtistrySpotlight />
         <ProductCategories />
+        <ArtistryNYFWCta />
         <WhyIndependent />
         <FinalCta />
       </main>
