@@ -6,7 +6,7 @@ export const SITE_NAME = "Longitivity";
 export const SITE_TAGLINE = "Curated Wellness & Home Essentials";
 
 export const CONTACT = {
-  email: "carnageitself@gmail.com",
+  email: "contact@longitivity.com",
 };
 
 // Categories that count as opened personal-care/health/consumable items under
