@@ -13,28 +13,54 @@ export default function FinalCta() {
         aria-hidden
         fill
         sizes="100vw"
-        quality={90}
+        quality={100}
         className="object-contain"
       />
-      <div aria-hidden className="absolute inset-0 bg-black/70" />
-      <div aria-hidden className="absolute inset-x-0 top-0 h-56 bg-linear-to-b from-black to-transparent" />
-      {/* Soft spotlight behind the text: a radial gradient fades to fully
-          transparent well within its own box, so there's no hard blur-edge
-          for the busy photo behind it to reveal. */}
+      {/* Second copy, blurred and masked to only show near the outer edge:
+          keeps the photo sharp in the middle while softly blurring it into
+          the black background at the perimeter, instead of a hard cutoff. */}
+      <Image
+        src="/longitivity-CTA.png"
+        alt=""
+        aria-hidden
+        fill
+        sizes="100vw"
+        quality={100}
+        className="object-contain blur-md"
+        style={{
+          maskImage: "radial-gradient(ellipse 60% 55% at 50% 45%, transparent 55%, black 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 50% 45%, transparent 55%, black 100%)",
+        }}
+      />
+      {/* Soft light spilling down from above: blurs the seam where the
+          photo's top edge would otherwise read as a picture frame, so it
+          feels like ambient light falling across one continuous scene. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 flex items-center justify-center"
-      >
-        <div
-          className="h-[70vh] w-[70vh] max-h-140 max-w-140 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, color-mix(in srgb, var(--color-accent) 22%, transparent) 0%, color-mix(in srgb, var(--color-accent) 8%, transparent) 40%, transparent 72%)",
-          }}
-        />
-      </div>
+        className="pointer-events-none absolute inset-x-0 top-0 h-2/3 blur-3xl"
+        style={{
+          background: "radial-gradient(ellipse 65% 100% at 50% 0%, rgba(255,255,255,0.16) 0%, transparent 65%)",
+        }}
+      />
+      {/* Contrast only where the copy sits, not across the whole photo: a
+          soft dark pool centered on the text block, fading out quickly so
+          the rest of the image keeps its full brightness and mood. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse 42% 48% at 50% 50%, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 55%, transparent 85%)",
+        }}
+      />
+      {/* Solid black-to-transparent fade at the top of the image, matching
+          the section above's own background so the two bleed into each
+          other instead of cutting hard at the boundary. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-44 bg-linear-to-b from-black to-transparent"
+      />
 
-      <div className="relative mx-auto max-w-3xl px-6 text-center">
+      <div className="relative z-20 mx-auto max-w-3xl px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
