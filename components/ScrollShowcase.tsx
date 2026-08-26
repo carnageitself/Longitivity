@@ -14,31 +14,39 @@ const CHAPTERS: CatalogCategory[] = ["Nutrilite", "Artistry", "XS", "Water & Air
 // everywhere else (product cards, FinalCta, etc.) keeps the catalog's
 // regular per-category image via CategoryVisual.
 const CHAPTER_IMAGE: Partial<Record<CatalogCategory, { src: string; alt: string }>> = {
-  Nutrilite: { src: "/Nutralite-1.png", alt: "Nutrilite Double X styled with fresh ingredients" },
-  Artistry: { src: "/Artistry-1.jpg", alt: "Artistry lip gloss lineup" },
-  XS: { src: "/XS-1.png", alt: "XS Energy cans chilling on ice" },
-  "Water & Air Treatment": { src: "/Air-1.png", alt: "Atmosphere air treatment system in a living room" },
+  Nutrilite: { src: "/Product-Nutralite.png", alt: "Nutrilite product lineup" },
+  Artistry: { src: "/Product-Artistry.png", alt: "Artistry lip gloss lineup" },
+  XS: { src: "/Product-XS.png", alt: "XS Energy cans chilling on ice" },
+  "Water & Air Treatment": {
+    src: "/Product-Air-and-water treatment.png",
+    alt: "eSpring water and air treatment system lineup",
+  },
 };
 
 function ChapterPhoto({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="relative h-72 w-56 overflow-hidden rounded-4xl shadow-xl shadow-black/40 sm:h-80 sm:w-64 lg:h-96 lg:w-72">
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="(min-width: 1024px) 288px, (min-width: 640px) 256px, 224px"
-        style={{ objectFit: "cover" }}
-      />
-      {/* Vignette: darkens the edges so the product stays the focal point
-          instead of competing with the photo's own set dressing. */}
+    <div className="relative z-10 h-56 w-84 sm:h-64 sm:w-96 lg:h-88 lg:w-125">
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="absolute inset-0"
         style={{
-          background: "radial-gradient(ellipse 65% 65% at 50% 45%, transparent 30%, rgba(0,0,0,0.8) 100%)",
+          // Keeps the center ~80% fully sharp, fading only the outer edge so
+          // the photo's own black background dissolves into the grid
+          // pattern behind it instead of showing a hard rectangle.
+          maskImage: "radial-gradient(ellipse 60% 62% at 50% 50%, black 80%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse 60% 62% at 50% 50%, black 80%, transparent 100%)",
         }}
-      />
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(min-width: 1024px) 500px, (min-width: 640px) 384px, 336px"
+          style={{ objectFit: "contain" }}
+        />
+      </div>
+      {/* Original bottom fade, kept as its own unmasked layer so it isn't
+          softened by the radial edge mask above. */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black to-transparent" />
     </div>
   );
 }
@@ -152,20 +160,20 @@ function Chapter({
         )}
       </motion.div>
 
-      <motion.div style={{ x: textX }} className="relative max-w-sm text-center lg:text-left">
-        <p className="text-xs font-medium tracking-wide text-accent uppercase">{copy.eyebrow}</p>
-        <h3 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-4xl">{category}</h3>
-        <ul className="mt-4 flex flex-col gap-2.5 text-left">
+      <motion.div style={{ x: textX }} className="relative max-w-md text-center lg:text-left">
+        <p className="text-sm font-medium tracking-wide text-accent uppercase">{copy.eyebrow}</p>
+        <h3 className="mt-3 font-serif text-4xl font-medium tracking-tight sm:text-5xl">{category}</h3>
+        <ul className="mt-5 flex flex-col gap-3 text-left">
           {copy.points.map((point) => (
-            <li key={point} className="flex items-start gap-2 text-sm text-muted">
-              <Check size={15} className="mt-0.5 shrink-0 text-accent" />
+            <li key={point} className="flex items-start gap-2.5 text-base text-muted">
+              <Check size={18} className="mt-0.5 shrink-0 text-accent" />
               {point}
             </li>
           ))}
         </ul>
         <Link
           href="/products"
-          className="pointer-events-auto mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent underline-offset-4 hover:underline"
+          className="pointer-events-auto mt-6 inline-flex items-center gap-2 text-base font-medium text-accent underline-offset-4 hover:underline"
         >
           {count} products in this line
         </Link>
@@ -224,7 +232,7 @@ export default function ScrollShowcase() {
   return (
     <section ref={ref} className="relative" style={{ height: `${CHAPTERS.length * 90}vh` }}>
       <div className="sticky top-0 h-screen overflow-hidden border-y border-border bg-black">
-        <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" />
+        <div className="bg-grid pointer-events-none absolute inset-0 z-0 opacity-60" />
         <div className="pointer-events-none absolute top-8 left-1/2 -translate-x-1/2 text-center">
           <p className="text-xs font-medium tracking-wide text-muted uppercase">
             One roof, six product lines
