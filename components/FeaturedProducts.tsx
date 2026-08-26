@@ -3,16 +3,19 @@
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { Play } from "lucide-react";
-import { catalog, CATEGORY_VISUAL } from "@/lib/catalog";
+import { catalog, CATEGORY_GLOW, CATEGORY_VISUAL } from "@/lib/catalog";
 import CategoryVisual from "@/components/CategoryVisual";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const BADGE_STYLES: Record<string, string> = {
-  Bestseller: "bg-accent text-accent-foreground",
-  New: "bg-emerald-500 text-white",
+  Bestseller: "bg-linear-to-br from-accent to-[#8a6d3b] text-accent-foreground shadow-md shadow-amber-900/40 ring-1 ring-inset ring-white/25",
+  New: "bg-linear-to-br from-emerald-400 to-emerald-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-inset ring-white/25",
   "Staff Pick": "bg-amber-500 text-black",
 };
 
-const FEATURED = catalog.filter((p) => p.badge).slice(0, 6);
+const FEATURED = catalog
+  .filter((p) => p.badge && (p.image ?? CATEGORY_VISUAL[p.category].image))
+  .slice(0, 6);
 
 const container: Variants = {
   hidden: {},
@@ -63,71 +66,82 @@ export default function FeaturedProducts() {
       >
         {FEATURED.map((product) => {
           const visual = CATEGORY_VISUAL[product.category];
+          const glow = CATEGORY_GLOW[product.category];
 
           return (
             <motion.div key={product.slug} variants={item}>
               <Link
                 href={`/products/${product.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors hover:border-accent/60"
+                className="group relative flex h-full flex-col rounded-2xl border border-border bg-surface p-2 transition-colors hover:border-accent/60"
               >
-                <div className="relative flex h-48 shrink-0 items-center justify-center overflow-hidden bg-linear-to-b from-background to-surface">
-                  <div
-                    aria-hidden
-                    className={`absolute h-32 w-32 rounded-full bg-linear-to-br ${visual.gradient} blur-2xl transition-transform duration-500 group-hover:scale-110`}
-                  />
-
-                  <motion.div
-                    animate={{ y: [0, -6, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    whileHover={{ rotate: [-1, 1.5, -1], scale: 1.04 }}
-                  >
-                    <CategoryVisual
-                      category={product.category}
-                      image={product.image}
-                      photoStyle={product.photoStyle}
-                      alt={product.name}
-                      width={product.image ?? visual.image ? 112 : 80}
-                      height={product.image ?? visual.image ? 112 : 96}
-                      iconSize={30}
-                      rounded="rounded-2xl"
+                <GlowingEffect spread={40} glow proximity={64} inactiveZone={0.01} disabled={false} />
+                <div className="relative flex h-full flex-col overflow-hidden rounded-xl">
+                  <div className="relative flex h-48 shrink-0 items-center justify-center overflow-hidden bg-black">
+                    {/* Ambient glow, same treatment as the catalog product
+                        cards: soft diffused light in the category color
+                        instead of a flat tinted panel. */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute -inset-8 opacity-50 blur-2xl transition-opacity duration-300 group-hover:opacity-75"
+                      style={{
+                        background: `radial-gradient(ellipse 60% 60% at 50% 50%, rgba(${glow}, 0.4) 0%, rgba(${glow}, 0.16) 45%, transparent 75%)`,
+                      }}
                     />
-                  </motion.div>
 
-                  {product.badge && (
-                    <span
-                      className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${BADGE_STYLES[product.badge]}`}
+                    <motion.div
+                      className="relative z-10"
+                      animate={{ y: [0, -6, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      whileHover={{ rotate: [-1, 1.5, -1], scale: 1.04 }}
                     >
-                      {product.badge}
-                    </span>
-                  )}
-                  {product.videoId && (
-                    <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-medium backdrop-blur-sm">
-                      <Play size={11} className="fill-current" />
-                      Video
-                    </span>
-                  )}
-                </div>
+                      <CategoryVisual
+                        category={product.category}
+                        image={product.image}
+                        photoStyle={product.photoStyle}
+                        alt={product.name}
+                        width={product.image ?? visual.image ? 112 : 80}
+                        height={product.image ?? visual.image ? 112 : 96}
+                        iconSize={30}
+                        rounded="rounded-2xl"
+                      />
+                    </motion.div>
 
-                <div className="flex flex-1 flex-col p-6">
-                  <span className="text-xs font-medium tracking-wide text-muted uppercase">
-                    {product.category}
-                  </span>
-                  <h3 className="mt-1 line-clamp-2 font-semibold">{product.name}</h3>
-                  <p className="mt-2 line-clamp-2 text-sm text-muted">{product.hook}</p>
+                    {product.badge && (
+                      <span
+                        className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${BADGE_STYLES[product.badge]}`}
+                      >
+                        {product.badge}
+                      </span>
+                    )}
+                    {product.videoId && (
+                      <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-medium backdrop-blur-sm">
+                        <Play size={11} className="fill-current" />
+                        Video
+                      </span>
+                    )}
+                  </div>
 
-                  <div className="mt-auto flex items-end justify-between gap-3 pt-5">
-                    <div>
-                      <span className="text-lg font-semibold tracking-tight">{product.price}</span>
-                      {product.priceStatus === "approx" && (
-                        <p className="text-[11px] text-muted">estimated</p>
-                      )}
-                      {product.priceStatus === "on-request" && (
-                        <p className="text-[11px] text-muted">ask for current price</p>
-                      )}
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="text-xs font-medium tracking-wide text-muted uppercase">
+                      {product.category}
+                    </span>
+                    <h3 className="mt-1 line-clamp-2 font-semibold">{product.name}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm text-muted">{product.hook}</p>
+
+                    <div className="mt-auto flex items-end justify-between gap-3 pt-5">
+                      <div>
+                        <span className="text-lg font-semibold tracking-tight">{product.price}</span>
+                        {product.priceStatus === "approx" && (
+                          <p className="text-[11px] text-muted">estimated</p>
+                        )}
+                        {product.priceStatus === "on-request" && (
+                          <p className="text-[11px] text-muted">ask for current price</p>
+                        )}
+                      </div>
+                      <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-accent opacity-0 transition-opacity group-hover:opacity-100">
+                        View details
+                      </span>
                     </div>
-                    <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-accent opacity-0 transition-opacity group-hover:opacity-100">
-                      View details
-                    </span>
                   </div>
                 </div>
               </Link>

@@ -8,8 +8,8 @@ import Carousel from "@/components/ui/carousel";
 import AskAboutProductButton from "@/components/AskAboutProductButton";
 
 const BADGE_STYLES: Record<string, string> = {
-  Bestseller: "bg-accent text-accent-foreground",
-  New: "bg-emerald-500 text-white",
+  Bestseller: "bg-linear-to-br from-accent to-[#8a6d3b] text-accent-foreground shadow-md shadow-amber-900/40 ring-1 ring-inset ring-white/25",
+  New: "bg-linear-to-br from-emerald-400 to-emerald-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-inset ring-white/25",
   "Staff Pick": "bg-amber-500 text-black",
 };
 
@@ -27,6 +27,8 @@ export default function ProductDetail({
     src: CATEGORY_PLACEHOLDER_IMAGE[p.category],
   }));
   const visual = CATEGORY_VISUAL[product.category];
+  const image = product.image ?? visual.image;
+  const photoStyle = product.image ? product.photoStyle : visual.photoStyle;
 
   return (
     <div className="mx-auto max-w-4xl px-6 pt-24 pb-16">
@@ -38,19 +40,19 @@ export default function ProductDetail({
         Back to catalog
       </Link>
 
-      {product.image ? (
+      {image ? (
         <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-black">
           <div
             aria-hidden
             className={`absolute inset-0 m-auto h-32 w-32 rounded-full bg-linear-to-br ${visual.gradient} opacity-60 blur-3xl`}
           />
           <Image
-            src={product.image}
+            src={image}
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 448px, 90vw"
             style={
-              product.photoStyle === "card"
+              photoStyle === "card"
                 ? {
                     objectFit: "contain",
                     maskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
@@ -58,7 +60,7 @@ export default function ProductDetail({
                   }
                 : { objectFit: "contain" }
             }
-            className={product.photoStyle === "card" ? "p-10" : "p-8 drop-shadow-2xl"}
+            className={photoStyle === "card" ? "p-10" : "p-8 drop-shadow-2xl"}
           />
           {product.badge && (
             <span
