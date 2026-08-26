@@ -2,11 +2,15 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { catalog, CATEGORY_INFO, type CatalogCategory } from "@/lib/catalog";
+import { catalog, CATEGORY_INFO, CATEGORY_VISUAL, type CatalogCategory } from "@/lib/catalog";
 import ProductCard from "@/components/ProductCard";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
 
 const CATEGORIES = Object.keys(CATEGORY_INFO) as CatalogCategory[];
+
+// Skip anything with no real photo (own image or the category fallback) so
+// the catalog only shows products with actual photography, not icon cards.
+const CATALOG_WITH_IMAGE = catalog.filter((p) => p.image ?? CATEGORY_VISUAL[p.category].image);
 
 const SEARCH_PLACEHOLDERS = [
   "Search Nutrilite vitamins...",
@@ -21,7 +25,7 @@ export default function CatalogBrowser() {
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {
-    return catalog.filter((product) => {
+    return CATALOG_WITH_IMAGE.filter((product) => {
       const matchesCategory = activeCategory === "All" || product.category === activeCategory;
       const matchesQuery =
         query.trim() === "" ||
@@ -43,7 +47,7 @@ export default function CatalogBrowser() {
                 : "border-border text-muted hover:bg-surface"
             }`}
           >
-            All ({catalog.length})
+            All ({CATALOG_WITH_IMAGE.length})
           </button>
           {CATEGORIES.map((cat) => (
             <button
