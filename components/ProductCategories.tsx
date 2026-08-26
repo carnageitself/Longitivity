@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { catalog, CATEGORY_INFO, CATEGORY_VISUAL, type CatalogCategory } from "@/lib/catalog";
@@ -62,19 +61,9 @@ export default function ProductCategories() {
               <Link href="/products" className="group block h-full">
                 <CardSpotlight className="flex h-full flex-col gap-4 rounded-none border-0 bg-background p-8 transition-colors group-hover:bg-surface">
                   <div className="relative z-20 flex items-center gap-3">
-                    {(category === "XS" ||
-                      category === "Nutrilite" ||
-                      category === "Artistry" ||
-                      category === "Water & Air Treatment") &&
-                    visual.image ? (
-                      <div className={`relative h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-linear-to-br ${visual.gradient}`}>
-                        <Image src={visual.image} alt={category} fill sizes="40px" className="object-cover" />
-                      </div>
-                    ) : (
-                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br ${visual.gradient}`}>
-                        <Icon size={20} className="text-foreground/70" />
-                      </div>
-                    )}
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br ${visual.gradient}`}>
+                      <Icon size={20} className="text-foreground/70" />
+                    </div>
                     <h3 className="font-medium">{category}</h3>
                   </div>
                   <div className="relative z-20 flex-1">

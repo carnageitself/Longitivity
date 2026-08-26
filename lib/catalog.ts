@@ -66,19 +66,17 @@ export const CATEGORY_VISUAL: Record<CatalogCategory, CategoryVisual> = {
   Nutrilite: {
     icon: Pill,
     gradient: "from-emerald-500/25 to-emerald-500/0",
-    image: "/Product-Nutralite.png",
+    image: "/Nutralite double X.jpg",
     photoStyle: "card",
   },
   Artistry: {
     icon: Sparkles,
     gradient: "from-rose-500/25 to-rose-500/0",
-    image: "/Product-Artistry.png",
-    photoStyle: "card",
   },
   XS: {
     icon: Zap,
     gradient: "from-orange-500/25 to-orange-500/0",
-    image: "/Product-XS.png",
+    image: "/XS classic.jpg",
     photoStyle: "card",
   },
   "Personal Care": { icon: Droplet, gradient: "from-cyan-500/25 to-cyan-500/0" },
@@ -86,9 +84,23 @@ export const CATEGORY_VISUAL: Record<CatalogCategory, CategoryVisual> = {
   "Water & Air Treatment": {
     icon: Wind,
     gradient: "from-blue-500/25 to-blue-500/0",
-    image: "/Product-Air-and-water treatment.png",
+    image: "/espring under the counter.jpg",
     photoStyle: "card",
   },
+};
+
+// RGB triplets (not hex) so callers can drop them straight into an
+// `rgba(${color}, alpha)` string for a radial-gradient glow. Deliberately
+// separate from CATEGORY_VISUAL.gradient (a lighter Tailwind token used for
+// flat fills elsewhere) since this is tuned for a deep, saturated ambient
+// light look on near-black card backgrounds.
+export const CATEGORY_GLOW: Record<CatalogCategory, string> = {
+  Nutrilite: "16, 122, 87",
+  Artistry: "128, 22, 58",
+  XS: "191, 99, 20",
+  "Personal Care": "13, 129, 149",
+  "Home Care": "146, 96, 20",
+  "Water & Air Treatment": "22, 90, 158",
 };
 
 // Placeholder stock photos until real product photography is in. Cycled
@@ -434,8 +446,8 @@ export const catalog: CatalogProduct[] = [
     description: "Sleep-support capsules built on plant-based melatonin, 30 capsules per bottle.",
     hook: "A plant-based melatonin capsule for people who'd rather take a bedtime capsule than a gummy.",
     madeIn: "USA",
-    image: "/Nutralite sleep health.jpg",
-    photoStyle: "card",
+    image: "/Nutralite sleep health.png",
+    photoStyle: "transparent",
   },
   {
     slug: "nutrilite-twist-tubes-2go-strawberry-kiwi",
@@ -567,8 +579,8 @@ export const catalog: CatalogProduct[] = [
     description: "Volumizing, lengthening mascara in black.",
     hook: "Volumizing and lengthening in the same tube: no separate primer step required.",
     madeIn: "USA",
-    image: "/Artistry Mascara.jpg",
-    photoStyle: "card",
+    image: "/Artistry Mascara.png",
+    photoStyle: "transparent",
   },
   {
     slug: "artistry-go-vibrant-lipstick",
@@ -621,8 +633,8 @@ export const catalog: CatalogProduct[] = [
     description: "Pressed powder foundation with SPF 20, oil-control matte finish.",
     hook: "Pressed powder with SPF 20 built in: skips the separate sunscreen step most powders require.",
     madeIn: "USA",
-    image: "/Artistry powder foundation.jpg",
-    photoStyle: "card",
+    image: "/Artistry powder foundation.png",
+    photoStyle: "transparent",
   },
 
   // ---------- Personal Care ----------
@@ -641,8 +653,8 @@ export const catalog: CatalogProduct[] = [
     hook: "Built around a sunflower-seed water complex you won't find in a drugstore shampoo aisle.",
     videoId: "jB-GeJZ30EQ",
     madeIn: "USA",
-    image: "/Satnique Moisture Shampoo.jpg",
-    photoStyle: "card",
+    image: "/Satnique Moisture Shampoo.png",
+    photoStyle: "transparent",
   },
   {
     slug: "satinique-smooth-moisture-conditioner",
@@ -658,8 +670,8 @@ export const catalog: CatalogProduct[] = [
     description: "Moisturizing conditioner paired with the Smooth Moisture Shampoo.",
     hook: "Formulated as one half of a pair: not a generic conditioner bottled to match anything.",
     madeIn: "USA",
-    image: "/Satnique Moisture Conditioner.jpg",
-    photoStyle: "card",
+    image: "/Satnique Moisture Conditioner.png",
+    photoStyle: "transparent",
   },
   {
     slug: "glister-toothpaste",
