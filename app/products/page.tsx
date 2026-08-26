@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "XS energy drink flavors",
     "eSpring filters",
     "Atmosphere Sky filters",
-    "SA8 home care products",
+    "Home care products",
     "wellness product prices",
     "product ingredients list",
   ],

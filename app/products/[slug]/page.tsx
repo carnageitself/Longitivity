@@ -41,9 +41,17 @@ const KNOWN_BRANDS = [
   "Dish Drops",
 ].sort((a, b) => b.length - a.length);
 
+// SA8 and L.O.C. are no longer an official partner brand (dropped from the
+// roster), so still detect them by name but label the result generically.
+const BRAND_DISPLAY_OVERRIDE: Record<string, string> = {
+  SA8: "Home",
+  "L.O.C.": "Home",
+};
+
 function brandFor(product: CatalogProduct): string {
   const match = KNOWN_BRANDS.find((b) => product.name.toLowerCase().includes(b.toLowerCase()));
-  return match ?? SITE_NAME;
+  if (!match) return SITE_NAME;
+  return BRAND_DISPLAY_OVERRIDE[match] ?? match;
 }
 
 export async function generateMetadata({
