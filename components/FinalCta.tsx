@@ -1,47 +1,46 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import CategoryVisual from "@/components/CategoryVisual";
 
 export default function FinalCta() {
   return (
-    <section className="relative overflow-hidden border-t border-border bg-surface py-24">
+    <section className="relative overflow-hidden bg-black py-32 lg:py-44">
+      <Image
+        src="/longitivity-CTA.png"
+        alt=""
+        aria-hidden
+        fill
+        sizes="100vw"
+        quality={90}
+        className="object-contain"
+      />
+      <div aria-hidden className="absolute inset-0 bg-black/70" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-56 bg-linear-to-b from-black to-transparent" />
+      {/* Soft spotlight behind the text: a radial gradient fades to fully
+          transparent well within its own box, so there's no hard blur-edge
+          for the busy photo behind it to reveal. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-[-20%] left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-accent/15 blur-[110px]"
-      />
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+      >
+        <div
+          className="h-[70vh] w-[70vh] max-h-140 max-w-140 rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, color-mix(in srgb, var(--color-accent) 22%, transparent) 0%, color-mix(in srgb, var(--color-accent) 8%, transparent) 40%, transparent 72%)",
+          }}
+        />
+      </div>
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-2 lg:gap-12">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative order-2 mx-auto flex w-full max-w-xs items-center justify-center gap-6 sm:max-w-sm lg:order-1"
-        >
-          <motion.div
-            animate={{ y: [0, -14, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <CategoryVisual category="XS" width={140} height={140} rounded="rounded-3xl" />
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, -14, 0] }}
-            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <CategoryVisual category="Artistry" width={140} height={140} rounded="rounded-3xl" />
-          </motion.div>
-        </motion.div>
-
+      <div className="relative mx-auto max-w-3xl px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="order-1 flex flex-col items-center gap-6 text-center lg:order-2 lg:items-start lg:text-left"
+          className="flex flex-col items-center gap-6"
         >
           <h2 className="font-serif text-3xl font-medium tracking-tight sm:text-4xl">
             Not sure where to start?
@@ -50,7 +49,7 @@ export default function FinalCta() {
             Browse bundles built for your situation, or just send a message.
             I&apos;ll help you find the right fit.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 lg:justify-start">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <Link
               href="/for-you"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-85"
