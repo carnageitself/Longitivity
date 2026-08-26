@@ -1,14 +1,22 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useSyncExternalStore, type FormEvent } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, CheckCircle2, AlertCircle, X } from "lucide-react";
 import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { CONTACT } from "@/lib/site-config";
 import { CATEGORY_INFO } from "@/lib/catalog";
+import {
+  clearProductInquiries,
+  getProductInquiriesServerSnapshot,
+  getProductInquiriesSnapshot,
+  removeProductInquiry,
+  subscribeProductInquiries,
+  type ProductInquiry,
+} from "@/lib/productInquiry";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip } from "@/components/ui/tooltip-card";
 
@@ -16,8 +24,52 @@ const CATEGORIES = Object.keys(CATEGORY_INFO);
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+function mostCommonCategory(products: ProductInquiry[]): string {
+  const counts = new Map<string, number>();
+  for (const p of products) counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
+  let best = "";
+  let bestCount = 0;
+  for (const [category, count] of counts) {
+    if (count > bestCount) {
+      best = category;
+      bestCount = count;
+    }
+  }
+  return best;
+}
+
+function defaultMessage(products: ProductInquiry[]): string {
+  if (products.length === 0) return "";
+  const names = products.map((p) => p.name);
+  return `I'd like to ask about ${names.join(", ")}.`;
+}
+
 export default function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
+  const products = useSyncExternalStore(
+    subscribeProductInquiries,
+    getProductInquiriesSnapshot,
+    getProductInquiriesServerSnapshot,
+  );
+
+  const [interest, setInterest] = useState("");
+  const [message, setMessage] = useState("");
+  const [seeded, setSeeded] = useState(false);
+
+  // Seed the interest/message fields from the stored products the first
+  // time they arrive (they load asynchronously via useSyncExternalStore),
+  // without clobbering anything the user has already typed since. This
+  // mirrors React's documented "adjust state during render" escape hatch
+  // rather than a useEffect, since it only needs to happen during render.
+  if (!seeded && products.length > 0) {
+    setSeeded(true);
+    setInterest(mostCommonCategory(products));
+    setMessage(defaultMessage(products));
+  }
+
+  function handleRemoveProduct(slug: string) {
+    removeProductInquiry(slug);
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,6 +82,7 @@ export default function LeadForm() {
       phone: String(data.get("phone") ?? ""),
       interest: String(data.get("interest") ?? ""),
       message: String(data.get("message") ?? ""),
+      products,
       createdAt: serverTimestamp(),
     };
 
@@ -43,6 +96,9 @@ export default function LeadForm() {
       await addDoc(collection(db, "leads"), lead);
       setStatus("success");
       form.reset();
+      clearProductInquiries();
+      setInterest("");
+      setMessage("");
     } catch {
       setStatus("error");
     }
@@ -59,6 +115,30 @@ export default function LeadForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      {products.length > 0 && (
+        <LabelInputContainer>
+          <Label>Asking about</Label>
+          <div className="flex flex-wrap gap-2">
+            {products.map((p) => (
+              <span
+                key={p.slug}
+                className="flex items-center gap-1.5 rounded-full border border-border bg-surface pl-3 pr-2 py-1 text-xs font-medium"
+              >
+                {p.name}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveProduct(p.slug)}
+                  aria-label={`Remove ${p.name}`}
+                  className="rounded-full p-0.5 text-muted transition-colors hover:text-foreground"
+                >
+                  <X size={12} />
+                </button>
+              </span>
+            ))}
+          </div>
+        </LabelInputContainer>
+      )}
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <LabelInputContainer>
           <RequiredLabel htmlFor="name" hint="So I know who I'm following up with.">
@@ -83,16 +163,22 @@ export default function LeadForm() {
         </LabelInputContainer>
         <LabelInputContainer>
           <Label htmlFor="interest">What are you interested in?</Label>
-          <Select id="interest" name="interest" defaultValue="">
-            <option value="" disabled>
-              Select a category
-            </option>
-            {CATEGORIES.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-            <option value="Not sure yet">Not sure yet</option>
+          <Select
+            name="interest"
+            value={interest}
+            onValueChange={setInterest}
+          >
+            <SelectTrigger id="interest">
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent>
+              {CATEGORIES.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
+              <SelectItem value="Not sure yet">Not sure yet</SelectItem>
+            </SelectContent>
           </Select>
         </LabelInputContainer>
       </div>
@@ -103,6 +189,8 @@ export default function LeadForm() {
           id="message"
           name="message"
           rows={4}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           placeholder="Tell me a bit about what you're looking for..."
         />
       </LabelInputContainer>

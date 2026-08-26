@@ -5,6 +5,7 @@ import { CATEGORY_PLACEHOLDER_IMAGE, CATEGORY_VISUAL, catalog, type CatalogProdu
 import type { CompetitorMatch } from "@/lib/fullCompare";
 import { getReturnPolicy, getRetailerReturnPolicy } from "@/lib/site-config";
 import Carousel from "@/components/ui/carousel";
+import AskAboutProductButton from "@/components/AskAboutProductButton";
 
 const BADGE_STYLES: Record<string, string> = {
   Bestseller: "bg-accent text-accent-foreground",
@@ -225,12 +226,7 @@ export default function ProductDetail({
         )}
       </div>
 
-      <Link
-        href="/contact"
-        className="mt-12 inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-85"
-      >
-        Ask about this product
-      </Link>
+      <AskAboutProductButton slug={product.slug} name={product.name} category={product.category} />
     </div>
   );
 }
