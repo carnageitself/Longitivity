@@ -66,19 +66,19 @@ export const CATEGORY_VISUAL: Record<CatalogCategory, CategoryVisual> = {
   Nutrilite: {
     icon: Pill,
     gradient: "from-emerald-500/25 to-emerald-500/0",
-    image: "/Nutralite double X.jpg",
+    image: "/Product-Nutralite.png",
     photoStyle: "card",
   },
   Artistry: {
     icon: Sparkles,
     gradient: "from-rose-500/25 to-rose-500/0",
-    image: "/artistry.png",
+    image: "/Product-Artistry.png",
     photoStyle: "card",
   },
   XS: {
     icon: Zap,
     gradient: "from-orange-500/25 to-orange-500/0",
-    image: "/XS classic.jpg",
+    image: "/Product-XS.png",
     photoStyle: "card",
   },
   "Personal Care": { icon: Droplet, gradient: "from-cyan-500/25 to-cyan-500/0" },
@@ -86,7 +86,7 @@ export const CATEGORY_VISUAL: Record<CatalogCategory, CategoryVisual> = {
   "Water & Air Treatment": {
     icon: Wind,
     gradient: "from-blue-500/25 to-blue-500/0",
-    image: "/espring under the counter.jpg",
+    image: "/Product-Air-and-water treatment.png",
     photoStyle: "card",
   },
 };
@@ -519,6 +519,8 @@ export const catalog: CatalogProduct[] = [
     hook: "Built around ashwagandha and holy basil extracts: ingredients most drugstore serums have never touched.",
     videoId: "wrCgBjvd5eU",
     madeIn: "USA",
+    image: "/Artistry Defying Serum.jpg",
+    photoStyle: "card",
   },
   {
     slug: "artistry-hydrating-gel-cream",
@@ -534,6 +536,8 @@ export const catalog: CatalogProduct[] = [
     description: "Daily gel-cream moisturizer for normal-to-oily skin.",
     hook: "A gel-cream light enough for oily skin, built on a proprietary botanical blend that isn't fully published.",
     madeIn: "USA",
+    image: "/Artistry Hydrating Gel Cream.jpg",
+    photoStyle: "card",
   },
   {
     slug: "artistry-ideal-radiance-cc-cream",
@@ -549,6 +553,8 @@ export const catalog: CatalogProduct[] = [
     description: "Tinted CC cream with SPF 50 that evens tone and brightens skin.",
     hook: "SPF 50 and a stabilized vitamin-C derivative in one tinted cream: most CC creams only pick one.",
     madeIn: "USA",
+    image: "/Artistry Illuminating cc cream.jpg",
+    photoStyle: "card",
   },
   {
     slug: "artistry-signature-eyes-mascara",
@@ -561,6 +567,8 @@ export const catalog: CatalogProduct[] = [
     description: "Volumizing, lengthening mascara in black.",
     hook: "Volumizing and lengthening in the same tube: no separate primer step required.",
     madeIn: "USA",
+    image: "/Artistry Mascara.jpg",
+    photoStyle: "card",
   },
   {
     slug: "artistry-go-vibrant-lipstick",
@@ -577,6 +585,8 @@ export const catalog: CatalogProduct[] = [
     hook: "Uses a liquid-pigment base for color meant to feel weightless, not waxy.",
     badge: "New",
     madeIn: "USA",
+    image: "/Artistry Vibrant lipstick.jpg",
+    photoStyle: "card",
   },
   {
     slug: "artistry-men-balancing-hydrator",
@@ -611,6 +621,8 @@ export const catalog: CatalogProduct[] = [
     description: "Pressed powder foundation with SPF 20, oil-control matte finish.",
     hook: "Pressed powder with SPF 20 built in: skips the separate sunscreen step most powders require.",
     madeIn: "USA",
+    image: "/Artistry powder foundation.jpg",
+    photoStyle: "card",
   },
 
   // ---------- Personal Care ----------
@@ -629,6 +641,8 @@ export const catalog: CatalogProduct[] = [
     hook: "Built around a sunflower-seed water complex you won't find in a drugstore shampoo aisle.",
     videoId: "jB-GeJZ30EQ",
     madeIn: "USA",
+    image: "/Satnique Moisture Shampoo.jpg",
+    photoStyle: "card",
   },
   {
     slug: "satinique-smooth-moisture-conditioner",
@@ -644,6 +658,8 @@ export const catalog: CatalogProduct[] = [
     description: "Moisturizing conditioner paired with the Smooth Moisture Shampoo.",
     hook: "Formulated as one half of a pair: not a generic conditioner bottled to match anything.",
     madeIn: "USA",
+    image: "/Satnique Moisture Conditioner.jpg",
+    photoStyle: "card",
   },
   {
     slug: "glister-toothpaste",
@@ -662,6 +678,8 @@ export const catalog: CatalogProduct[] = [
     hook: "Its fluoride content is on file with the FDA's own public drug listing database: not just on the box.",
     videoId: "1yAZfkYcQpA",
     madeIn: "USA",
+    image: "/Glister Multi action Toothpaste.jpg",
+    photoStyle: "card",
   },
   {
     slug: "glister-oral-rinse",
@@ -677,6 +695,8 @@ export const catalog: CatalogProduct[] = [
     description: "Alcohol-free concentrated oral rinse that reduces plaque and freshens breath.",
     hook: "One small concentrate bottle stretches into about 100 rinses: no alcohol burn included.",
     madeIn: "USA",
+    image: "/Glister oral rinse.jpg",
+    photoStyle: "card",
   },
   {
     slug: "gh-protect-deodorant-roll-on",
@@ -694,6 +714,8 @@ export const catalog: CatalogProduct[] = [
     description: "Roll-on antiperspirant/deodorant rated for up to 48-hour protection.",
     hook: "Uses the same Nutrilite-certified green tea extract as the supplement line: not an unrelated formula slapped on a new label.",
     madeIn: "USA",
+    image: "/G&H deodrant roll on.jpg",
+    photoStyle: "card",
   },
   {
     slug: "gh-protect-plus-deodorant",
@@ -706,6 +728,8 @@ export const catalog: CatalogProduct[] = [
     description: "Aluminum-free deodorant stick for daily use, rated 24-hour+ protection.",
     hook: "Skips aluminum entirely without giving up all-day odor protection.",
     madeIn: "USA",
+    image: "/G&H aluminium free deodrant.jpg",
+    photoStyle: "card",
   },
   {
     slug: "gh-nourish-body-wash",
@@ -722,6 +746,8 @@ export const catalog: CatalogProduct[] = [
     description: "Moisturizing, sulfate-free body wash for dry skin.",
     hook: "Gentle enough to double as a face wash: most body washes won't make that claim.",
     madeIn: "USA",
+    image: "/G&H body wash.jpg",
+    photoStyle: "card",
   },
 
   // ---------- XS ----------
