@@ -1,7 +1,5 @@
 export type Partner = {
   name: string;
-  logo?: string;
-  logoWidth?: number;
   description: string;
   // A single standout credential — the kind of thing you'd put on a plaque,
   // not just another feature bullet. Kept separate from `points` so it can
@@ -11,8 +9,8 @@ export type Partner = {
 };
 
 // Brand-level data: distinct from CATEGORY_INFO in catalog.ts, since brands
-// like Satinique and SA8/L.O.C. sit inside a broader catalog category rather
-// than mapping to one 1:1.
+// like Satinique sit inside a broader catalog category rather than mapping
+// to one 1:1.
 export const partners: Partner[] = [
   {
     name: "Nutrilite",
@@ -60,12 +58,39 @@ export const partners: Partner[] = [
     ],
   },
   {
-    name: "SA8 / L.O.C.",
-    description: "Concentrated home care formulas that outlast the bottle they come in.",
-    achievement: "SA8 was one of the first phosphate-free laundry detergents sold in the U.S., years ahead of regulation.",
+    name: "G&H",
+    description: "Plant-based body and hand care, formulated for daily use without harsh sulfates.",
+    achievement: "Formulated without parabens, phthalates, or synthetic dyes.",
     points: [
-      "A little goes further than the bottle suggests.",
-      "EPA Safer Choice-recognized where it matters most.",
+      "Body wash, hand soap, and lotion built around plant-derived cleansers.",
+      "Dermatologist-tested, including formulas for sensitive skin.",
+    ],
+  },
+  {
+    name: "Glister",
+    description: "A complete oral care system built around fluoride toothpaste and daily mouthwash.",
+    achievement: "Multi-Action Fluoride Toothpaste, formulated to fight cavities and freshen breath in one step.",
+    points: [
+      "Toothpaste, mouthwash, and toothbrush designed to work as one routine.",
+      "Sold internationally as part of Amway's global personal care line.",
+    ],
+  },
+  {
+    name: "iCook",
+    description: "Five-ply stainless steel cookware built to outlast a lifetime of daily cooking.",
+    achievement: "Backed by a limited lifetime warranty on the full cookware line.",
+    points: [
+      "Five-ply construction for even heat distribution, not just a nonstick coating.",
+      "Oven-safe, induction-compatible, and dishwasher-safe.",
+    ],
+  },
+  {
+    name: "Atmosphere",
+    description: "Whole-room air treatment systems built around HEPA and carbon filtration.",
+    achievement: "Multi-stage filtration designed to capture common allergens, odors, and airborne particles.",
+    points: [
+      "HEPA filter captures fine particles; carbon filter targets odors and VOCs.",
+      "Quiet enough to run continuously in a bedroom or living room.",
     ],
   },
 ];

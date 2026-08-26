@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { Award, Check } from "lucide-react";
@@ -35,19 +34,7 @@ export default function PartnersGrid() {
             className="flex flex-col rounded-2xl border border-border bg-surface p-8"
           >
             <div className="mb-6 flex h-10 items-center">
-              {partner.logo ? (
-                <div className="relative h-full" style={{ width: partner.logoWidth ?? 130 }}>
-                  <Image
-                    src={partner.logo}
-                    alt={partner.name}
-                    fill
-                    sizes={`${partner.logoWidth ?? 130}px`}
-                    className="object-contain object-left filter-[brightness(0)_invert(1)]"
-                  />
-                </div>
-              ) : (
-                <span className="text-2xl font-semibold tracking-tight">{partner.name}</span>
-              )}
+              <span className="text-2xl font-semibold tracking-tight">{partner.name}</span>
             </div>
 
             <p className="text-sm text-muted">{partner.description}</p>

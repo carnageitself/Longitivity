@@ -5,7 +5,7 @@ import PartnersGrid from "@/components/PartnersGrid";
 import { SITE_NAME } from "@/lib/site-config";
 
 const DESCRIPTION =
-  "The brands behind every product: Nutrilite, Artistry, Satinique, XS, eSpring, and SA8/L.O.C.";
+  "The brands behind every product: Nutrilite, Artistry, Satinique, XS, eSpring, G&H, Glister, iCook, and Atmosphere.";
 
 export const metadata: Metadata = {
   title: `Brand Partners | ${SITE_NAME}`,
@@ -17,7 +17,9 @@ export const metadata: Metadata = {
     "Glister brand",
     "XS energy brand",
     "eSpring brand",
-    "SA8 L.O.C. home care brand",
+    "G&H brand",
+    "iCook cookware",
+    "Atmosphere air treatment brand",
   ],
   alternates: { canonical: "/partners" },
   openGraph: {
@@ -42,7 +44,7 @@ export default function PartnersPage() {
               Who&apos;s behind the products
             </p>
             <h1 className="max-w-2xl font-serif text-4xl font-medium tracking-tight sm:text-5xl">
-              Six brands. One roof.
+              Nine brands. One roof.
             </h1>
             <p className="mt-5 max-w-xl text-muted">
               Every product sold here comes from one of these established
