@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import { Play } from "lucide-react";
 import { catalog, CATEGORY_GLOW, CATEGORY_VISUAL } from "@/lib/catalog";
-import CategoryVisual from "@/components/CategoryVisual";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const BADGE_STYLES: Record<string, string> = {
@@ -67,6 +67,9 @@ export default function FeaturedProducts() {
         {FEATURED.map((product) => {
           const visual = CATEGORY_VISUAL[product.category];
           const glow = CATEGORY_GLOW[product.category];
+          const Icon = visual.icon;
+          const image = product.image ?? visual.image;
+          const photoStyle = product.image ? product.photoStyle : visual.photoStyle;
 
           return (
             <motion.div key={product.slug} variants={item}>
@@ -88,23 +91,26 @@ export default function FeaturedProducts() {
                       }}
                     />
 
-                    <motion.div
-                      className="relative z-10"
-                      animate={{ y: [0, -6, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      whileHover={{ rotate: [-1, 1.5, -1], scale: 1.04 }}
-                    >
-                      <CategoryVisual
-                        category={product.category}
-                        image={product.image}
-                        photoStyle={product.photoStyle}
+                    {image ? (
+                      <Image
+                        src={image}
                         alt={product.name}
-                        width={product.image ?? visual.image ? 112 : 80}
-                        height={product.image ?? visual.image ? 112 : 96}
-                        iconSize={30}
-                        rounded="rounded-2xl"
+                        fill
+                        sizes="400px"
+                        style={
+                          photoStyle === "card"
+                            ? {
+                                objectFit: "contain",
+                                maskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+                                WebkitMaskImage: "radial-gradient(ellipse 60% 60% at 50% 46%, black 45%, transparent 88%)",
+                              }
+                            : { objectFit: "contain" }
+                        }
+                        className={photoStyle === "card" ? "p-6" : "p-5 drop-shadow-2xl"}
                       />
-                    </motion.div>
+                    ) : (
+                      <Icon size={48} className="relative z-10 text-foreground/70" strokeWidth={1.25} />
+                    )}
 
                     {product.badge && (
                       <span
