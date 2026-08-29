@@ -14,12 +14,12 @@ export const CONTACT = {
 // once opened, even inside their general return window).
 const HYGIENE_EXCLUDED: CatalogCategory[] = ["Nutrilite", "Artistry", "Personal Care", "XS"];
 
-// Standard customer satisfaction guarantee, processed directly through me
-// (refund / exchange / credit), not a corporate return line. Water & Air
-// Treatment systems get a shorter window than everything else.
+// Standard customer satisfaction guarantee, processed directly (refund /
+// exchange / credit), not a corporate return line. Water & Air Treatment
+// systems get a shorter window than everything else.
 export function getReturnPolicy(category: CatalogCategory): string {
   const window = category === "Water & Air Treatment" ? "4 months" : "6 months";
-  return `100% satisfaction guarantee: return within ${window} through me for a refund, exchange, or credit.`;
+  return `100% satisfaction guarantee: return within ${window} for a refund, exchange, or credit.`;
 }
 
 // Retailer return policy, tailored to whether this specific product's
