@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CatalogBrowser from "@/components/CatalogBrowser";
@@ -77,7 +78,9 @@ export default function ProductsPage() {
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-14">
-          <CatalogBrowser />
+          <Suspense fallback={null}>
+            <CatalogBrowser />
+          </Suspense>
         </section>
       </main>
       <Footer />

@@ -56,7 +56,7 @@ export default function ArtistrySpotlight() {
             anywhere else it&apos;s sold.
           </p>
           <Link
-            href="/products"
+            href="/products?category=Artistry"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-85"
           >
             Shop Artistry

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { catalog, CATEGORY_INFO, CATEGORY_VISUAL, type CatalogCategory } from "@/lib/catalog";
 import ProductCard from "@/components/ProductCard";
@@ -20,8 +21,16 @@ const SEARCH_PLACEHOLDERS = [
   "Search Glister oral care...",
 ];
 
+function isCatalogCategory(value: string | null): value is CatalogCategory {
+  return CATEGORIES.includes(value as CatalogCategory);
+}
+
 export default function CatalogBrowser() {
-  const [activeCategory, setActiveCategory] = useState<CatalogCategory | "All">("All");
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
+  const [activeCategory, setActiveCategory] = useState<CatalogCategory | "All">(
+    isCatalogCategory(categoryParam) ? categoryParam : "All",
+  );
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {

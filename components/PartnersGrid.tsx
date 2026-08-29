@@ -54,10 +54,10 @@ export default function PartnersGrid() {
             </ul>
 
             <Link
-              href="/products"
+              href={partner.category ? `/products?category=${encodeURIComponent(partner.category)}` : "/products"}
               className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent underline-offset-4 hover:underline"
             >
-              Explore products
+              Explore {partner.name}
             </Link>
           </motion.div>
         ))}

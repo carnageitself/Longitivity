@@ -34,7 +34,7 @@ export default function ArtistryNYFWCta() {
             a consultant, not a department-store markup.
           </p>
           <Link
-            href="/products"
+            href="/products?category=Artistry"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black transition-opacity hover:opacity-85"
           >
             Shop Artistry

@@ -172,7 +172,7 @@ function Chapter({
           ))}
         </ul>
         <Link
-          href="/products"
+          href={`/products?category=${encodeURIComponent(category)}`}
           className="pointer-events-auto mt-6 inline-flex items-center gap-2 text-base font-medium text-accent underline-offset-4 hover:underline"
         >
           {count} products in this line

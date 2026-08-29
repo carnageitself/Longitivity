@@ -1,3 +1,5 @@
+import type { CatalogCategory } from "@/lib/catalog";
+
 export type Partner = {
   name: string;
   description: string;
@@ -6,6 +8,10 @@ export type Partner = {
   // get its own visual treatment.
   achievement: string;
   points: string[];
+  // Which catalog category "Explore products" should deep-link to. Left
+  // undefined for brands with no catalog products yet (e.g. iCook), so the
+  // link falls back to the unfiltered catalog instead of an empty result.
+  category?: CatalogCategory;
 };
 
 // Brand-level data: distinct from CATEGORY_INFO in catalog.ts, since brands
@@ -20,6 +26,7 @@ export const partners: Partner[] = [
       "Grown and traced on dedicated farms, not sourced from an anonymous factory.",
       "22 plant concentrates in every serving of the flagship multivitamin.",
     ],
+    category: "Nutrilite",
   },
   {
     name: "Artistry",
@@ -29,6 +36,7 @@ export const partners: Partner[] = [
       "Built on real actives, like ashwagandha and holy basil, not filler.",
       "The same global formulas sold at department-store counters, priced the same.",
     ],
+    category: "Artistry",
   },
   {
     name: "Satinique",
@@ -38,6 +46,7 @@ export const partners: Partner[] = [
       "A sunflower-seed water complex you won't find in a drugstore shampoo aisle.",
       "Formulated for daily use on dry, unruly hair.",
     ],
+    category: "Personal Care",
   },
   {
     name: "XS",
@@ -47,6 +56,7 @@ export const partners: Partner[] = [
       "Zero sugar, 114 mg of caffeine per can: a real lift without the crash.",
       "Six flavors, from classic citrus to sparkling pink grapefruit.",
     ],
+    category: "XS",
   },
   {
     name: "eSpring",
@@ -56,6 +66,7 @@ export const partners: Partner[] = [
       "Filters down to 0.2 microns while leaving beneficial minerals untouched.",
       "Independently tested against 170+ contaminants.",
     ],
+    category: "Water & Air Treatment",
   },
   {
     name: "G&H",
@@ -65,6 +76,7 @@ export const partners: Partner[] = [
       "Body wash, hand soap, and lotion built around plant-derived cleansers.",
       "Dermatologist-tested, including formulas for sensitive skin.",
     ],
+    category: "Personal Care",
   },
   {
     name: "Glister",
@@ -74,6 +86,7 @@ export const partners: Partner[] = [
       "Toothpaste, mouthwash, and toothbrush designed to work as one routine.",
       "Sold internationally as part of Amway's global personal care line.",
     ],
+    category: "Personal Care",
   },
   {
     name: "iCook",
@@ -92,5 +105,6 @@ export const partners: Partner[] = [
       "HEPA filter captures fine particles; carbon filter targets odors and VOCs.",
       "Quiet enough to run continuously in a bedroom or living room.",
     ],
+    category: "Water & Air Treatment",
   },
 ];
