@@ -758,8 +758,8 @@ export const catalog: CatalogProduct[] = [
     description: "Moisturizing, sulfate-free body wash for dry skin.",
     hook: "Gentle enough to double as a face wash: most body washes won't make that claim.",
     madeIn: "USA",
-    image: "/G&H body wash.jpg",
-    photoStyle: "card",
+    image: "/G&H body wash.png",
+    photoStyle: "transparent",
   },
 
   // ---------- XS ----------
