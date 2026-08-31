@@ -10,35 +10,37 @@ export const audiences: Audience[] = [
   {
     slug: "students",
     title: "Students",
-    tagline: "Fuel your semester",
+    tagline: "Exams coming up?",
     description:
-      "Budget-friendly energy, focus, and skincare basics built around long study sessions, tight schedules, and even tighter budgets.",
+      "Feel energetic day and night through finals, then actually fall asleep once they're over. Built around what a real semester looks like: late study nights, meals skipped between classes, and a sleep schedule that falls apart around exams.",
     picks: [
-      { name: "XS Energy Drink", brand: "XS", note: "A cleaner-label boost for late study nights" },
-      { name: "All Plant Protein Powder", brand: "Nutrilite", note: "Affordable protein between dining-hall meals" },
-      { name: "Skin Nutrition Starter Set", brand: "Artistry", note: "A simple 3-step routine that travels well" },
+      { name: "XS Elite Focus: Peach Mango", brand: "XS", note: "Caffeine built for a study session, not just a sugar rush" },
+      { name: "Wellness Bar, Nutty Dark Chocolate", brand: "Nutrilite", note: "A real meal stand-in between back-to-back classes" },
+      { name: "Organics Plant Protein Powder", brand: "Nutrilite", note: "Blend it in a dorm-room shaker when dining hall hours don't line up" },
+      { name: "Sweet Dreams Sleep Gummies", brand: "Nutrilite", note: "Melatonin and passionflower for actually sleeping after a late study night" },
     ],
   },
   {
     slug: "professionals",
     title: "Working Professionals",
-    tagline: "Perform at your best",
+    tagline: "Feeling sleepy after lunch?",
     description:
-      "Daily wellness, sustained energy, and polished grooming for people who need to show up sharp, every day, on a packed calendar.",
+      "Show up sharp for back-to-back meetings without another coffee wearing off by 3pm. Daily wellness, sustained energy, and polished grooming for people whose calendar doesn't let up.",
     picks: [
       { name: "Double X Multivitamin", brand: "Nutrilite", note: "One daily habit to cover nutritional gaps" },
-      { name: "XS Energy Drink", brand: "XS", note: "A mid-afternoon reset without the crash" },
-      { name: "Skin Nutrition Defying Serum", brand: "Artistry", note: "Grooming that holds up on camera and in meetings" },
+      { name: "XS Energy Drink", brand: "XS", note: "A mid-afternoon reset without the crash before your next meeting" },
+      { name: "Sweet Dreams Sleep Gummies", brand: "Nutrilite", note: "For actually winding down after a day that didn't stop at 5pm" },
+      { name: "Skin Nutrition Defying Serum", brand: "Artistry", note: "Grooming that holds up on video calls and in person" },
     ],
   },
   {
     slug: "gym",
     title: "Gym & Fitness",
-    tagline: "Fuel the reps, not just the goals",
+    tagline: "Want to build a lean, strong body?",
     description:
-      "Protein, energy, and recovery basics built around actual training days, not influencer marketing.",
+      "Protein, energy, and recovery built around actual training days: what gets you through a heavy set and the soreness the next morning, not influencer marketing.",
     picks: [
-      { name: "All Plant Protein Powder", brand: "Nutrilite", note: "Tri-blend protein for post-workout recovery" },
+      { name: "Organics Plant Protein Powder", brand: "Nutrilite", note: "USDA-organic protein for post-workout recovery, no synthetic fillers" },
       { name: "XS Energy Drink", brand: "XS", note: "Pre-workout energy without the sugar crash" },
       { name: "Omega", brand: "Nutrilite", note: "Supports joint and heart health on heavy training days" },
     ],
@@ -46,25 +48,25 @@ export const audiences: Audience[] = [
   {
     slug: "women",
     title: "Women",
-    tagline: "Skincare and wellness, dialed in",
+    tagline: "Skin not bouncing back like it used to?",
     description:
-      "Prestige skincare paired with the daily supplements women reach for most: bone health, hydration, and a routine that actually holds up.",
+      "Prestige skincare that targets what's actually changing, paired with the daily supplements women reach for most: bone health, hydration, and a routine built to hold up.",
     picks: [
       { name: "Skin Nutrition Defying Serum", brand: "Artistry", note: "Targets fine lines, pores, and elasticity" },
-      { name: "Cal Mag D", brand: "Nutrilite", note: "Calcium, magnesium, and D3 for long-term bone health" },
+      { name: "Cal Mag D", brand: "Nutrilite", note: "Bone health that matters well before your 40s, not just after" },
       { name: "g&h Nourish Body Wash", brand: "g&h", note: "Sulfate-free, gentle enough to double as a face wash" },
     ],
   },
   {
     slug: "families",
     title: "Families",
-    tagline: "Everyday essentials, for everyone",
+    tagline: "Worried about what's really in your tap water?",
     description:
-      "Home care and clean water for the whole household, plus family-size wellness: the recurring essentials families restock every month.",
+      "Certified clean water and home care for the whole household, plus the family-size wellness essentials you're already restocking every month, without the guesswork.",
     picks: [
-      { name: "L.O.C. Multi-Purpose Cleaner", brand: "SA8 / L.O.C.", note: "One concentrate, dozens of household uses" },
-      { name: "eSpring Water Purifier", brand: "eSpring", note: "Certified clean drinking water at the tap" },
-      { name: "Double X Multivitamin (Family Pack)", brand: "Nutrilite", note: "Daily nutrition for the whole household" },
+      { name: "Dish Drops Dishwashing Liquid", brand: "Amway Home", note: "One concentrated bottle rated to outlast several big-box refills" },
+      { name: "eSpring Water Treatment System", brand: "eSpring", note: "Certified clean drinking water at the tap, for everyone in the house" },
+      { name: "Double X Multivitamin", brand: "Nutrilite", note: "Daily nutrition for the whole household, kids included" },
     ],
   },
 ];

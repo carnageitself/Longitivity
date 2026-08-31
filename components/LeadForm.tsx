@@ -14,6 +14,12 @@ import {
   subscribeProductInquiries,
   type ProductInquiry,
 } from "@/lib/productInquiry";
+import {
+  clearBundleInquiry,
+  getBundleInquiryServerSnapshot,
+  getBundleInquirySnapshot,
+  subscribeBundleInquiry,
+} from "@/lib/bundleInquiry";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
@@ -38,10 +44,15 @@ function mostCommonCategory(products: ProductInquiry[]): string {
   return best;
 }
 
-function defaultMessage(products: ProductInquiry[]): string {
-  if (products.length === 0) return "";
-  const names = products.map((p) => p.name);
-  return `I'd like to ask about ${names.join(", ")}.`;
+function defaultMessage(products: ProductInquiry[], bundle: string | null): string {
+  const parts: string[] = [];
+  if (products.length > 0) {
+    parts.push(`I'd like to ask about ${products.map((p) => p.name).join(", ")}.`);
+  }
+  if (bundle) {
+    parts.push(`I'm interested in the "${bundle}" bundle.`);
+  }
+  return parts.join(" ");
 }
 
 export default function LeadForm() {
@@ -51,20 +62,27 @@ export default function LeadForm() {
     getProductInquiriesSnapshot,
     getProductInquiriesServerSnapshot,
   );
+  const bundle = useSyncExternalStore(
+    subscribeBundleInquiry,
+    getBundleInquirySnapshot,
+    getBundleInquiryServerSnapshot,
+  );
 
   const [interest, setInterest] = useState("");
   const [message, setMessage] = useState("");
   const [seeded, setSeeded] = useState(false);
 
-  // Seed the interest/message fields from the stored products the first
-  // time they arrive (they load asynchronously via useSyncExternalStore),
-  // without clobbering anything the user has already typed since. This
-  // mirrors React's documented "adjust state during render" escape hatch
-  // rather than a useEffect, since it only needs to happen during render.
-  if (!seeded && products.length > 0) {
+  // Seed the interest/message fields from the stored products/bundle the
+  // first time they arrive (they load asynchronously via
+  // useSyncExternalStore), without clobbering anything the user has already
+  // typed since. This mirrors React's documented "adjust state during
+  // render" escape hatch rather than a useEffect, since it only needs to
+  // happen during render.
+  if (!seeded && (products.length > 0 || bundle)) {
     setSeeded(true);
-    setInterest(mostCommonCategory(products));
-    setMessage(defaultMessage(products));
+    if (bundle) setInterest("Bundle");
+    else if (products.length > 0) setInterest(mostCommonCategory(products));
+    setMessage(defaultMessage(products, bundle));
   }
 
   function handleRemoveProduct(slug: string) {
@@ -83,6 +101,7 @@ export default function LeadForm() {
       interest: String(data.get("interest") ?? ""),
       message: String(data.get("message") ?? ""),
       products,
+      bundle,
       createdAt: serverTimestamp(),
     };
 
@@ -97,6 +116,7 @@ export default function LeadForm() {
       setStatus("success");
       form.reset();
       clearProductInquiries();
+      clearBundleInquiry();
       setInterest("");
       setMessage("");
     } catch {
@@ -108,14 +128,14 @@ export default function LeadForm() {
     return (
       <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-surface p-10 text-center">
         <CheckCircle2 size={32} className="text-accent" />
-        <p className="font-medium">Thanks. I&apos;ll be in touch shortly.</p>
+        <p className="font-medium">Thanks. Your account executive will be in touch shortly.</p>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      {products.length > 0 && (
+      {(products.length > 0 || bundle) && (
         <LabelInputContainer>
           <Label>Asking about</Label>
           <div className="flex flex-wrap gap-2">
@@ -135,6 +155,19 @@ export default function LeadForm() {
                 </button>
               </span>
             ))}
+            {bundle && (
+              <span className="flex items-center gap-1.5 rounded-full border border-border bg-surface pl-3 pr-2 py-1 text-xs font-medium">
+                {bundle} bundle
+                <button
+                  type="button"
+                  onClick={() => clearBundleInquiry()}
+                  aria-label={`Remove ${bundle} bundle`}
+                  className="rounded-full p-0.5 text-muted transition-colors hover:text-foreground"
+                >
+                  <X size={12} />
+                </button>
+              </span>
+            )}
           </div>
         </LabelInputContainer>
       )}
@@ -149,7 +182,7 @@ export default function LeadForm() {
         <LabelInputContainer>
           <RequiredLabel
             htmlFor="email"
-            hint="This is where I'll send your pricing and comparison. No spam, just this reply."
+            hint="This is where your account executive will send pricing and next steps. No spam, just this reply."
           >
             Email
           </RequiredLabel>
@@ -177,6 +210,7 @@ export default function LeadForm() {
                   {category}
                 </SelectItem>
               ))}
+              <SelectItem value="Bundle">Bundle</SelectItem>
               <SelectItem value="Not sure yet">Not sure yet</SelectItem>
             </SelectContent>
           </Select>
@@ -191,7 +225,7 @@ export default function LeadForm() {
           rows={4}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Tell me a bit about what you're looking for..."
+          placeholder="Tell us a bit about what you're looking for..."
         />
       </LabelInputContainer>
 
@@ -199,7 +233,7 @@ export default function LeadForm() {
         <div className="flex items-start gap-2 rounded-lg border border-red-900/50 bg-red-950/40 p-3 text-sm text-red-300">
           <AlertCircle size={16} className="mt-0.5 shrink-0" />
           <p>
-            Couldn&apos;t send that automatically. Email me directly at{" "}
+            Couldn&apos;t send that automatically. Email your account executive directly at{" "}
             <a href={`mailto:${CONTACT.email}`} className="font-medium underline">
               {CONTACT.email}
             </a>{" "}

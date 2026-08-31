@@ -24,7 +24,7 @@ const NAV_COLUMNS: { heading: string; links: { href: string; label: string }[] }
 export default function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="mx-20 py-16">
+      <div className="mx-6 py-16 sm:mx-12 lg:mx-20">
         <div className="grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="col-span-2 max-w-sm lg:col-span-1">
             <BrandSparkles />
@@ -62,7 +62,7 @@ export default function Footer() {
                   className="flex items-center gap-2 text-sm text-muted transition-colors hover:text-foreground"
                 >
                   <Mail size={14} className="shrink-0 text-accent" />
-                  <span className="truncate">{CONTACT.email}</span>
+                  <span className="break-all">{CONTACT.email}</span>
                 </a>
               </li>
             </ul>
@@ -71,7 +71,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-border">
-        <div className="mx-20 flex flex-col items-center gap-4 py-8 sm:flex-row sm:justify-between">
+        <div className="mx-6 flex flex-col items-center gap-4 py-8 sm:mx-12 sm:flex-row sm:justify-between lg:mx-20">
           <p className="text-xs text-muted">
             © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
           </p>

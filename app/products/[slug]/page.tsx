@@ -25,7 +25,6 @@ function parsePrice(product: CatalogProduct): number | undefined {
 // and generic house items (bleach, scouring pads, etc.) fall back to the
 // storefront name rather than a nonsense guess from the first word.
 const KNOWN_BRANDS = [
-  "n* by Nutrilite",
   "Nutrilite",
   "Artistry",
   "Satinique",
@@ -35,23 +34,13 @@ const KNOWN_BRANDS = [
   "Atmosphere Sky",
   "eSpring",
   "XS",
-  "SA8",
-  "L.O.C.",
   "Pursue",
   "Dish Drops",
 ].sort((a, b) => b.length - a.length);
 
-// SA8 and L.O.C. are no longer an official partner brand (dropped from the
-// roster), so still detect them by name but label the result generically.
-const BRAND_DISPLAY_OVERRIDE: Record<string, string> = {
-  SA8: "Home",
-  "L.O.C.": "Home",
-};
-
 function brandFor(product: CatalogProduct): string {
   const match = KNOWN_BRANDS.find((b) => product.name.toLowerCase().includes(b.toLowerCase()));
-  if (!match) return SITE_NAME;
-  return BRAND_DISPLAY_OVERRIDE[match] ?? match;
+  return match ?? SITE_NAME;
 }
 
 export async function generateMetadata({

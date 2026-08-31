@@ -94,9 +94,6 @@ export default function ProductDetail({
 
         <div className="shrink-0 sm:text-right">
           <span className="text-2xl font-semibold tracking-tight">{product.price}</span>
-          {product.priceStatus === "approx" && (
-            <p className="text-xs text-muted">estimated, confirm before purchase</p>
-          )}
           {product.priceStatus === "on-request" && (
             <p className="text-xs text-muted">not publicly listed, ask for current price</p>
           )}

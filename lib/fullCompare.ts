@@ -378,26 +378,6 @@ export const fullCompare: FullComparison[] = [
       },
     ],
   },
-  {
-    slug: "xs-creatine-plus",
-    competitors: [
-      {
-        name: "Optimum Nutrition Micronized Creatine Monohydrate",
-        retailer: "Amazon",
-        price: "~$20-26 / 120 servings",
-        difference: "Just creatine monohydrate on its own, with no added calcium HMB or electrolytes like XS Creatine+ includes.",
-        madeIn: "USA",
-      },
-      {
-        name: "MuscleTech Platinum 100% Creatine",
-        retailer: "Amazon",
-        price: "~$23 / 80 servings",
-        difference: "Also a single-ingredient creatine monohydrate, cheaper per serving, but without the calcium HMB or electrolyte blend XS Creatine+ adds.",
-        madeIn: "USA",
-      },
-    ],
-  },
-
   // ---------- Personal Care ----------
   {
     slug: "satinique-smooth-moisture-shampoo",
@@ -528,63 +508,6 @@ export const fullCompare: FullComparison[] = [
 
   // ---------- Home Care ----------
   {
-    slug: "sa8-powder-detergent",
-    competitors: [
-      {
-        name: "Tide Original Powder",
-        retailer: "Walmart",
-        price: "~$20-23",
-        difference: "A standard-strength, higher-sudsing powder that needs correct dosing in HE machines, versus SA8's low-suds formula built to rinse clean in any washer.",
-        madeIn: "USA",
-      },
-      {
-        name: "Seventh Generation Powder",
-        retailer: "Amazon",
-        price: "Not publicly confirmed",
-        difference: "Independently certified by the EPA as environmentally friendly, backing up its green claims the way SA8's own claims aren't officially certified.",
-        madeIn: "Not publicly confirmed",
-      },
-    ],
-  },
-  {
-    slug: "sa8-liquid-detergent",
-    competitors: [
-      {
-        name: "Persil ProClean",
-        retailer: "Walmart",
-        price: "~$0.10-0.15 / load",
-        difference: "Also a concentrated detergent, but doesn't carry an official eco-friendly certification the way SA8 markets itself.",
-        madeIn: "USA",
-      },
-      {
-        name: "Seventh Generation Concentrated Free & Clear",
-        retailer: "Amazon",
-        price: "~$0.10-0.15 / load range",
-        difference: "Has an official EPA eco-certification backing up its green claims, which SA8 doesn't have for this specific product.",
-        madeIn: "Not publicly confirmed",
-      },
-    ],
-  },
-  {
-    slug: "loc-multi-purpose-cleaner",
-    competitors: [
-      {
-        name: "Method All-Purpose Cleaner (ready-to-use spray)",
-        retailer: "Walmart",
-        price: "~$4.28-4.63",
-        difference: "Ready to spray right out of the bottle, but you're paying for a lot of water since it isn't a concentrate like L.O.C.",
-        madeIn: "USA",
-      },
-      {
-        name: "Mrs. Meyer's Multi-Surface Concentrate",
-        retailer: "Amazon",
-        price: "Not publicly confirmed",
-        difference: "Also a concentrate you dilute yourself, but L.O.C. is designed to stretch about 4 times further per bottle.",
-        madeIn: "Not publicly confirmed (conflicting USA/UK listings)",
-      },
-    ],
-  },
-  {
     slug: "dish-drops",
     competitors: [
       {
@@ -638,25 +561,6 @@ export const fullCompare: FullComparison[] = [
         price: "~$3.97-9.36",
         difference: "Cleans using foaming bubbles instead of the scale-dissolving ingredient (citric acid) in this version.",
         madeIn: "Not publicly confirmed",
-      },
-    ],
-  },
-  {
-    slug: "sa8-prewash-spray",
-    competitors: [
-      {
-        name: "Shout Advanced Stain Lifting Foam Aerosol",
-        retailer: "Walmart",
-        price: "~$7 / can",
-        difference: "Works best on fresh, recent stains rather than the old, already-set-in stains SA8's spray is built for.",
-        madeIn: "Not publicly confirmed",
-      },
-      {
-        name: "OxiClean Max Force Spray",
-        retailer: "Walmart",
-        price: "~$3.32-4.67 / can",
-        difference: "Uses an oxygen-based stain remover in a squeeze/pump bottle, not a pressurized spray can like SA8's.",
-        madeIn: "USA",
       },
     ],
   },

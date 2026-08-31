@@ -86,14 +86,11 @@ export default function Hero() {
   // Scroll-driven opacity for these layers is applied by writing directly to
   // the DOM in the scroll listener below (see the useMotionValueEvent call),
   // not via React state — that keeps scrolling perfectly smooth by avoiding a
-  // re-render of this whole tree on every scroll tick. The whole scroll-scrub
-  // sequence (canvas, captions, CTA) is desktop-only; on mobile these refs
-  // simply never get written to, so the hero stays at its resting state.
+  // re-render of this whole tree on every scroll tick.
   const textLayerRef = useRef<HTMLDivElement>(null);
   const bottlesLayerRef = useRef<HTMLDivElement>(null);
   const canvasLayerRef = useRef<HTMLDivElement>(null);
   const particleLayerRef = useRef<HTMLDivElement>(null);
-  const isDesktopRef = useRef(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -112,16 +109,6 @@ export default function Hero() {
     x.set(0);
     y.set(0);
   }
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const update = () => {
-      isDesktopRef.current = mq.matches;
-    };
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -166,13 +153,10 @@ export default function Hero() {
   }
 
   useMotionValueEvent(frameFloat, "change", (latest) => {
-    if (!isDesktopRef.current) return;
     draw(Math.round(latest));
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (!isDesktopRef.current) return;
-
     const t = Math.min(1, Math.max(0, latest / CROSSFADE_END));
     if (textLayerRef.current) textLayerRef.current.style.opacity = String(1 - t);
     if (bottlesLayerRef.current) bottlesLayerRef.current.style.opacity = String(1 - t);
@@ -193,42 +177,42 @@ export default function Hero() {
   }, [framesReady]);
 
   return (
-    <section ref={sectionRef} id="top" className="relative min-h-screen bg-black lg:h-[500vh]">
-      <div className="flex min-h-screen w-full flex-col lg:sticky lg:top-0 lg:h-screen lg:overflow-hidden">
+    <section ref={sectionRef} id="top" className="relative h-[400vh] bg-black lg:h-[500vh]">
+      <div className="sticky top-0 flex h-dvh w-full flex-col overflow-hidden">
         <div
           ref={rowRef}
           onMouseMove={handleRowMouseMove}
           onMouseLeave={handleRowMouseLeave}
-          className="relative z-10 mx-auto grid w-full max-w-[1800px] flex-1 items-stretch gap-12 px-6 py-16 sm:px-12 lg:grid-cols-[1fr_1.15fr] lg:px-20"
+          className="relative z-10 mx-auto grid w-full max-w-[1800px] flex-1 items-stretch gap-1 px-6 py-1 sm:gap-12 sm:px-12 sm:py-10 lg:grid-cols-[1fr_1.15fr] lg:px-20 lg:py-16"
         >
-          <div ref={textLayerRef} className="flex h-full flex-col">
-            <div className="flex flex-1 flex-col justify-center">
+          <div ref={textLayerRef} className="flex h-full flex-col justify-center">
+            <div className="flex flex-col">
               <FadeInItem
                 delay={0.15}
-                className="flex items-center gap-3 text-xs font-medium tracking-[0.3em] text-muted uppercase"
+                className="flex items-center gap-3 text-sm font-medium tracking-[0.3em] text-muted uppercase"
               >
                 <span className="h-px w-8 bg-accent" aria-hidden />
                 An independent price check, not a pitch
               </FadeInItem>
               <FadeInItem
                 delay={0.27}
-                className="mt-5 font-serif text-4xl leading-[1.05] font-medium tracking-tight text-balance sm:text-5xl lg:text-6xl"
+                className="mt-4 font-serif text-3xl leading-[1.05] font-medium tracking-tight text-balance sm:mt-5 sm:text-5xl md:text-6xl"
               >
                 Serious about your health?
                 <br />
                 Stop buying it <em className="text-accent">blind</em>.
               </FadeInItem>
-              <FadeInItem delay={0.39} className="mt-6 max-w-lg text-base text-muted sm:text-lg">
+              <FadeInItem delay={0.39} className="mt-3 max-w-lg text-base text-muted sm:mt-6 sm:text-xl">
                 You don&apos;t end up on a page like this by accident. Every product
                 here is traceable to its source and backed by a real person,
                 not a random seller you&apos;ll never hear from again.
               </FadeInItem>
             </div>
 
-            <FadeInItem delay={0.51} className="mt-10 mb-10 flex flex-wrap items-center gap-x-8 gap-y-4 lg:mb-16">
+            <FadeInItem delay={0.51} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 sm:mt-8 lg:mt-10">
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-85"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85 sm:px-7 sm:py-3.5"
               >
                 Browse the catalog
               </Link>
@@ -241,7 +225,7 @@ export default function Hero() {
             </FadeInItem>
           </div>
 
-          <FadeInItem delay={0.63} className="relative mx-auto w-full max-w-lg self-center">
+          <FadeInItem delay={0.63} className="relative mx-auto w-full self-center sm:max-w-md lg:max-w-lg">
             {/* Particles: not clipped, bleed past the image box, always in front. */}
             <div
               ref={particleLayerRef}
@@ -255,7 +239,7 @@ export default function Hero() {
                 <HeroBottles x={x} y={y} scrollYProgress={scrollYProgress} />
               </div>
 
-              <div ref={canvasLayerRef} style={{ opacity: 0 }} className="absolute inset-0 hidden lg:block">
+              <div ref={canvasLayerRef} style={{ opacity: 0 }} className="absolute inset-0">
                 <canvas ref={canvasRef} className="h-full w-full" />
               </div>
             </div>

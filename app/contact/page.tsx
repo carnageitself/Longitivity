@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
 import { SITE_NAME } from "@/lib/site-config";
 
-const DESCRIPTION = "Get in touch for pricing, availability, and personalized product recommendations.";
+const DESCRIPTION =
+  "Get a dedicated account executive assigned to you: personalized product picks, order tracking, delivery, and refunds, handled by one person, not a support queue.";
 
 export const metadata: Metadata = {
   title: `Contact | ${SITE_NAME}`,
@@ -30,10 +31,10 @@ export default function ContactPage() {
         <section className="border-b border-border px-6 pt-20 pb-14">
           <div className="mx-auto max-w-7xl">
             <p className="mb-3 text-xs font-medium tracking-wide text-accent uppercase">
-              Get in touch
+              White-glove, not self-service
             </p>
             <h1 className="max-w-2xl font-serif text-4xl font-medium tracking-tight sm:text-5xl">
-              Let&apos;s find what fits.
+              Your own dedicated account executive.
             </h1>
           </div>
         </section>

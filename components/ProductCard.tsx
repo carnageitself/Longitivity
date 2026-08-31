@@ -87,9 +87,6 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
           <div className="mt-auto flex items-end justify-between gap-3 pt-5">
             <div>
               <span className="text-lg font-semibold tracking-tight">{product.price}</span>
-              {product.priceStatus === "approx" && (
-                <p className="text-[11px] text-muted">estimated</p>
-              )}
               {product.priceStatus === "on-request" && (
                 <p className="text-[11px] text-muted">ask for current price</p>
               )}
