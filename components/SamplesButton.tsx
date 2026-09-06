@@ -2,8 +2,9 @@ import Link from "next/link";
 
 // Every "free samples" CTA on the site renders through here, so the styling
 // and the destination can't drift apart the way the two Artistry CTAs did.
-// `interest=samples` is what LeadForm reads to pre-fill the contact form.
-const BASE_HREF = "/contact?interest=samples";
+// Free samples now come with an in-person demo booked through /schedule
+// rather than a plain contact-form message.
+const BASE_HREF = "/schedule";
 
 const SIZES = {
   sm: "px-4 py-2 text-xs",
@@ -19,13 +20,13 @@ export default function SamplesButton({
   onClick,
 }: {
   size?: keyof typeof SIZES;
-  /** Narrows the request to one product line in the pre-filled message. */
+  /** Narrows the request to one product line for the booking form. */
   category?: string;
   label?: string;
   className?: string;
   onClick?: () => void;
 }) {
-  const href = category ? `${BASE_HREF}&category=${encodeURIComponent(category)}` : BASE_HREF;
+  const href = category ? `${BASE_HREF}?category=${encodeURIComponent(category)}` : BASE_HREF;
 
   return (
     <Link

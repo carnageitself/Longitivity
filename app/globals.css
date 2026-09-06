@@ -23,6 +23,22 @@
   --font-serif: var(--font-serif-display);
 }
 
+/* Chrome/Safari force a light yellow background + black text on autofilled
+   inputs, which can't be overridden via background-color (the pseudo-class
+   has higher precedence there). The inset box-shadow trick works because
+   box-shadow isn't part of that lockout, and the absurdly long transition
+   delays the native yellow from ever flashing in before this applies. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--foreground);
+  -webkit-box-shadow: 0 0 0px 1000px var(--background) inset;
+  box-shadow: 0 0 0px 1000px var(--background) inset;
+  caret-color: var(--foreground);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 html {
   scrollbar-width: none;
   -ms-overflow-style: none;

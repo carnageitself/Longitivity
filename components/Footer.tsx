@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Mail } from "lucide-react";
 import BrandSparkles from "@/components/BrandSparkles";
-import BackToTop from "@/components/BackToTop";
 import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
 import { CATEGORY_SEO } from "@/lib/categories";
 
@@ -36,7 +35,7 @@ export default function Footer() {
     <footer className="border-t border-border">
       <div className="mx-6 py-16 sm:mx-12 lg:mx-20">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-y-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
-          <div className="col-span-2 max-w-sm lg:col-span-1">
+          <div className="col-span-2 mx-auto flex max-w-sm flex-col items-center text-center sm:mx-0 sm:items-start sm:text-left lg:col-span-1">
             <BrandSparkles />
             <p className="mt-3 text-sm text-muted">{SITE_TAGLINE}</p>
           </div>
@@ -84,11 +83,10 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-border">
-        <div className="mx-6 flex flex-col items-center gap-4 py-8 sm:mx-12 sm:flex-row sm:justify-between lg:mx-20">
+        <div className="mx-6 flex flex-col items-center gap-4 py-8 sm:mx-12 sm:flex-row lg:mx-20">
           <p className="text-xs text-muted">
             © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
           </p>
-          <BackToTop />
         </div>
       </div>
     </footer>
