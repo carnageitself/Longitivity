@@ -23,15 +23,22 @@
   --font-serif: var(--font-serif-display);
 }
 
-/* Chrome/Safari force a light yellow background + black text on autofilled
-   inputs, which can't be overridden via background-color (the pseudo-class
-   has higher precedence there). The inset box-shadow trick works because
-   box-shadow isn't part of that lockout, and the absurdly long transition
-   delays the native yellow from ever flashing in before this applies. */
+/* Chrome/Safari force a light yellow (older) or grey (current Chrome) fill
+   on autofilled inputs, which can't be reliably overridden via
+   background-color alone (the pseudo-class has higher precedence there).
+   The inset box-shadow trick works because box-shadow isn't part of that
+   lockout, and the absurdly long transition delays the native fill from
+   ever flashing in before this applies. !important on background-color is
+   redundant insurance for engines that do honor it. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+input:-webkit-autofill:active,
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+  background-color: var(--background) !important;
   -webkit-text-fill-color: var(--foreground);
   -webkit-box-shadow: 0 0 0px 1000px var(--background) inset;
   box-shadow: 0 0 0px 1000px var(--background) inset;

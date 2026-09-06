@@ -9,6 +9,38 @@ import { Calendar } from "@/components/ui/calendar";
 import { getAvailableDays, toDateKey, slotsForDate, slotKey, formatSlotForEmail } from "@/lib/scheduling";
 
 type Status = "idle" | "submitting" | "success" | "error";
+type FieldErrors = Partial<Record<"firstName" | "lastName" | "email" | "phone" | "location", string>>;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Only cares that a US number is in there somewhere, regardless of how it's
+// formatted: strip everything but digits and check for 10 digits, optionally
+// with a leading US/Canada country code (1).
+function isValidUsPhone(raw: string): boolean {
+  const digits = raw.replace(/\D/g, "");
+  return digits.length === 10 || (digits.length === 11 && digits.startsWith("1"));
+}
+// Rejects stray numbers/symbols someone fat-fingered into the city field,
+// while still allowing "Boston, MA" or "St. Paul".
+function isValidCityName(raw: string): boolean {
+  return /^[A-Za-z][A-Za-z\s.,'-]{1,}$/.test(raw.trim());
+}
+
+function validateBookingForm(data: FormData): FieldErrors {
+  const errors: FieldErrors = {};
+  const firstName = String(data.get("firstName") ?? "").trim();
+  const lastName = String(data.get("lastName") ?? "").trim();
+  const email = String(data.get("email") ?? "").trim();
+  const phone = String(data.get("phone") ?? "").trim();
+  const location = String(data.get("location") ?? "").trim();
+
+  if (!firstName) errors.firstName = "Enter your first name.";
+  if (!lastName) errors.lastName = "Enter your last name.";
+  if (!email || !EMAIL_PATTERN.test(email)) errors.email = "Enter a valid email address.";
+  if (!phone || !isValidUsPhone(phone)) errors.phone = "Enter a valid US phone number.";
+  if (!location || !isValidCityName(location)) errors.location = "Enter a valid city.";
+
+  return errors;
+}
 
 function StepNumber({ n }: { n: number }) {
   return (
@@ -16,6 +48,11 @@ function StepNumber({ n }: { n: number }) {
       {n}
     </span>
   );
+}
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return <p className="text-xs text-red-400">{message}</p>;
 }
 
 export default function ScheduleBooking() {
@@ -34,6 +71,16 @@ export default function ScheduleBooking() {
   const [loadingAvailability, setLoadingAvailability] = useState(true);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+  function clearFieldError(field: keyof FieldErrors) {
+    setFieldErrors((prev) => {
+      if (!(field in prev)) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  }
 
   useEffect(() => {
     const from = days[0]?.date;
@@ -49,9 +96,20 @@ export default function ScheduleBooking() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!selectedTime || !selectedDate) return;
     const data = new FormData(e.currentTarget);
 
+    if (!selectedDate || !selectedTime) {
+      setErrorMessage("Select a date and a time above before booking.");
+      setStatus("error");
+      return;
+    }
+
+    const errors = validateBookingForm(data);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
     setStatus("submitting");
     setErrorMessage("");
 
@@ -87,7 +145,7 @@ export default function ScheduleBooking() {
 
   if (status === "success") {
     return (
-      <div className="mx-auto flex max-w-lg flex-col items-center gap-3 rounded-2xl border border-border bg-surface p-10 text-center">
+      <div className="mx-auto flex max-w-lg flex-col items-center gap-3 rounded-2xl border border-border bg-background p-10 text-center">
         <CheckCircle2 size={32} className="text-accent" />
         <p className="font-medium">
           Your slot is confirmed for {formatSlotForEmail(selectedDate, selectedTime as string)}.
@@ -104,7 +162,7 @@ export default function ScheduleBooking() {
     selectedDate && selectedTime ? formatSlotForEmail(selectedDate, selectedTime) : null;
 
   return (
-    <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-border bg-surface">
+    <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-border bg-background">
       <div className="grid grid-cols-1 lg:grid-cols-2">
         {/* Steps 1 & 2: date + time */}
         <div className="flex flex-col gap-8 border-b border-border p-6 lg:border-r lg:border-b-0 lg:p-8">
@@ -121,6 +179,7 @@ export default function ScheduleBooking() {
                 onSelect={(day) => {
                   setSelectedDay(day);
                   setSelectedTime(null);
+                  if (status === "error") setStatus("idle");
                 }}
                 disabled={(date) => !bookableDates.has(toDateKey(date))}
               />
@@ -144,7 +203,10 @@ export default function ScheduleBooking() {
                       key={slot.value}
                       type="button"
                       disabled={taken || loadingAvailability}
-                      onClick={() => setSelectedTime(slot.value)}
+                      onClick={() => {
+                        setSelectedTime(slot.value);
+                        if (status === "error") setStatus("idle");
+                      }}
                       className={`rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors ${
                         taken
                           ? "cursor-not-allowed border-border text-muted/40 line-through"
@@ -169,7 +231,7 @@ export default function ScheduleBooking() {
             Your contact details
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
             {selectionSummary && (
               <p className="rounded-lg border border-accent/30 bg-accent/10 px-3 py-2 text-sm text-foreground">
                 {selectionSummary}
@@ -185,28 +247,66 @@ export default function ScheduleBooking() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="firstName">First name</Label>
-                <Input id="firstName" name="firstName" required />
+                <Input
+                  id="firstName"
+                  name="firstName"
+                  required
+                  className={fieldErrors.firstName ? "border-red-500!" : undefined}
+                  onChange={() => clearFieldError("firstName")}
+                />
+                <FieldError message={fieldErrors.firstName} />
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="lastName">Last name</Label>
-                <Input id="lastName" name="lastName" required />
+                <Input
+                  id="lastName"
+                  name="lastName"
+                  required
+                  className={fieldErrors.lastName ? "border-red-500!" : undefined}
+                  onChange={() => clearFieldError("lastName")}
+                />
+                <FieldError message={fieldErrors.lastName} />
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" type="email" required />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className={fieldErrors.email ? "border-red-500!" : undefined}
+                  onChange={() => clearFieldError("email")}
+                />
+                <FieldError message={fieldErrors.email} />
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" name="phone" type="tel" required />
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  className={fieldErrors.phone ? "border-red-500!" : undefined}
+                  onChange={() => clearFieldError("phone")}
+                />
+                <FieldError message={fieldErrors.phone} />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="location">City</Label>
-              <Input id="location" name="location" placeholder="e.g. Boston, MA" required />
+              <Input
+                id="location"
+                name="location"
+                placeholder="e.g. Boston, MA"
+                required
+                className={fieldErrors.location ? "border-red-500!" : undefined}
+                onChange={() => clearFieldError("location")}
+              />
+              <FieldError message={fieldErrors.location} />
             </div>
 
             {status === "error" && (
@@ -218,7 +318,7 @@ export default function ScheduleBooking() {
 
             <button
               type="submit"
-              disabled={!selectedTime || status === "submitting"}
+              disabled={status === "submitting"}
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-border bg-black px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50"
             >
               {status === "submitting" && <Loader2 size={16} className="animate-spin" />}
@@ -226,7 +326,7 @@ export default function ScheduleBooking() {
             </button>
 
             {!selectedTime && (
-              <p className="text-center text-xs text-muted">Select a date and time to continue.</p>
+              <p className="text-center text-xs text-muted">Select a date and time above first.</p>
             )}
           </form>
         </div>

@@ -34,7 +34,7 @@ export default function SchedulePage() {
     <>
       <Navbar />
       <main className="flex-1">
-        <section className="border-b border-border px-6 pt-14 pb-8">
+        <section className="border-b border-border px-6 pt-24 pb-8">
           <div className="mx-auto max-w-7xl">
             <p className="mb-2 text-xs font-medium tracking-wide text-accent uppercase">
               Book a slot

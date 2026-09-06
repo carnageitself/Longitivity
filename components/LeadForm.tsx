@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useSyncExternalStore, type FormEvent } from "react";
-import { useSearchParams } from "next/navigation";
 import { Loader2, CheckCircle2, AlertCircle, X } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { CONTACT } from "@/lib/site-config";
@@ -24,14 +23,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Tooltip } from "@/components/ui/tooltip-card";
+import { RequiredLabel } from "@/components/ui/required-label";
 
 const CATEGORIES = Object.keys(CATEGORY_INFO);
-
-// Matches the `interest` value the "Free samples" CTAs link with, and the
-// SelectItem below. Kept as one constant so the URL, the seeded select value,
-// and the option label can't drift apart.
-const SAMPLES_INTEREST = "Free samples";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -49,12 +43,6 @@ function mostCommonCategory(products: ProductInquiry[]): string {
   return best;
 }
 
-function samplesMessage(category: string | null): string {
-  return category
-    ? `I'd like to request free samples from the ${category} line.`
-    : "I'd like to request free samples.";
-}
-
 function defaultMessage(products: ProductInquiry[], bundle: string | null): string {
   const parts: string[] = [];
   if (products.length > 0) {
@@ -68,11 +56,6 @@ function defaultMessage(products: ProductInquiry[], bundle: string | null): stri
 
 export default function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
-  const searchParams = useSearchParams();
-  // ?interest=samples, optionally &category=Artistry, set by the navbar and
-  // the Artistry sampling CTA.
-  const wantsSamples = searchParams.get("interest") === "samples";
-  const sampleCategory = searchParams.get("category");
   const products = useSyncExternalStore(
     subscribeProductInquiries,
     getProductInquiriesSnapshot,
@@ -84,10 +67,8 @@ export default function LeadForm() {
     getBundleInquiryServerSnapshot,
   );
 
-  // The samples intent comes from the URL, so it's known on first render and
-  // can seed state directly.
-  const [interest, setInterest] = useState(wantsSamples ? SAMPLES_INTEREST : "");
-  const [message, setMessage] = useState(wantsSamples ? samplesMessage(sampleCategory) : "");
+  const [interest, setInterest] = useState("");
+  const [message, setMessage] = useState("");
   const [seeded, setSeeded] = useState(false);
 
   // Seed the interest/message fields from the stored products/bundle the
@@ -98,17 +79,9 @@ export default function LeadForm() {
   // happen during render.
   if (!seeded && (products.length > 0 || bundle)) {
     setSeeded(true);
-    // An explicit sample request from the URL outranks whatever category the
-    // stored products imply, but their names still belong in the message.
-    if (!wantsSamples) {
-      if (bundle) setInterest("Bundle");
-      else setInterest(mostCommonCategory(products));
-    }
-    setMessage(
-      [wantsSamples ? samplesMessage(sampleCategory) : "", defaultMessage(products, bundle)]
-        .filter(Boolean)
-        .join(" "),
-    );
+    if (bundle) setInterest("Bundle");
+    else setInterest(mostCommonCategory(products));
+    setMessage(defaultMessage(products, bundle));
   }
 
   function handleRemoveProduct(slug: string) {
@@ -245,8 +218,10 @@ export default function LeadForm() {
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <LabelInputContainer>
-          <Label htmlFor="phone">Phone (optional)</Label>
-          <Input id="phone" name="phone" type="tel" />
+          <RequiredLabel htmlFor="phone" hint="So your account executive can reach you directly.">
+            Phone
+          </RequiredLabel>
+          <Input id="phone" name="phone" type="tel" required />
         </LabelInputContainer>
         <LabelInputContainer>
           <Label htmlFor="interest">What are you interested in?</Label>
@@ -265,7 +240,6 @@ export default function LeadForm() {
                 </SelectItem>
               ))}
               <SelectItem value="Bundle">Bundle</SelectItem>
-              <SelectItem value={SAMPLES_INTEREST}>{SAMPLES_INTEREST}</SelectItem>
               <SelectItem value="Not sure yet">Not sure yet</SelectItem>
             </SelectContent>
           </Select>
@@ -273,11 +247,14 @@ export default function LeadForm() {
       </div>
 
       <LabelInputContainer>
-        <Label htmlFor="message">Message (optional)</Label>
+        <RequiredLabel htmlFor="message" hint="So your account executive knows what you need before reaching out.">
+          Message
+        </RequiredLabel>
         <Textarea
           id="message"
           name="message"
           rows={4}
+          required
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Tell us a bit about what you're looking for..."
@@ -312,27 +289,6 @@ export default function LeadForm() {
 
 function LabelInputContainer({ children }: { children: React.ReactNode }) {
   return <div className="flex w-full flex-col gap-1.5">{children}</div>;
-}
-
-function RequiredLabel({
-  htmlFor,
-  hint,
-  children,
-}: {
-  htmlFor: string;
-  hint: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center gap-1">
-      <Label htmlFor={htmlFor}>{children}</Label>
-      <Tooltip content={hint}>
-        <span className="cursor-help text-sm leading-none text-accent" aria-label="Required">
-          *
-        </span>
-      </Tooltip>
-    </div>
-  );
 }
 
 function BottomGradient() {

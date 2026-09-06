@@ -124,7 +124,7 @@ export default async function CollectionPage({
             <p className="mb-3 text-xs font-medium tracking-wide text-accent uppercase">
               {products.length} products
             </p>
-            <h1 className="max-w-3xl font-serif text-4xl font-medium tracking-tight sm:text-5xl">
+            <h1 className="max-w-2xl font-serif text-4xl font-medium tracking-tight sm:text-5xl">
               {entry.h1}
             </h1>
             <p className="mt-5 max-w-2xl text-muted">{entry.intro}</p>

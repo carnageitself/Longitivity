@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Mail, Check } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import { CONTACT } from "@/lib/site-config";
@@ -30,19 +29,15 @@ export default function ContactSection() {
           </ul>
 
           <div className="mt-8 flex flex-col gap-4">
-            <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-3 text-sm">
               <Mail size={18} className="text-accent" />
-              {CONTACT.email}
-            </a>
+              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+            </div>
           </div>
         </div>
 
         <div className="rounded-2xl border border-border bg-background p-8">
-          {/* LeadForm reads ?interest=samples via useSearchParams, which needs
-              a Suspense boundary on a prerendered route. */}
-          <Suspense fallback={null}>
-            <LeadForm />
-          </Suspense>
+          <LeadForm />
         </div>
       </div>
     </section>
