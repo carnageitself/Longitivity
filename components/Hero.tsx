@@ -70,7 +70,7 @@ function ScrollCaption({
   return (
     <motion.div
       style={{ opacity, y }}
-      className="pointer-events-none absolute inset-x-0 top-[24%] z-30 flex flex-row flex-wrap items-baseline justify-center gap-x-3 gap-y-1 px-6 text-center lg:inset-x-auto lg:inset-y-0 lg:top-auto lg:left-0 lg:z-auto lg:w-[46%] lg:flex-col lg:flex-nowrap lg:items-stretch lg:justify-center lg:gap-0 lg:px-20 lg:text-left"
+      className="pointer-events-none absolute inset-x-0 top-[24%] z-30 flex flex-row flex-wrap items-baseline justify-center gap-x-3 gap-y-1 px-6 text-center lg:inset-x-auto lg:inset-y-0 lg:left-0 lg:z-auto lg:w-[46%] lg:flex-col lg:flex-nowrap lg:items-stretch lg:justify-center lg:gap-0 lg:px-20 lg:text-left"
     >
       <p className="shrink-0 text-xs font-medium tracking-[0.3em] text-accent uppercase drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)] lg:drop-shadow-none">{eyebrow}</p>
       <h2 className="font-serif text-sm font-medium tracking-tight text-balance drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)] lg:mt-5 lg:max-w-md lg:text-4xl lg:leading-[1.05] lg:drop-shadow-none xl:text-5xl">
