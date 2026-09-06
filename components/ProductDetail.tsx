@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Check, ListChecks, Scale } from "lucide-react";
+import { ArrowLeft, Award, Check, ListChecks, Scale } from "lucide-react";
 import { CATEGORY_PLACEHOLDER_IMAGE, CATEGORY_VISUAL, catalog, type CatalogProduct } from "@/lib/catalog";
 import type { CompetitorMatch } from "@/lib/fullCompare";
 import { getReturnPolicy, getRetailerReturnPolicy } from "@/lib/site-config";
@@ -199,7 +199,7 @@ export default function ProductDetail({
                     </tr>
                   );
                 })}
-                <tr>
+                <tr className="border-b border-border">
                   <td className="sticky left-0 z-10 bg-background p-4 align-top text-xs font-medium tracking-wide text-muted uppercase">
                     Ingredients
                   </td>
@@ -216,6 +216,25 @@ export default function ProductDetail({
                   {competitors.map((c) => (
                     <td key={c.name} className="border-l border-border p-4 align-top text-xs text-muted">
                       {c.difference}
+                    </td>
+                  ))}
+                </tr>
+                {/* Read left-to-right: each competitor column states what this
+                    product does better than that specific competitor, so the
+                    "ours" cell is a pointer rather than a claim of its own. */}
+                <tr className="bg-accent/5">
+                  <td className="sticky left-0 z-10 bg-background p-4 align-top text-xs font-medium tracking-wide text-accent uppercase">
+                    Our advantage
+                  </td>
+                  <td className="border-l-2 border-accent bg-surface p-4 align-top">
+                    <span className="flex items-start gap-1.5 text-xs font-medium text-accent">
+                      <Award size={14} className="mt-0.5 shrink-0" />
+                      {product.hook}
+                    </span>
+                  </td>
+                  {competitors.map((c) => (
+                    <td key={c.name} className="border-l border-border p-4 align-top text-xs">
+                      {c.advantage}
                     </td>
                   ))}
                 </tr>

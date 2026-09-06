@@ -20,24 +20,29 @@ const CROSSFADE_END = 0.05;
 const FINALE_START = 0.88;
 const FINALE_END = 0.97;
 
+// `as` exists so the hero headline can be a real <h1> without changing how it
+// looks or animates. The homepage previously shipped no h1 at all.
 function FadeInItem({
   delay,
   className,
   children,
+  as = "div",
 }: {
   delay: number;
   className?: string;
   children: React.ReactNode;
+  as?: "div" | "h1";
 }) {
+  const Tag = as === "h1" ? motion.h1 : motion.div;
   return (
-    <motion.div
+    <Tag
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay, ease: "easeOut" }}
       className={className}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
 
@@ -183,33 +188,34 @@ export default function Hero() {
           ref={rowRef}
           onMouseMove={handleRowMouseMove}
           onMouseLeave={handleRowMouseLeave}
-          className="relative z-10 mx-auto grid w-full max-w-[1800px] flex-1 items-stretch gap-1 px-6 py-1 sm:gap-12 sm:px-12 sm:py-10 lg:grid-cols-[1fr_1.15fr] lg:px-20 lg:py-16"
+          className="relative z-10 mx-auto grid w-full max-w-[1800px] flex-1 items-stretch gap-6 px-6 py-8 sm:gap-12 sm:px-12 sm:py-10 lg:grid-cols-[1fr_1.15fr] lg:px-20 lg:py-16"
         >
           <div ref={textLayerRef} className="flex h-full flex-col justify-center">
             <div className="flex flex-col">
               <FadeInItem
                 delay={0.15}
-                className="flex items-center gap-3 text-sm font-medium tracking-[0.3em] text-muted uppercase"
+                className="hidden items-center gap-3 text-sm font-medium tracking-[0.3em] text-muted uppercase sm:flex"
               >
                 <span className="h-px w-8 bg-accent" aria-hidden />
                 An independent price check, not a pitch
               </FadeInItem>
               <FadeInItem
+                as="h1"
                 delay={0.27}
-                className="mt-4 font-serif text-3xl leading-[1.05] font-medium tracking-tight text-balance sm:mt-5 sm:text-5xl md:text-6xl"
+                className="mt-5 font-serif text-3xl leading-[1.05] font-medium tracking-tight text-balance sm:text-5xl md:text-6xl"
               >
                 Serious about your health?
                 <br />
                 Stop buying it <em className="text-accent">blind</em>.
               </FadeInItem>
-              <FadeInItem delay={0.39} className="mt-3 max-w-lg text-base text-muted sm:mt-6 sm:text-xl">
+              <FadeInItem delay={0.39} className="mt-4 max-w-lg text-base text-muted sm:mt-6 sm:text-xl">
                 You don&apos;t end up on a page like this by accident. Every product
-                here is traceable to its source and backed by a real person,
-                not a random seller you&apos;ll never hear from again.
+                here is traceable to its source and backed by the scientists who
+                developed it, not a random seller you&apos;ll never hear from again.
               </FadeInItem>
             </div>
 
-            <FadeInItem delay={0.51} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 sm:mt-8 lg:mt-10">
+            <FadeInItem delay={0.51} className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 lg:mt-10">
               <Link
                 href="/products"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85 sm:px-7 sm:py-3.5"

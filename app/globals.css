@@ -53,6 +53,90 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+/* Periodic diagonal light sweep for the primary CTAs, so the button reads as
+   a polished metal surface catching a light. The sweep is fast and the pause
+   between passes is long on purpose: a continuously travelling glare reads as
+   a loading shimmer rather than a finish. */
+@keyframes cta-shine {
+  0% {
+    transform: translateX(-140%) skewX(-20deg);
+  }
+  22%,
+  100% {
+    transform: translateX(320%) skewX(-20deg);
+  }
+}
+
+.shine-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.shine-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 35%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 35%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.15) 65%,
+    transparent 100%
+  );
+  animation: cta-shine 5s cubic-bezier(0.35, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-cta::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Scroll reveal that does not depend on JavaScript.
+ *
+ * framer-motion's `whileInView` renders the element with an inline
+ * `opacity: 0` in the server HTML and only clears it once React has hydrated
+ * and an IntersectionObserver has fired. On a page that also loads a 120-frame
+ * WebP sequence, tsparticles and framer itself, that wait is long enough to
+ * read as content going missing and then popping in.
+ *
+ * Doing it in CSS means the browser handles the whole thing on its own, before
+ * any script has run.
+ *
+ * Fallback: browsers without scroll-driven animations ignore
+ * `animation-timeline`, so the shorthand's implied `0s` duration applies and
+ * `both` holds the end state — the element is simply visible, never stuck
+ * hidden. That is the important property here. */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal-up {
+  animation: reveal-up linear both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 22%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    animation: none;
+  }
+}
+
 .bg-grid {
   background-image:
     linear-gradient(to right, var(--border) 1px, transparent 1px),

@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CatalogBrowser from "@/components/CatalogBrowser";
+import JsonLd from "@/components/JsonLd";
 import { catalog } from "@/lib/catalog";
+import { CATEGORY_SEO, countIn } from "@/lib/categories";
+import { absoluteUrl, breadcrumbJsonLd, ORGANIZATION_ID } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site-config";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://longitivity.vercel.app";
-
 const DESCRIPTION =
-  "Browse every flagship product across Nutrilite, Artistry, Satinique, Glister, XS, Personal Care, Home Care, and Water & Air Treatment, with ingredients, sizing, and retail pricing.";
+  "Every product across Nutrilite, Artistry, XS, personal care, home care and water & air treatment — with full ingredient lists, sizes and honest pricing.";
 
 export const metadata: Metadata = {
-  title: `Full Product Catalog | ${SITE_NAME}`,
+  // Bare title: the root layout's template appends "| Longitivity". Adding it
+  // here too is what produced "... | Longitivity | Longitivity" in the SERP.
+  title: "All Products — Nutrilite, Artistry, XS & More",
   description: DESCRIPTION,
   keywords: [
     "Nutrilite catalog",
@@ -39,26 +43,33 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
+  "@id": absoluteUrl("/products"),
+  url: absoluteUrl("/products"),
   name: `Full Product Catalog | ${SITE_NAME}`,
   description: DESCRIPTION,
+  isPartOf: { "@id": absoluteUrl("/#website") },
+  publisher: { "@id": ORGANIZATION_ID },
   mainEntity: {
     "@type": "ItemList",
+    numberOfItems: catalog.length,
     itemListElement: catalog.map((product, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${SITE_URL}/products/${product.slug}`,
+      url: absoluteUrl(`/products/${product.slug}`),
       name: product.name,
     })),
   },
 };
 
+const breadcrumbs = breadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Products", path: "/products" },
+]);
+
 export default function ProductsPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={[jsonLd, breadcrumbs]} />
       <Navbar />
       <main className="flex-1">
         <section className="border-b border-border px-6 pt-20 pb-14">
@@ -74,6 +85,22 @@ export default function ProductsPage() {
               hand-waving. Tap any product to see exactly what&apos;s inside
               before you commit.
             </p>
+
+            {/* Server-rendered links into the category landing pages. The
+                filter buttons below are client state and produce no crawlable
+                URL, so without these the collection pages would be orphaned. */}
+            <nav aria-label="Product categories" className="mt-8 flex flex-wrap gap-3">
+              {CATEGORY_SEO.map((entry) => (
+                <Link
+                  key={entry.slug}
+                  href={`/collections/${entry.slug}`}
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-surface"
+                >
+                  {entry.category}
+                  <span className="text-xs text-muted">{countIn(entry.category)}</span>
+                </Link>
+              ))}
+            </nav>
           </div>
         </section>
 

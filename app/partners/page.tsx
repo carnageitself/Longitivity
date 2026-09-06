@@ -8,7 +8,7 @@ const DESCRIPTION =
   "The brands behind every product: Nutrilite, Artistry, Satinique, XS, eSpring, G&H, Glister, iCook, and Atmosphere.";
 
 export const metadata: Metadata = {
-  title: `Brand Partners | ${SITE_NAME}`,
+  title: "Our Brands: Nutrilite, Artistry, eSpring & More",
   description: DESCRIPTION,
   keywords: [
     "Nutrilite brand",

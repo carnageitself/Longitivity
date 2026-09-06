@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { Award, Check } from "lucide-react";
 import { partners } from "@/lib/partners";
+import { categoryPath } from "@/lib/categories";
 
 const container: Variants = {
   hidden: {},
@@ -54,7 +55,7 @@ export default function PartnersGrid() {
             </ul>
 
             <Link
-              href={partner.category ? `/products?category=${encodeURIComponent(partner.category)}` : "/products"}
+              href={partner.category ? categoryPath(partner.category) : "/products"}
               className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent underline-offset-4 hover:underline"
             >
               Explore {partner.name}

@@ -13,21 +13,33 @@ const BRANDS: Brand[] = [
   { name: "eSpring", width: 84 },
   { name: "Glister", width: 100 },
 ];
-const LOOP = [...BRANDS, ...BRANDS];
+// The track scrolls from 0% to -50%, so the *back half* of it has to be wide
+// enough to fill the container on its own. With a single copy per half that
+// was 809px against a 1232px container, leaving ~420px of blank space every
+// cycle: the logos scrolled away, nothing followed them, then the loop reset
+// and they snapped back in.
+//
+// Must stay even so that -50% lands exactly on a copy boundary. Three copies
+// per half (~2.4k px) clears the 1232px container with room for the width
+// variance between font loads.
+const COPIES = 6;
+
+// Original pace was one copy per 24s. Half the track is now COPIES/2 copies
+// wide, so the duration scales with it or the logos would fly past 3x faster.
+const SECONDS_PER_COPY = 24;
+const DURATION = SECONDS_PER_COPY * (COPIES / 2);
+
+const LOOP = Array.from({ length: COPIES }, () => BRANDS).flat();
 
 export default function TrustBar() {
   return (
     <section className="border-b border-border bg-surface py-10">
       <div className="mx-auto max-w-7xl px-6">
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mb-7 text-center text-xs font-medium tracking-wide text-muted uppercase"
-        >
+        {/* CSS reveal, not whileInView: this shipped with an inline
+            opacity:0 and stayed invisible until hydration finished. */}
+        <p className="reveal-up mb-7 text-center text-xs font-medium tracking-wide text-muted uppercase">
           Powered by brands you already trust
-        </motion.p>
+        </p>
 
         <div className="relative flex overflow-hidden">
           {/* Edge fades as solid overlays instead of an animated mask-image:
@@ -38,7 +50,7 @@ export default function TrustBar() {
           <motion.div
             className="flex shrink-0 items-center gap-x-16 pr-16"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: DURATION, repeat: Infinity, ease: "linear" }}
           >
             {LOOP.map((brand, i) => (
               <motion.div

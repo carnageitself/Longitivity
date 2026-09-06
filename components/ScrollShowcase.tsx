@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Check } from "lucide-react";
 import { CATEGORY_VISUAL, catalog, type CatalogCategory } from "@/lib/catalog";
+import { categoryPath } from "@/lib/categories";
 import CategoryVisual from "@/components/CategoryVisual";
 
 const CHAPTERS: CatalogCategory[] = ["Nutrilite", "Artistry", "XS", "Water & Air Treatment"];
@@ -172,7 +173,7 @@ function Chapter({
           ))}
         </ul>
         <Link
-          href={`/products?category=${encodeURIComponent(category)}`}
+          href={categoryPath(category)}
           className="pointer-events-auto mt-6 inline-flex items-center gap-2 text-base font-medium text-accent underline-offset-4 hover:underline"
         >
           {count} products in this line

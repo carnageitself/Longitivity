@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function FinalCta() {
   return (
-    <section className="relative overflow-hidden bg-black py-32 lg:py-44">
+    <section className="relative overflow-hidden bg-black py-24 sm:py-32 lg:py-44">
       <Image
         src="/longitivity-CTA.png"
         alt=""
@@ -14,7 +14,7 @@ export default function FinalCta() {
         fill
         sizes="100vw"
         quality={100}
-        className="object-contain"
+        className="object-cover sm:object-contain"
       />
       {/* Second copy, blurred and masked to only show near the outer edge:
           keeps the photo sharp in the middle while softly blurring it into
@@ -26,7 +26,7 @@ export default function FinalCta() {
         fill
         sizes="100vw"
         quality={100}
-        className="object-contain blur-md"
+        className="object-cover blur-md sm:object-contain"
         style={{
           maskImage: "radial-gradient(ellipse 60% 55% at 50% 45%, transparent 55%, black 100%)",
           WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 50% 45%, transparent 55%, black 100%)",

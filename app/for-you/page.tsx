@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/lib/site-config";
 const DESCRIPTION = "Curated product bundles for students, working professionals, women, and families.";
 
 export const metadata: Metadata = {
-  title: `For You | ${SITE_NAME}`,
+  title: "Wellness Bundles for Students & Families",
   description: DESCRIPTION,
   keywords: [
     "curated wellness bundles",

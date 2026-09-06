@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductDetail from "@/components/ProductDetail";
+import JsonLd from "@/components/JsonLd";
 import { catalog, type CatalogProduct } from "@/lib/catalog";
 import { fullCompare } from "@/lib/fullCompare";
+import { categoryPath, CATEGORY_SEO_BY_NAME } from "@/lib/categories";
+import { absoluteUrl, breadcrumbJsonLd, ORGANIZATION_ID } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site-config";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://longitivity.vercel.app";
 
 export function generateStaticParams() {
   return catalog.map((product) => ({ slug: product.slug }));
@@ -43,6 +44,22 @@ function brandFor(product: CatalogProduct): string {
   return match ?? SITE_NAME;
 }
 
+// "Price & Ingredients" covers the two highest-intent modifiers people append
+// to a product name, but only where the name is short enough that the whole
+// title still survives Google's ~60-character truncation.
+function titleFor(product: CatalogProduct): string {
+  return product.name.length <= 40 ? `${product.name} — Price & Ingredients` : product.name;
+}
+
+// Google suppresses an Offer whose priceValidUntil has passed, so this rolls
+// a year forward from each build rather than hardcoding a date that silently
+// expires. It is a "quoted until" marker, not a price lock.
+function priceValidUntil(): string {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() + 1);
+  return d.toISOString().split("T")[0];
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -52,8 +69,14 @@ export async function generateMetadata({
   const product = catalog.find((p) => p.slug === slug);
   if (!product) return {};
 
-  const title = `${product.name} | ${SITE_NAME}`;
-  const image = product.image ? [encodeURI(product.image)] : undefined;
+  // Bare title: the root layout template appends the brand. Passing it here
+  // as well is what produced "... | Longitivity | Longitivity".
+  const title = titleFor(product);
+  const ogTitle = `${product.name} | ${SITE_NAME}`;
+  // No `images` here on purpose. The sibling opengraph-image.tsx renders a
+  // branded 1200x630 card; setting openGraph.images explicitly would override
+  // it and go back to sharing the bare product JPG, which is the wrong aspect
+  // ratio and shows a white box on every dark-themed social client.
 
   return {
     title,
@@ -67,15 +90,14 @@ export async function generateMetadata({
     ],
     alternates: { canonical: `/products/${product.slug}` },
     openGraph: {
+      type: "website",
       url: `/products/${product.slug}`,
-      title,
+      title: ogTitle,
       description: product.description,
-      images: image,
     },
     twitter: {
-      title,
+      title: ogTitle,
       description: product.description,
-      images: image,
     },
   };
 }
@@ -92,47 +114,61 @@ export default async function ProductPage({
   const competitors = fullCompare.find((c) => c.slug === slug)?.competitors ?? [];
   const price = parsePrice(product);
 
+  const url = absoluteUrl(`/products/${product.slug}`);
+
+  // Return window in days, taken from the same policy the page renders to the
+  // customer so the two can't drift apart. Water & Air gets a shorter window.
+  const returnDays = product.category === "Water & Air Treatment" ? 120 : 180;
+
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": `${url}#product`,
     name: product.name,
     description: product.description,
     category: product.category,
-    ...(product.image ? { image: `${SITE_URL}${encodeURI(product.image)}` } : {}),
+    sku: product.slug,
+    ...(product.image ? { image: absoluteUrl(product.image) } : {}),
+    ...(product.madeIn && product.madeIn !== "Not publicly confirmed"
+      ? { countryOfOrigin: product.madeIn }
+      : {}),
     brand: { "@type": "Brand", name: brandFor(product) },
     ...(price !== undefined
       ? {
           offers: {
             "@type": "Offer",
-            url: `${SITE_URL}/products/${product.slug}`,
+            url,
             priceCurrency: "USD",
             price,
+            priceValidUntil: priceValidUntil(),
+            itemCondition: "https://schema.org/NewCondition",
             availability: "https://schema.org/InStock",
+            seller: { "@id": ORGANIZATION_ID },
+            hasMerchantReturnPolicy: {
+              "@type": "MerchantReturnPolicy",
+              applicableCountry: "US",
+              returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+              merchantReturnDays: returnDays,
+            },
           },
         }
       : {}),
   };
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Products", item: `${SITE_URL}/products` },
-      { "@type": "ListItem", position: 2, name: product.category, item: `${SITE_URL}/products?category=${encodeURIComponent(product.category)}` },
-      { "@type": "ListItem", position: 3, name: product.name, item: `${SITE_URL}/products/${product.slug}` },
-    ],
-  };
+  const categoryEntry = CATEGORY_SEO_BY_NAME.get(product.category);
+
+  const breadcrumbs = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Products", path: "/products" },
+    // Point at the indexable collection page rather than the old
+    // `?category=` query string, which crawlers fold back into /products.
+    { name: categoryEntry?.h1 ?? product.category, path: categoryPath(product.category) },
+    { name: product.name, path: `/products/${product.slug}` },
+  ]);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={[productJsonLd, breadcrumbs]} />
       <Navbar />
       <main className="flex-1">
         <ProductDetail product={product} competitors={competitors} />

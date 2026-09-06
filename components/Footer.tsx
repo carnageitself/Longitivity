@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import BrandSparkles from "@/components/BrandSparkles";
 import BackToTop from "@/components/BackToTop";
 import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
+import { CATEGORY_SEO } from "@/lib/categories";
 
 const NAV_COLUMNS: { heading: string; links: { href: string; label: string }[] }[] = [
   {
@@ -11,6 +12,15 @@ const NAV_COLUMNS: { heading: string; links: { href: string; label: string }[] }
       { href: "/products", label: "All Products" },
       { href: "/for-you", label: "For You" },
     ],
+  },
+  {
+    // Every category landing page, linked from every page on the site. Sitewide
+    // footer links are what keep these one hop from anywhere a crawler lands.
+    heading: "By range",
+    links: CATEGORY_SEO.map((entry) => ({
+      href: `/collections/${entry.slug}`,
+      label: entry.category,
+    })),
   },
   {
     heading: "Company",
@@ -25,18 +35,21 @@ export default function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="mx-6 py-16 sm:mx-12 lg:mx-20">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-y-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           <div className="col-span-2 max-w-sm lg:col-span-1">
             <BrandSparkles />
             <p className="mt-3 text-sm text-muted">{SITE_TAGLINE}</p>
           </div>
 
           {NAV_COLUMNS.map((column) => (
-            <div key={column.heading}>
+            <div
+              key={column.heading}
+              className={`${column.heading === "By range" ? "hidden sm:flex" : "flex"} flex-col items-center text-center sm:items-start sm:text-left`}
+            >
               <p className="text-xs font-medium tracking-widest text-foreground uppercase">
                 {column.heading}
               </p>
-              <ul className="mt-4 flex flex-col gap-3">
+              <ul className="mt-4 flex flex-col items-center gap-3 sm:items-start">
                 {column.links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -51,11 +64,11 @@ export default function Footer() {
             </div>
           ))}
 
-          <div>
+          <div className="col-span-2 flex flex-col items-center text-center sm:col-span-1 sm:items-start sm:text-left">
             <p className="text-xs font-medium tracking-widest text-foreground uppercase">
               Get in touch
             </p>
-            <ul className="mt-4 flex flex-col gap-3">
+            <ul className="mt-4 flex flex-col items-center gap-3 sm:items-start">
               <li>
                 <a
                   href={`mailto:${CONTACT.email}`}

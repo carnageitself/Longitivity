@@ -1,12 +1,13 @@
+import { Suspense } from "react";
 import { Mail, Check } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import { CONTACT } from "@/lib/site-config";
 
 const POINTS = [
-  "Personalized picks from your executive, not a generic bundle",
-  "Order and delivery tracking, whenever you need it",
-  "Returns and refunds handled directly by your executive, no ticket number",
-  "The same executive every time, never a rotating queue",
+  "Personalized product recommendations",
+  "Order and delivery tracking",
+  "Direct returns and refunds",
+  "One consistent point of contact",
 ];
 
 export default function ContactSection() {
@@ -15,10 +16,8 @@ export default function ContactSection() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-6 lg:grid-cols-2">
         <div>
           <p className="max-w-md text-muted">
-            Submit this and a dedicated account executive is assigned to you
-            personally: one point of contact for picking the right products,
-            tracking your order after it ships, and handling delivery or
-            refunds whenever you need to.
+            You&apos;ll be assigned a dedicated account executive: one contact
+            for product picks, order tracking, and returns.
           </p>
 
           <ul className="mt-6 flex flex-col gap-3">
@@ -39,7 +38,11 @@ export default function ContactSection() {
         </div>
 
         <div className="rounded-2xl border border-border bg-background p-8">
-          <LeadForm />
+          {/* LeadForm reads ?interest=samples via useSearchParams, which needs
+              a Suspense boundary on a prerendered route. */}
+          <Suspense fallback={null}>
+            <LeadForm />
+          </Suspense>
         </div>
       </div>
     </section>

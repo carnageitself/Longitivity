@@ -10,26 +10,17 @@ import ProductCategories from "@/components/ProductCategories";
 import WhyIndependent from "@/components/WhyIndependent";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
-import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
+import type { Metadata } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://longitivity.vercel.app";
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_NAME,
-  description: SITE_TAGLINE,
-  url: SITE_URL,
-  email: CONTACT.email,
+// The Organization/WebSite graph this page used to declare now lives in the
+// root layout, so every route carries it instead of just the homepage.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
 };
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <Navbar />
       <main className="flex-1">
         <Hero />

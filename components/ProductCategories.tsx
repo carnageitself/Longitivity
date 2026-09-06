@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, type Variants } from "framer-motion";
 import { catalog, CATEGORY_INFO, CATEGORY_VISUAL, type CatalogCategory } from "@/lib/catalog";
+import { categoryPath } from "@/lib/categories";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 
 const CATEGORIES = Object.keys(CATEGORY_INFO) as CatalogCategory[];
@@ -58,7 +59,9 @@ export default function ProductCategories() {
           const count = catalog.filter((p) => p.category === category).length;
           return (
             <motion.div key={category} variants={item} className="h-full">
-              <Link href={`/products?category=${encodeURIComponent(category)}`} className="group block h-full">
+              {/* Was `/products?category=…`, which crawlers fold back into
+                  /products. The collection page is the indexable equivalent. */}
+              <Link href={categoryPath(category)} className="group block h-full">
                 <CardSpotlight className="flex h-full flex-col gap-4 rounded-none border-0 bg-background p-8 transition-colors group-hover:bg-surface">
                   <div className="relative z-20 flex items-center gap-3">
                     <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br ${visual.gradient}`}>

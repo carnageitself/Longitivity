@@ -8,7 +8,7 @@ import { Scales } from "@/components/ui/scales";
 export default function ArtistrySpotlight() {
   return (
     <section className="mx-auto max-w-7xl overflow-hidden px-6 py-24">
-      <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-20">
+      <div className="grid grid-cols-1 items-center gap-24 lg:grid-cols-2 lg:gap-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -56,7 +56,7 @@ export default function ArtistrySpotlight() {
             anywhere else it&apos;s sold.
           </p>
           <Link
-            href="/products?category=Artistry"
+            href="/collections/artistry"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-85"
           >
             Shop Artistry

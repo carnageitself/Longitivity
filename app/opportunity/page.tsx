@@ -7,7 +7,7 @@ const DESCRIPTION =
   "An honest look at the business opportunity: how the compensation plan works, the brands behind it, and the training and mentorship available through BWW.";
 
 export const metadata: Metadata = {
-  title: `Business Opportunity | ${SITE_NAME}`,
+  title: "The Business Opportunity, Explained Honestly",
   description: DESCRIPTION,
   keywords: [
     "home business opportunity",

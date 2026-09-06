@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SITE_NAME } from "@/lib/site-config";
+import SamplesButton from "@/components/SamplesButton";
 
 const LINKS = [
   { href: "/products", label: "Products" },
@@ -52,26 +53,34 @@ export default function Navbar() {
           {SITE_NAME}
         </Link>
 
-        <ul className="hidden items-center gap-8 text-xs font-medium tracking-widest text-muted uppercase md:flex">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <Link href={link.href} className="group relative inline-block py-1 transition-colors hover:text-foreground">
-                {link.label}
-                <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 ease-out group-hover:scale-x-100" />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="flex items-center gap-8">
+          <ul className="hidden items-center gap-8 text-xs font-medium tracking-widest text-muted uppercase md:flex">
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="group relative inline-block py-1 transition-colors hover:text-foreground">
+                  {link.label}
+                  <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 ease-out group-hover:scale-x-100" />
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <button
-          type="button"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/5 md:hidden"
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+          {/* Wrapper owns the responsive visibility: putting `hidden` on the
+              button itself would collide with its own `inline-flex`. */}
+          <span className="hidden md:block">
+            <SamplesButton />
+          </span>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/5 md:hidden"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -84,7 +93,7 @@ export default function Navbar() {
             className="overflow-hidden border-t border-border/80 bg-background/95 backdrop-blur-md md:hidden"
           >
             {LINKS.map((link) => (
-              <li key={link.href} className="border-b border-border/60 last:border-none">
+              <li key={link.href} className="border-b border-border/60">
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
@@ -94,6 +103,9 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+            <li className="px-6 py-4">
+              <SamplesButton size="md" onClick={() => setMenuOpen(false)} />
+            </li>
           </motion.ul>
         )}
       </AnimatePresence>

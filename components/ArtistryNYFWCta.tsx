@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
+import SamplesButton from "@/components/SamplesButton";
 
 export default function ArtistryNYFWCta() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
+    <section className="mx-auto max-w-7xl px-0 py-16 sm:px-6">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -29,16 +29,11 @@ export default function ArtistryNYFWCta() {
         </div>
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-8 pb-10 text-center sm:pb-14">
-          <p className="max-w-lg text-sm text-white/75 sm:text-base">
-            The same prestige formulas seen on the runway, sold here through
-            a consultant, not a department-store markup.
-          </p>
-          <Link
-            href="/products?category=Artistry"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black transition-opacity hover:opacity-85"
-          >
-            Shop Artistry
-          </Link>
+          <SamplesButton
+            size="lg"
+            category="Artistry"
+            label="Request free samples"
+          />
         </div>
       </motion.div>
     </section>

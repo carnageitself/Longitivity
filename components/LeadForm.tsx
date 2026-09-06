@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useSyncExternalStore, type FormEvent } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useSearchParams } from "next/navigation";
 import { Loader2, CheckCircle2, AlertCircle, X } from "lucide-react";
-import { db, isFirebaseConfigured } from "@/lib/firebase";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { CONTACT } from "@/lib/site-config";
 import { CATEGORY_INFO } from "@/lib/catalog";
 import {
@@ -28,6 +28,11 @@ import { Tooltip } from "@/components/ui/tooltip-card";
 
 const CATEGORIES = Object.keys(CATEGORY_INFO);
 
+// Matches the `interest` value the "Free samples" CTAs link with, and the
+// SelectItem below. Kept as one constant so the URL, the seeded select value,
+// and the option label can't drift apart.
+const SAMPLES_INTEREST = "Free samples";
+
 type Status = "idle" | "submitting" | "success" | "error";
 
 function mostCommonCategory(products: ProductInquiry[]): string {
@@ -44,6 +49,12 @@ function mostCommonCategory(products: ProductInquiry[]): string {
   return best;
 }
 
+function samplesMessage(category: string | null): string {
+  return category
+    ? `I'd like to request free samples from the ${category} line.`
+    : "I'd like to request free samples.";
+}
+
 function defaultMessage(products: ProductInquiry[], bundle: string | null): string {
   const parts: string[] = [];
   if (products.length > 0) {
@@ -57,6 +68,11 @@ function defaultMessage(products: ProductInquiry[], bundle: string | null): stri
 
 export default function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
+  const searchParams = useSearchParams();
+  // ?interest=samples, optionally &category=Artistry, set by the navbar and
+  // the Artistry sampling CTA.
+  const wantsSamples = searchParams.get("interest") === "samples";
+  const sampleCategory = searchParams.get("category");
   const products = useSyncExternalStore(
     subscribeProductInquiries,
     getProductInquiriesSnapshot,
@@ -68,8 +84,10 @@ export default function LeadForm() {
     getBundleInquiryServerSnapshot,
   );
 
-  const [interest, setInterest] = useState("");
-  const [message, setMessage] = useState("");
+  // The samples intent comes from the URL, so it's known on first render and
+  // can seed state directly.
+  const [interest, setInterest] = useState(wantsSamples ? SAMPLES_INTEREST : "");
+  const [message, setMessage] = useState(wantsSamples ? samplesMessage(sampleCategory) : "");
   const [seeded, setSeeded] = useState(false);
 
   // Seed the interest/message fields from the stored products/bundle the
@@ -80,9 +98,17 @@ export default function LeadForm() {
   // happen during render.
   if (!seeded && (products.length > 0 || bundle)) {
     setSeeded(true);
-    if (bundle) setInterest("Bundle");
-    else if (products.length > 0) setInterest(mostCommonCategory(products));
-    setMessage(defaultMessage(products, bundle));
+    // An explicit sample request from the URL outranks whatever category the
+    // stored products imply, but their names still belong in the message.
+    if (!wantsSamples) {
+      if (bundle) setInterest("Bundle");
+      else setInterest(mostCommonCategory(products));
+    }
+    setMessage(
+      [wantsSamples ? samplesMessage(sampleCategory) : "", defaultMessage(products, bundle)]
+        .filter(Boolean)
+        .join(" "),
+    );
   }
 
   function handleRemoveProduct(slug: string) {
@@ -102,24 +128,52 @@ export default function LeadForm() {
       message: String(data.get("message") ?? ""),
       products,
       bundle,
-      createdAt: serverTimestamp(),
     };
 
-    if (!isFirebaseConfigured || !db) {
-      setStatus("error");
-      return;
-    }
+    setStatus("submitting");
 
-    try {
-      setStatus("submitting");
-      await addDoc(collection(db, "leads"), lead);
+    // Fire the email notification and the Supabase write in parallel and
+    // independently: either one succeeding counts as a successful submit, so
+    // a missing Supabase config (or a Resend hiccup) doesn't block the lead
+    // from reaching us some other way.
+    const storePromise =
+      isSupabaseConfigured && supabase
+        ? supabase
+            .from("leads")
+            .insert({
+              name: lead.name,
+              email: lead.email,
+              phone: lead.phone || null,
+              interest: lead.interest || null,
+              message: lead.message || null,
+              bundle: lead.bundle,
+              products: lead.products,
+            })
+            .then(({ error }) => {
+              if (error) throw error;
+            })
+        : Promise.reject(new Error("Supabase not configured"));
+
+    const [notifyResult, storeResult] = await Promise.allSettled([
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lead),
+      }),
+      storePromise,
+    ]);
+
+    const notified = notifyResult.status === "fulfilled" && notifyResult.value.ok;
+    const stored = storeResult.status === "fulfilled";
+
+    if (notified || stored) {
       setStatus("success");
       form.reset();
       clearProductInquiries();
       clearBundleInquiry();
       setInterest("");
       setMessage("");
-    } catch {
+    } else {
       setStatus("error");
     }
   }
@@ -182,7 +236,7 @@ export default function LeadForm() {
         <LabelInputContainer>
           <RequiredLabel
             htmlFor="email"
-            hint="This is where your account executive will send pricing and next steps. No spam, just this reply."
+            hint="Where your account executive will send pricing and next steps."
           >
             Email
           </RequiredLabel>
@@ -211,6 +265,7 @@ export default function LeadForm() {
                 </SelectItem>
               ))}
               <SelectItem value="Bundle">Bundle</SelectItem>
+              <SelectItem value={SAMPLES_INTEREST}>{SAMPLES_INTEREST}</SelectItem>
               <SelectItem value="Not sure yet">Not sure yet</SelectItem>
             </SelectContent>
           </Select>
