@@ -70,13 +70,13 @@ function ScrollCaption({
   return (
     <motion.div
       style={{ opacity, y }}
-      className="pointer-events-none absolute inset-y-0 left-0 hidden w-[46%] flex-col justify-center px-20 lg:flex"
+      className="pointer-events-none absolute inset-x-0 top-[24%] z-30 flex flex-row flex-wrap items-baseline justify-center gap-x-3 gap-y-1 px-6 text-center lg:inset-x-auto lg:inset-y-0 lg:top-auto lg:left-0 lg:z-auto lg:w-[46%] lg:flex-col lg:flex-nowrap lg:items-stretch lg:justify-center lg:gap-0 lg:px-20 lg:text-left"
     >
-      <p className="text-xs font-medium tracking-[0.3em] text-accent uppercase">{eyebrow}</p>
-      <h2 className="mt-5 max-w-md font-serif text-4xl leading-[1.05] font-medium tracking-tight text-balance sm:text-5xl">
+      <p className="shrink-0 text-xs font-medium tracking-[0.3em] text-accent uppercase drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)] lg:drop-shadow-none">{eyebrow}</p>
+      <h2 className="font-serif text-sm font-medium tracking-tight text-balance drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)] lg:mt-5 lg:max-w-md lg:text-4xl lg:leading-[1.05] lg:drop-shadow-none xl:text-5xl">
         {title}
       </h2>
-      <p className="mt-6 max-w-md text-base text-muted sm:text-lg">{children}</p>
+      <p className="hidden text-base text-muted lg:mt-6 lg:block lg:max-w-md lg:text-lg">{children}</p>
     </motion.div>
   );
 }
@@ -188,7 +188,7 @@ export default function Hero() {
           ref={rowRef}
           onMouseMove={handleRowMouseMove}
           onMouseLeave={handleRowMouseLeave}
-          className="relative z-10 mx-auto grid w-full max-w-[1800px] flex-1 items-stretch gap-6 px-6 py-8 sm:gap-12 sm:px-12 sm:py-10 lg:grid-cols-[1fr_1.15fr] lg:px-20 lg:py-16"
+          className="relative z-10 mx-auto grid w-full max-w-[1800px] flex-1 items-stretch gap-6 px-6 pt-20 pb-8 sm:gap-12 sm:px-12 sm:py-10 lg:grid-cols-[1fr_1.15fr] lg:px-20 lg:py-16"
         >
           <div ref={textLayerRef} className="flex h-full flex-col justify-center">
             <div className="flex flex-col">
@@ -208,7 +208,7 @@ export default function Hero() {
                 <br />
                 Stop buying it <em className="text-accent">blind</em>.
               </FadeInItem>
-              <FadeInItem delay={0.39} className="mt-4 max-w-lg text-base text-muted sm:mt-6 sm:text-xl">
+              <FadeInItem delay={0.39} className="mt-4 hidden max-w-lg text-base text-muted sm:mt-6 sm:block sm:text-xl">
                 You don&apos;t end up on a page like this by accident. Every product
                 here is traceable to its source and backed by the scientists who
                 developed it, not a random seller you&apos;ll never hear from again.
