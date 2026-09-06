@@ -45,7 +45,8 @@ export default function CardPage() {
             href="/"
             className="shine-cta flex items-center justify-center gap-2 rounded-2xl bg-linear-to-br from-accent to-[#8a6d3b] px-6 py-5 text-center text-sm leading-snug font-medium tracking-wide text-accent-foreground shadow-md shadow-amber-900/40 ring-1 ring-inset ring-white/25 transition-opacity hover:opacity-90"
           >
-            Care about your health? Lemme hook you up!
+            Care about your health?
+            <br className="sm:hidden" /> Lemme hook you up!
           </Link>
         </div>
 
