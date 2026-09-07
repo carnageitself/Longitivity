@@ -37,6 +37,7 @@ export default function CardPage() {
                 needed. (The jsx-a11y disable that used to sit here was flagged
                 as unused — that rule is not enabled in this config.) */}
             <video
+              id="artistry-loop"
               // "#t=0" is a media fragment, not a URL hash the server ever
               // sees: it pins the start position so the browser cannot resume
               // a partially-played file from its media cache.
@@ -49,6 +50,23 @@ export default function CardPage() {
               className="pointer-events-none w-full"
             />
           </div>
+          {/* Rewind on every entry to the page.
+           *
+           * `load`/`DOMContentLoaded` are no use for the case that actually
+           * breaks: returning via the back button restores the page from the
+           * back/forward cache, which re-runs no scripts and remounts nothing,
+           * so the loop resumes wherever it was. `pageshow` is the one event
+           * that fires for both a fresh load and a bfcache restore.
+           *
+           * Inline on purpose — it must run before paint, and this keeps the
+           * page a server component with no hydration boundary. */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html:
+                'addEventListener("pageshow",function(){var v=document.getElementById("artistry-loop");' +
+                "if(v){v.currentTime=0;var p=v.play();if(p)p.catch(function(){})}});",
+            }}
+          />
           <Link
             href="/"
             className="shine-cta flex items-center justify-center gap-2 rounded-2xl bg-linear-to-br from-accent to-[#8a6d3b] px-6 py-5 text-center text-sm leading-snug font-medium tracking-wide text-accent-foreground shadow-md shadow-amber-900/40 ring-1 ring-inset ring-white/25 transition-opacity hover:opacity-90"
