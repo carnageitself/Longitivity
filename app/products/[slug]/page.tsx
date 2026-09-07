@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -44,11 +45,60 @@ function brandFor(product: CatalogProduct): string {
   return match ?? SITE_NAME;
 }
 
+// Google truncates a result title around 60 characters, and the root layout
+// template spends 14 of them on " | Longitivity". The budget has to account
+// for that suffix and the modifier together — sizing it against the bare
+// product name alone pushed 45 of 69 titles over the limit.
+const TITLE_LIMIT = 60;
+const BRAND_COST = ` | ${SITE_NAME}`.length;
+const MODIFIER = " — Price & Ingredients";
+
 // "Price & Ingredients" covers the two highest-intent modifiers people append
-// to a product name, but only where the name is short enough that the whole
-// title still survives Google's ~60-character truncation.
-function titleFor(product: CatalogProduct): string {
-  return product.name.length <= 40 ? `${product.name} — Price & Ingredients` : product.name;
+// to a product name, but it only earns its space on names short enough to keep
+// the whole title intact.
+function titleFor(product: CatalogProduct): string | { absolute: string } {
+  const name = product.name;
+  if (name.length + MODIFIER.length + BRAND_COST <= TITLE_LIMIT) return name + MODIFIER;
+  if (name.length + BRAND_COST <= TITLE_LIMIT) return name;
+  // Long enough that the name plus brand would be cut mid-word. Drop the brand
+  // via `absolute` so the product name — the part people searched for —
+  // survives instead.
+  return { absolute: name };
+}
+
+// Catalog blurbs run 41-96 characters, which leaves most of a ~160-character
+// SERP snippet unused. This pads each one out with the facts people are
+// actually searching on — price, size, origin — rather than a boilerplate tail
+// repeated across all 69 pages, then clamps on a word boundary.
+function metaDescription(product: CatalogProduct): string {
+  const parts: string[] = [product.description.trim().replace(/\s+/g, " ")];
+  if (!/[.!?]$/.test(parts[0])) parts[0] += ".";
+
+  parts.push(
+    product.priceStatus === "on-request"
+      ? `${product.size}, price on request.`
+      : `${product.price} for ${product.size}.`,
+  );
+
+  if (product.madeIn && product.madeIn !== "Not publicly confirmed") {
+    parts.push(`Made in ${product.madeIn}.`);
+  }
+
+  let out = "";
+  for (const part of parts) {
+    if (out && `${out} ${part}`.length > 158) break;
+    out = out ? `${out} ${part}` : part;
+  }
+
+  // Longest closing line that still fits. Dropping it wholesale (the previous
+  // behaviour) left 22 pages short of a usable snippet.
+  const tails = [
+    "Full ingredient list and an honest price comparison.",
+    "Full ingredient list and price comparison.",
+    "Full ingredient list.",
+  ];
+  const tail = tails.find((t) => `${out} ${t}`.length <= 158);
+  return tail ? `${out} ${tail}` : out;
 }
 
 // Google suppresses an Offer whose priceValidUntil has passed, so this rolls
@@ -78,9 +128,11 @@ export async function generateMetadata({
   // it and go back to sharing the bare product JPG, which is the wrong aspect
   // ratio and shows a white box on every dark-themed social client.
 
+  const description = metaDescription(product);
+
   return {
     title,
-    description: product.description,
+    description,
     keywords: [
       product.name,
       product.category,
@@ -93,11 +145,11 @@ export async function generateMetadata({
       type: "website",
       url: `/products/${product.slug}`,
       title: ogTitle,
-      description: product.description,
+      description,
     },
     twitter: {
       title: ogTitle,
-      description: product.description,
+      description,
     },
   };
 }
@@ -171,6 +223,34 @@ export default async function ProductPage({
       <JsonLd data={[productJsonLd, breadcrumbs]} />
       <Navbar />
       <main className="flex-1">
+        {/* Visible trail matching the BreadcrumbList payload. Google wants the
+            structured data to reflect something actually on the page before it
+            will render breadcrumbs in a result, and it gives every product an
+            internal link up to its category. */}
+        <nav aria-label="Breadcrumb" className="mx-auto max-w-7xl px-6 pt-24 text-xs text-muted">
+          <ol className="flex flex-wrap items-center gap-2">
+            <li>
+              <Link href="/" className="transition-colors hover:text-foreground">
+                Home
+              </Link>
+            </li>
+            <li aria-hidden>/</li>
+            <li>
+              <Link href="/products" className="transition-colors hover:text-foreground">
+                Products
+              </Link>
+            </li>
+            <li aria-hidden>/</li>
+            <li>
+              <Link
+                href={categoryPath(product.category)}
+                className="transition-colors hover:text-foreground"
+              >
+                {product.category}
+              </Link>
+            </li>
+          </ol>
+        </nav>
         <ProductDetail product={product} competitors={competitors} />
       </main>
       <Footer />

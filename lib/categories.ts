@@ -189,7 +189,10 @@ export const CATEGORY_SEO: CategorySeo[] = [
   {
     slug: "water-air-treatment",
     category: "Water & Air Treatment",
-    title: "eSpring Water Filters & Atmosphere Air Purifiers",
+    // Singular reads closer to how these are actually searched ("espring water
+    // filter", "atmosphere air purifier") and keeps the title inside 60 chars
+    // once the brand suffix is appended.
+    title: "eSpring Water Filter & Atmosphere Air Purifier",
     h1: "Water & Air Treatment Systems",
     description:
       "eSpring under-counter water treatment ($1,299) and Atmosphere Sky air purifiers ($1,710), plus HEPA and carbon replacement filters and real running costs.",
