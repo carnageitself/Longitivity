@@ -47,11 +47,11 @@ function brandFor(product: CatalogProduct): string {
 
 // Google truncates a result title around 60 characters, and the root layout
 // template spends 14 of them on " | Longitivity". The budget has to account
-// for that suffix and the modifier together — sizing it against the bare
+// for that suffix and the modifier together - sizing it against the bare
 // product name alone pushed 45 of 69 titles over the limit.
 const TITLE_LIMIT = 60;
 const BRAND_COST = ` | ${SITE_NAME}`.length;
-const MODIFIER = " — Price & Ingredients";
+const MODIFIER = " - Price & Ingredients";
 
 // "Price & Ingredients" covers the two highest-intent modifiers people append
 // to a product name, but it only earns its space on names short enough to keep
@@ -61,14 +61,14 @@ function titleFor(product: CatalogProduct): string | { absolute: string } {
   if (name.length + MODIFIER.length + BRAND_COST <= TITLE_LIMIT) return name + MODIFIER;
   if (name.length + BRAND_COST <= TITLE_LIMIT) return name;
   // Long enough that the name plus brand would be cut mid-word. Drop the brand
-  // via `absolute` so the product name — the part people searched for —
+  // via `absolute` so the product name - the part people searched for - 
   // survives instead.
   return { absolute: name };
 }
 
 // Catalog blurbs run 41-96 characters, which leaves most of a ~160-character
 // SERP snippet unused. This pads each one out with the facts people are
-// actually searching on — price, size, origin — rather than a boilerplate tail
+// actually searching on - price, size, origin - rather than a boilerplate tail
 // repeated across all 69 pages, then clamps on a word boundary.
 function metaDescription(product: CatalogProduct): string {
   const parts: string[] = [product.description.trim().replace(/\s+/g, " ")];

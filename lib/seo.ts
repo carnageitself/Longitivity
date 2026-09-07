@@ -6,7 +6,7 @@ import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
 //
 // The fallback must be the production domain, not the vercel.app one. While it
 // pointed at the preview host, longitivity.com served canonicals, a sitemap and
-// og:image URLs all naming vercel.app — which tells Google the preview is the
+// og:image URLs all naming vercel.app - which tells Google the preview is the
 // real site and hands it every ranking signal the custom domain earned.
 //
 // Overridable via NEXT_PUBLIC_SITE_URL for preview deployments.
@@ -19,7 +19,7 @@ export const SITE_URL = (
 // to be resolved here first. `new URL` also percent-encodes the spaces that
 // most of the product photo filenames contain.
 //
-// It does not touch `&`, which is legal in a path — but three catalog photos
+// It does not touch `&`, which is legal in a path - but three catalog photos
 // are named "G&H ...", and a raw `&` is an unterminated entity in XML. That
 // made the whole sitemap unparseable, not just those rows, because XML parsers
 // abort at the first bad entity. Encoding it resolves to the identical file.

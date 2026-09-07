@@ -168,7 +168,7 @@ export default function WaysToEarn() {
               <p className="mt-4 text-xs text-muted">
                 As group volume grows, the same bonus schedule applies to combined group PV/BV,
                 and additional discretionary incentives can become available. This is arithmetic
-                on the published schedule, not a promised or typical outcome — see the disclosure
+                on the published schedule, not a promised or typical outcome. See the disclosure
                 below.
               </p>
             </div>

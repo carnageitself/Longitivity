@@ -7,7 +7,7 @@ export const isSupabaseAdminConfigured = Boolean(supabaseUrl && serviceRoleKey);
 
 // Server-only client using the service role key, which bypasses Row Level
 // Security entirely. The bookings table holds customer PII (name, email,
-// phone, address), so it has no anon RLS policy at all — only this admin
+// phone, address), so it has no anon RLS policy at all - only this admin
 // client, used exclusively from API routes, can read or write it.
 //
 // NEVER import this file from a Client Component or anything that ships to

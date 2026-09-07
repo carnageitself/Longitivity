@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   // Lead with what people search for, not the brand name: nobody is typing
   // "Longitivity" yet. Child pages set a bare title and the template appends
-  // the brand once — they must NOT append it themselves.
+  // the brand once - they must NOT append it themselves.
   title: {
     default: `Nutrilite, Artistry & Wellness Essentials | ${SITE_NAME}`,
     template: `%s | ${SITE_NAME}`,

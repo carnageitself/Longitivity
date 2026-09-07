@@ -148,7 +148,7 @@ export default function ProductDetail({
         </h2>
         <p className="mb-4 text-xs text-muted">
           Read across any column to see how {product.name} beats that specific
-          alternative. Their prices are listed exactly as they are — check any of
+          alternative. Their prices are listed exactly as they are, so check any of
           them yourself.
         </p>
 
@@ -188,7 +188,7 @@ export default function ProductDetail({
                 {[
                   // Quantity first, and directly above price. Without it the
                   // table set "$66.00" beside "~$10-19" with nothing to show
-                  // they are different amounts of different things — the single
+                  // they are different amounts of different things - the single
                   // most misleading thing on the page, and it read against us.
                   {
                     label: "What you get",
@@ -282,7 +282,7 @@ export default function ProductDetail({
                 {/* The text in each competitor column is OUR argument against
                     that competitor, not a description of them. Sitting bare in
                     their column it read like their sales pitch, which is the
-                    opposite of the point — hence the explicit "Beats <name>"
+                    opposite of the point, hence the explicit "Beats <name>"
                     lead-in and accent styling marking it as our voice. */}
                 <tr className="bg-accent/5">
                   <td className="sticky left-0 z-10 bg-background p-4 align-top text-xs font-medium tracking-wide text-accent uppercase">

@@ -5,7 +5,7 @@ import AudienceSegments from "@/components/AudienceSegments";
 import { SITE_NAME } from "@/lib/site-config";
 
 const DESCRIPTION =
-  "Curated bundles for students, working professionals, women and families — vitamins, skincare and daily essentials picked to work together.";
+  "Curated bundles for students, working professionals, women and families: vitamins, skincare and daily essentials picked to work together.";
 
 export const metadata: Metadata = {
   title: "Wellness Bundles for Students & Families",

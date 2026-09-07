@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    // Slot is reserved (if Supabase is configured) even without email — but
+    // Slot is reserved (if Supabase is configured) even without email - but
     // without Resend, nobody gets told. Surface that clearly rather than
     // silently succeeding.
     return NextResponse.json(

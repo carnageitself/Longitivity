@@ -90,7 +90,7 @@ export default function Hero() {
 
   // Scroll-driven opacity for these layers is applied by writing directly to
   // the DOM in the scroll listener below (see the useMotionValueEvent call),
-  // not via React state — that keeps scrolling perfectly smooth by avoiding a
+  // not via React state - that keeps scrolling perfectly smooth by avoiding a
   // re-render of this whole tree on every scroll tick.
   const textLayerRef = useRef<HTMLDivElement>(null);
   const bottlesLayerRef = useRef<HTMLDivElement>(null);

@@ -11,7 +11,7 @@ import CategoryVisual from "@/components/CategoryVisual";
 
 const CHAPTERS: CatalogCategory[] = ["Nutrilite", "Artistry", "XS", "Water & Air Treatment"];
 
-// Richer, category-specific lifestyle photography for this section only —
+// Richer, category-specific lifestyle photography for this section only - 
 // everywhere else (product cards, FinalCta, etc.) keeps the catalog's
 // regular per-category image via CategoryVisual.
 const CHAPTER_IMAGE: Partial<Record<CatalogCategory, { src: string; alt: string }>> = {

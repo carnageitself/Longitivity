@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { supabaseAdmin, isSupabaseAdminConfigured } from "@/lib/supabaseAdmin";
 
 // Returns which slots are already taken in a date range, as plain
-// "YYYY-MM-DD_HH:MM" keys — never the underlying customer rows. Used by the
+// "YYYY-MM-DD_HH:MM" keys - never the underlying customer rows. Used by the
 // /schedule page to grey out booked times before the customer even picks one.
 export async function GET(request: Request) {
   if (!isSupabaseAdminConfigured || !supabaseAdmin) {

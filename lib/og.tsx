@@ -85,7 +85,7 @@ export function OgPhotoPanel({
 
 /**
  * The card shell: black field, gold glow bleeding in from the top right, a
- * hairline inset frame, and the wordmark over a gold gradient rule — the same
+ * hairline inset frame, and the wordmark over a gold gradient rule - the same
  * treatment BrandSparkles gives it in the header.
  *
  * Satori is flexbox-only and needs an explicit `display: flex` on anything

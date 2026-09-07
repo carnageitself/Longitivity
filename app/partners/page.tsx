@@ -5,7 +5,7 @@ import PartnersGrid from "@/components/PartnersGrid";
 import { SITE_NAME } from "@/lib/site-config";
 
 const DESCRIPTION =
-  "The nine brands behind every product here: Nutrilite, Artistry, Satinique, XS, eSpring, G&H, Glister, iCook and Atmosphere — and what each one makes.";
+  "The nine brands behind every product here: Nutrilite, Artistry, Satinique, XS, eSpring, G&H, Glister, iCook and Atmosphere, and what each one makes.";
 
 export const metadata: Metadata = {
   title: "Our Brands: Nutrilite, Artistry & eSpring",

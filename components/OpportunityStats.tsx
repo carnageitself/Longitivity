@@ -38,7 +38,7 @@ const STATS = [
 const BADGES = [
   {
     title: "#1 direct selling business in the world",
-    note: "Over 10 years in a row — Direct Selling News Global 100 Guide",
+    note: "Over 10 years in a row, per the Direct Selling News Global 100 Guide",
   },
   { title: "Diverse product selection", note: "Health, beauty, home, and tech, under one company" },
   { title: "Operating in 100+ countries & territories", note: "All 50 U.S. states plus international markets" },

@@ -14,7 +14,7 @@ export type OgPhoto = {
  * Mean luminance of the outer ring of pixels, i.e. the photo's backdrop.
  *
  * The catalog's `photoStyle` flag only distinguishes cut-outs from opaque
- * shots — it doesn't say what colour the opaque ones are, and they are mixed:
+ * shots - it doesn't say what colour the opaque ones are, and they are mixed:
  * some are on white, some (Nutrilite Double X among them) are on black. On the
  * site that never mattered because every card sits on a black page behind a
  * radial mask. On a share card it does, so measure rather than assume.
@@ -45,7 +45,7 @@ async function detectBackdrop(buf: Buffer): Promise<"light" | "dark"> {
 
 // Satori has a 500KB budget covering fonts, JSX and images, and it cannot fetch
 // from the site's own origin at build time (nothing is deployed yet). So the
-// photo is read off disk and inlined as a data URI — downscaled first, because
+// photo is read off disk and inlined as a data URI - downscaled first, because
 // six of the catalog files are over 400KB and one is 1MB.
 export async function loadOgPhoto(
   publicPath: string,

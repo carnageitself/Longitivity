@@ -525,7 +525,7 @@ export const fullCompare: FullComparison[] = [
         retailer: "Sephora",
         price: "~$88 / 30 mL",
         difference: "Prestige-counter serum built on a lab-cultured bifidus ferment aimed at the skin's microbiome, rather than the named botanical extracts Artistry works from.",
-        advantage: "The same 30 mL bottle for less at the same counter tier, and every active is a plant you can look up — ashwagandha root, holy basil, willow bark, seaweed and chia seed over sodium hyaluronate — instead of a proprietary ferment. Its USA manufacturing origin is published; Lancôme's is not.",
+        advantage: "The same 30 mL bottle for less at the same counter tier, and every active is a plant you can look up: ashwagandha root, holy basil, willow bark, seaweed and chia seed over sodium hyaluronate, instead of a proprietary ferment. Its USA manufacturing origin is published; Lancôme's is not.",
         madeIn: "Not publicly confirmed",
       },
     ],

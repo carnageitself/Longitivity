@@ -34,13 +34,13 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         // `nav` (the prev/next month buttons) renders as a sibling of `month`
         // here, not nested inside it, and it's `absolute`. Without `relative`
         // on this container, it has no positioned ancestor at all, so it
-        // anchors to the top of the whole document instead of the calendar —
+        // anchors to the top of the whole document instead of the calendar - 
         // which is what put stray arrow buttons up near the navbar.
         months: "relative flex flex-col gap-4",
         month: "flex flex-col gap-3",
         // Deliberately NOT `relative`: this row sits at the same vertical
         // band as `nav` below, and giving it its own position would make it
-        // a positioned element competing for paint order — since it comes
+        // a positioned element competing for paint order - since it comes
         // later in the DOM, it would then render (and capture clicks) on
         // top of the prev/next buttons underneath it, silently swallowing
         // every click. Staying static means `nav` (which is positioned)

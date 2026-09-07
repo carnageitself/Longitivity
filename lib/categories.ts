@@ -40,9 +40,9 @@ export const CATEGORY_SEO: CategorySeo[] = [
     category: "Nutrilite",
     title: "Nutrilite Vitamins & Supplements",
     h1: "Nutrilite Vitamins & Supplements",
-    description: `Browse ${NUTRILITE_COUNT} Nutrilite supplements — Double X, Omega, probiotics and daily packs — with full ingredient lists and prices checked against Amazon and Walmart.`,
+    description: `Browse ${NUTRILITE_COUNT} Nutrilite supplements including Double X, Omega, probiotics and daily packs, with full ingredient lists and prices checked against Amazon and Walmart.`,
     intro:
-      "Nutrilite is the part of this catalog people research hardest, and it should be. A daily supplement is something you buy every month for years, so the two questions worth answering up front are what is actually in it and whether the price holds up. Every product below opens to a complete ingredient panel — no proprietary blends hiding behind a trademark — alongside a side-by-side price check against comparable products at Amazon, Walmart and Costco.",
+      "Nutrilite is the part of this catalog people research hardest, and it should be. A daily supplement is something you buy every month for years, so the two questions worth answering up front are what is actually in it and whether the price holds up. Every product below opens to a complete ingredient panel, with no proprietary blends hiding behind a trademark, alongside a side-by-side price check against comparable products at Amazon, Walmart and Costco.",
     faqs: [
       {
         question: "Where are Nutrilite supplements made?",
@@ -61,7 +61,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
       {
         question: "Which Nutrilite product should I start with?",
         answer:
-          "Most people start with one daily foundation — Double X, the Men's Pack or the Women's Pack — and only then add something targeted like Omega, a probiotic or sleep support. Tell me what you are trying to cover and I will put a short list together instead of selling you the whole shelf.",
+          "Most people start with one daily foundation such as Double X, the Men's Pack or the Women's Pack, and only then add something targeted like Omega, a probiotic or sleep support. Tell me what you are trying to cover and I will put a short list together instead of selling you the whole shelf.",
       },
     ],
   },
@@ -70,7 +70,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     category: "Artistry",
     title: "Artistry Skincare & Cosmetics",
     h1: "Artistry Skincare & Cosmetics",
-    description: `Artistry serums, moisturisers, foundation, mascara and lipstick — ${ARTISTRY_COUNT} products with full ingredient lists, real prices and a 6-month satisfaction guarantee.`,
+    description: `Artistry serums, moisturisers, foundation, mascara and lipstick: ${ARTISTRY_COUNT} products with full ingredient lists, real prices and a 6-month satisfaction guarantee.`,
     intro:
       "Artistry is prestige skincare, priced like the brands at the department store counter. The difference: it's sold through a person, not a shelf, so there's no swatching in store. What you get instead is the full ingredient list before you buy, and six months to know it's right for your skin.",
     faqs: [
@@ -98,11 +98,11 @@ export const CATEGORY_SEO: CategorySeo[] = [
   {
     slug: "xs-energy",
     category: "XS",
-    title: "XS Energy Drinks — Every Flavor & Case Price",
+    title: "XS Energy Drinks: Every Flavor & Case Price",
     h1: "XS Energy Drinks",
-    description: `All ${XS_COUNT} XS Energy flavors — Classic, Tropical, Root Beer, Sparkling Juiced, Energy + Burn and Elite Focus — sold by the case, with full ingredient panels.`,
+    description: `All ${XS_COUNT} XS Energy flavors, from Classic and Tropical to Root Beer, Sparkling Juiced, Energy + Burn and Elite Focus, sold by the case, with full ingredient panels.`,
     intro:
-      "XS is built around a low-sugar formula with a higher caffeine load than most mainstream energy drinks, and it is sold by the case rather than the single can. A standard 12-pack of 12 fl oz cans runs $37.00, which works out to roughly $3.08 a can — worth doing the arithmetic on, because case pricing is where energy drinks are usually either a bargain or quietly expensive. Full ingredient and nutrition panels are on each flavor's page.",
+      "XS is built around a low-sugar formula with a higher caffeine load than most mainstream energy drinks, and it is sold by the case rather than the single can. A standard 12-pack of 12 fl oz cans runs $37.00, which works out to roughly $3.08 a can, which is worth doing the arithmetic on, because case pricing is where energy drinks are usually either a bargain or quietly expensive. Full ingredient and nutrition panels are on each flavor's page.",
     faqs: [
       {
         question: "What flavors does XS Energy come in?",
@@ -117,7 +117,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
       {
         question: "Is XS Energy sugar free?",
         answer:
-          "XS is formulated as a low-sugar energy drink rather than a full-sugar one. Rather than repeat a marketing line, each flavor's page carries its actual ingredient panel — check the one you are interested in, since the Sparkling Juiced and Elite Focus lines differ from the core flavors.",
+          "XS is formulated as a low-sugar energy drink rather than a full-sugar one. Rather than repeat a marketing line, each flavor's page carries its actual ingredient panel, so check the one you are interested in, since the Sparkling Juiced and Elite Focus lines differ from the core flavors.",
       },
       {
         question: "Can I mix flavors across cases?",
@@ -129,11 +129,11 @@ export const CATEGORY_SEO: CategorySeo[] = [
   {
     slug: "personal-care",
     category: "Personal Care",
-    title: "Satinique, Glister & G&H — Hair & Oral Care",
+    title: "Satinique, Glister & G&H: Hair & Oral Care",
     h1: "Hair, Oral & Body Care",
-    description: `Satinique shampoo and conditioner, Glister toothpaste and oral rinse, and g&h body wash and deodorant — ${PERSONAL_COUNT} everyday essentials with full ingredient lists.`,
+    description: `Satinique shampoo and conditioner, Glister toothpaste and oral rinse, and g&h body wash and deodorant: ${PERSONAL_COUNT} everyday essentials with full ingredient lists.`,
     intro:
-      "This is the repeat-purchase corner of the catalog: shampoo, toothpaste, deodorant, body wash. Because you buy these on a cycle rather than once, the per-use cost matters more than the sticker price, and several of them are concentrated — Glister's oral rinse in particular goes considerably further than the bottle size suggests. Satinique covers hair, Glister covers oral care and g&h covers body care.",
+      "This is the repeat-purchase corner of the catalog: shampoo, toothpaste, deodorant, body wash. Because you buy these on a cycle rather than once, the per-use cost matters more than the sticker price, and several of them are concentrated. Glister's oral rinse in particular goes considerably further than the bottle size suggests. Satinique covers hair, Glister covers oral care and g&h covers body care.",
     faqs: [
       {
         question: "How much is Glister toothpaste?",
@@ -161,7 +161,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     category: "Home Care",
     title: "Concentrated Home Cleaning & Laundry Products",
     h1: "Home Cleaning & Laundry",
-    description: `${HOME_COUNT} concentrated home care products — Dish Drops, kitchen and bathroom cleaner, laundry detergent, fabric softener and dishwasher tablets — priced per real use.`,
+    description: `${HOME_COUNT} concentrated home care products, from Dish Drops and kitchen cleaner to laundry detergent, fabric softener and dishwasher tablets, priced per real use.`,
     intro:
       "Almost everything in this section is concentrated, which is the whole argument for it and also the reason a straight price comparison misleads. A $17.00 litre of kitchen cleaner that dilutes several times over is not competing with a $4.00 spray bottle of ready-to-use cleaner on sticker price; it is competing on cost per bottle you actually fill. Each product page gives the dilution and the ingredient list so you can run that number rather than guess at it.",
     faqs: [
@@ -173,7 +173,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
       {
         question: "Do I need to buy the spray bottles separately?",
         answer:
-          "A Refillable Trigger Spray Bottle is $6.50 and is a one-time purchase — you refill it from the concentrate rather than replacing it. Dish Drops is also available in a ready-to-use pump bottle if you would rather skip the dilution step.",
+          "A Refillable Trigger Spray Bottle is $6.50 and is a one-time purchase: you refill it from the concentrate rather than replacing it. Dish Drops is also available in a ready-to-use pump bottle if you would rather skip the dilution step.",
       },
       {
         question: "What is in the laundry range?",
@@ -197,7 +197,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     description:
       "eSpring under-counter water treatment ($1,299) and Atmosphere Sky air purifiers ($1,710), plus HEPA and carbon replacement filters and real running costs.",
     intro:
-      "These are the two genuine capital purchases in the catalog, and they are the ones where the replacement filter cost matters as much as the unit price. The eSpring under-counter system is $1,299.00 with e3 carbon replacement filters at $254.00; the Atmosphere Sky is $1,710.00, with a $192.00 HEPA filter and a $140.00 carbon odour filter. Budget the consumables before you buy the unit — that is the number most comparison shopping leaves out.",
+      "These are the two genuine capital purchases in the catalog, and they are the ones where the replacement filter cost matters as much as the unit price. The eSpring under-counter system is $1,299.00 with e3 carbon replacement filters at $254.00; the Atmosphere Sky is $1,710.00, with a $192.00 HEPA filter and a $140.00 carbon odour filter. Budget the consumables before you buy the unit, because that is the number most comparison shopping leaves out.",
     faqs: [
       {
         question: "How much does an eSpring water filter cost to run?",
@@ -212,7 +212,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
       {
         question: "What contaminants does eSpring remove?",
         answer:
-          "eSpring is certified against a tested contaminant list rather than a marketing claim. The product page carries the specifics, and the certification is the part worth reading — an uncertified filter that claims the same reduction has not been independently tested for it.",
+          "eSpring is certified against a tested contaminant list rather than a marketing claim. The product page carries the specifics, and the certification is the part worth reading, because an uncertified filter that claims the same reduction has not been independently tested for it.",
       },
       {
         question: "What is the return window on a water or air system?",

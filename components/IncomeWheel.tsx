@@ -5,7 +5,7 @@ import { Clock, DollarSign, Users, Coins, Equal } from "lucide-react";
 
 // Geometry for the 4-blade pinwheel. Each blade fills exactly one compass
 // quadrant (NW/NE/SE/SW) so that its color lines up with the corner callout
-// that sits in that same quadrant — the seams sit at N/E/S/W, not on the
+// that sits in that same quadrant - the seams sit at N/E/S/W, not on the
 // diagonals, so a color never straddles the boundary a callout points at.
 // The two edges of each wedge are identical cubic-bezier "seam" curves
 // (rotations of one another) that bow in the clockwise tangential
@@ -29,7 +29,7 @@ function tangent(angleDeg: number): Pt {
   return { x: Math.cos(rad), y: Math.sin(rad) };
 }
 
-const SEAMS = [270, 0, 90, 180] as const; // W, N, E, S — quadrant boundaries
+const SEAMS = [270, 0, 90, 180] as const; // W, N, E, S: quadrant boundaries
 
 const seamData = SEAMS.map((angle) => {
   const outer = pt(angle, R);
@@ -94,7 +94,7 @@ const CORNERS: {
 
 // Labels always read left-to-right, matching the source diagram (only the
 // column that wraps a Corner decides whether the block hugs toward the
-// wheel or sits flush against the outer edge — see IncomeWheel below).
+// wheel or sits flush against the outer edge - see IncomeWheel below).
 function Corner({ corner }: { corner: (typeof CORNERS)[number] }) {
   const [IconA, IconB] = corner.icons;
   return (

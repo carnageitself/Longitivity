@@ -61,7 +61,7 @@ export default function OpportunityCta() {
           </div>
 
           <p className="mt-8 text-sm text-muted">
-            Have questions before then? Reach out any time — happy to walk through anything on
+            Have questions before then? Reach out any time. Happy to walk through anything on
             this page in more detail.
           </p>
         </motion.div>

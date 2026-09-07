@@ -11,12 +11,12 @@ import { absoluteUrl, breadcrumbJsonLd, ORGANIZATION_ID } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site-config";
 
 const DESCRIPTION =
-  "Every product across Nutrilite, Artistry, XS, personal care, home care and water & air treatment — with full ingredient lists, sizes and honest pricing.";
+  "Every product across Nutrilite, Artistry, XS, personal care, home care and water & air treatment, with full ingredient lists, sizes and honest pricing.";
 
 export const metadata: Metadata = {
   // Bare title: the root layout's template appends "| Longitivity". Adding it
   // here too is what produced "... | Longitivity | Longitivity" in the SERP.
-  title: "All Products — Nutrilite, Artistry, XS & More",
+  title: "All Products: Nutrilite, Artistry, XS & More",
   description: DESCRIPTION,
   keywords: [
     "Nutrilite catalog",

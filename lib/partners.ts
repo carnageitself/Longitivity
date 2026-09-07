@@ -3,7 +3,7 @@ import type { CatalogCategory } from "@/lib/catalog";
 export type Partner = {
   name: string;
   description: string;
-  // A single standout credential — the kind of thing you'd put on a plaque,
+  // A single standout credential - the kind of thing you'd put on a plaque,
   // not just another feature bullet. Kept separate from `points` so it can
   // get its own visual treatment.
   achievement: string;

@@ -8,7 +8,7 @@ const DESCRIPTION =
   "Get a dedicated account executive: personalized product picks, order tracking, delivery and refunds, handled by one person rather than a support queue.";
 
 export const metadata: Metadata = {
-  title: "Contact — Pricing & Product Recommendations",
+  title: "Contact: Pricing & Product Recommendations",
   description: DESCRIPTION,
   keywords: ["contact", "get pricing", "product recommendations", "wellness consultation"],
   alternates: { canonical: "/contact" },

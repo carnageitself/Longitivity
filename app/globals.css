@@ -135,7 +135,7 @@ body::-webkit-scrollbar {
  *
  * Fallback: browsers without scroll-driven animations ignore
  * `animation-timeline`, so the shorthand's implied `0s` duration applies and
- * `both` holds the end state — the element is simply visible, never stuck
+ * `both` holds the end state - the element is simply visible, never stuck
  * hidden. That is the important property here. */
 @keyframes reveal-up {
   from {

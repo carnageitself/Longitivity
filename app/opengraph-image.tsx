@@ -4,7 +4,7 @@ import { OG_SIZE, OgFrame, loadOgFonts } from "@/lib/og";
 
 export const size = OG_SIZE;
 export const contentType = "image/png";
-export const alt = `${SITE_NAME} — wellness and home essentials, price-checked against Amazon, Walmart and Costco`;
+export const alt = `${SITE_NAME}: wellness and home essentials, price-checked against Amazon, Walmart and Costco`;
 
 export default async function OpengraphImage() {
   return new ImageResponse(

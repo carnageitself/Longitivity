@@ -33,7 +33,7 @@ const ALL_SLOTS: TimeSlot[] = [...WEEKDAY_SLOTS, ...WEEKEND_SLOTS].filter(
 
 export type BookingDay = { date: string; label: string; weekday: string };
 
-// Y-M-D from local date parts, not toISOString() — toISOString() converts to
+// Y-M-D from local date parts, not toISOString() - toISOString() converts to
 // UTC first, which silently rolls the date back or forward a day depending on
 // the server/browser's timezone offset from midnight.
 export function toDateKey(d: Date): string {

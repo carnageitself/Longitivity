@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   // Bare title: the root layout template appends the brand, so spelling it out
   // here produced "Get in Touch | Longitivity | Longitivity".
   title: "Get in Touch",
-  description: `Contact details, the full ${SITE_NAME} site, and a look at Artistry skincare — all in one place.`,
+  description: `Contact details, the full ${SITE_NAME} site, and a look at Artistry skincare, all in one place.`,
   // Kept out of the index, but `follow` so the crawler still walks the links
   // through to the main site instead of treating them as a dead end.
   robots: { index: false, follow: true },
@@ -35,7 +35,7 @@ export default function CardPage() {
           <div className="overflow-hidden rounded-2xl border border-border bg-surface">
             {/* Ambient loop, no controls: purely visual, so no caption track
                 needed. (The jsx-a11y disable that used to sit here was flagged
-                as unused — that rule is not enabled in this config.) */}
+                as unused, that rule is not enabled in this config.) */}
             <video
               id="artistry-loop"
               // "#t=0" is a media fragment, not a URL hash the server ever
@@ -44,7 +44,7 @@ export default function CardPage() {
               src={`${encodeURI("/Artistry video.mp4")}#t=0`}
               // The file's true dimensions. Without them the element has no
               // height until metadata arrives, so the card collapsed and then
-              // snapped open, shoving the CTA down the page — the visible jump
+              // snapped open, shoving the CTA down the page - the visible jump
               // on load. Declaring them reserves the 16:9 box up front.
               width={1024}
               height={576}
@@ -66,7 +66,7 @@ export default function CardPage() {
            * so the loop resumes wherever it was. `pageshow` is the one event
            * that fires for both a fresh load and a bfcache restore.
            *
-           * Inline on purpose — it must run before paint, and this keeps the
+           * Inline on purpose - it must run before paint, and this keeps the
            * page a server component with no hydration boundary. */}
           <script
             dangerouslySetInnerHTML={{
