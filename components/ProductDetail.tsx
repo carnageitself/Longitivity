@@ -103,18 +103,6 @@ export default function ProductDetail({
       <p className="mt-6 text-lg">{product.hook}</p>
       <p className="mt-3 text-muted">{product.description}</p>
 
-      {product.videoId && (
-        <div className="mt-8 aspect-video overflow-hidden rounded-xl border border-border">
-          <iframe
-            className="h-full w-full"
-            src={`https://www.youtube-nocookie.com/embed/${product.videoId}`}
-            title={`${product.name} video`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      )}
-
       <div className="mt-12">
         <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold tracking-wide text-muted uppercase">
           <ListChecks size={15} />

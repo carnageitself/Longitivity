@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Sparkle, Play } from "lucide-react";
+import { Sparkle } from "lucide-react";
 import { CATEGORY_GLOW, CATEGORY_VISUAL, type CatalogProduct } from "@/lib/catalog";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
@@ -61,12 +61,6 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
               className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${BADGE_STYLES[product.badge]}`}
             >
               {product.badge}
-            </span>
-          )}
-          {product.videoId && (
-            <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-medium backdrop-blur-sm">
-              <Play size={11} className="fill-current" />
-              Video
             </span>
           )}
         </div>
