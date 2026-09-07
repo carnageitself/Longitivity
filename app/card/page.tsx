@@ -33,10 +33,14 @@ export default function CardPage() {
         <div className="flex w-full flex-col gap-3">
           <p className="text-xs font-medium tracking-wide text-accent uppercase">Artistry</p>
           <div className="overflow-hidden rounded-2xl border border-border bg-surface">
-            {/* Ambient loop, no controls: purely visual, so no caption track needed. */}
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+            {/* Ambient loop, no controls: purely visual, so no caption track
+                needed. (The jsx-a11y disable that used to sit here was flagged
+                as unused — that rule is not enabled in this config.) */}
             <video
-              src={encodeURI("/Artistry video.mp4")}
+              // "#t=0" is a media fragment, not a URL hash the server ever
+              // sees: it pins the start position so the browser cannot resume
+              // a partially-played file from its media cache.
+              src={`${encodeURI("/Artistry video.mp4")}#t=0`}
               autoPlay
               muted
               loop
