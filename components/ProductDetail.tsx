@@ -16,6 +16,13 @@ function unitFor(c: CompetitorMatch): string {
   return slash === -1 ? "Not listed" : c.price.slice(slash + 1).trim();
 }
 
+// ...and drop it from the price cell, so "~$88 / 30 mL" doesn't print its
+// pack size next to a row that already states it.
+function priceOnly(c: CompetitorMatch): string {
+  const slash = c.price.indexOf("/");
+  return slash === -1 ? c.price : c.price.slice(0, slash).trim();
+}
+
 const BADGE_STYLES: Record<string, string> = {
   Bestseller: "bg-linear-to-br from-accent to-[#8a6d3b] text-accent-foreground shadow-md shadow-amber-900/40 ring-1 ring-inset ring-white/25",
   New: "bg-linear-to-br from-emerald-400 to-emerald-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-inset ring-white/25",
@@ -218,7 +225,7 @@ export default function ProductDetail({
                     label: "Price",
                     ours: <span className="font-semibold tabular-nums">{product.price}</span>,
                     theirs: (c: CompetitorMatch) => (
-                      <span className="font-semibold tabular-nums text-muted">{c.price}</span>
+                      <span className="font-semibold tabular-nums text-muted">{priceOnly(c)}</span>
                     ),
                   },
                 ].map(({ label, ours, theirs, oursWins }, i) => {

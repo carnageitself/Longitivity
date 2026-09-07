@@ -47,5 +47,14 @@ export function getRetailerReturnPolicy(retailer: string, category: CatalogCateg
       : "No time limit: full refund whenever you're not satisfied.";
   }
 
+  // Prestige beauty counters, where Artistry actually competes. Both cut their
+  // window from 60 days to 30 in the last two years — Ulta in November 2024,
+  // Sephora for purchases from 24 April 2025 — and both require the item to be
+  // no more than "gently used", so a product you finish testing properly is
+  // outside the policy either way.
+  if (retailer === "Sephora" || retailer === "Ulta") {
+    return "30 days, and only while the product is still 'gently used' — both cut this from 60 days recently.";
+  }
+
   return "Contact retailer for current policy.";
 }
