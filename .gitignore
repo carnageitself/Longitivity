@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...except the example, which holds no values and exists precisely to be
+# committed: without it a fresh clone has no record of which vars are needed.
+!.env*.example
 
 # vercel
 .vercel

@@ -3,8 +3,15 @@ import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
 // Single source of truth for the canonical origin. Every route used to declare
 // its own copy of this line, which meant a domain change had to be made in five
 // places and a missed one would emit cross-domain canonicals.
+//
+// The fallback must be the production domain, not the vercel.app one. While it
+// pointed at the preview host, longitivity.com served canonicals, a sitemap and
+// og:image URLs all naming vercel.app — which tells Google the preview is the
+// real site and hands it every ranking signal the custom domain earned.
+//
+// Overridable via NEXT_PUBLIC_SITE_URL for preview deployments.
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://longitivity.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://longitivity.com"
 ).replace(/\/+$/, "");
 
 // Absolute URL for structured data and OG tags. Search engines treat relative
