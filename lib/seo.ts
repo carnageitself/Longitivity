@@ -18,8 +18,16 @@ export const SITE_URL = (
 // URLs inside JSON-LD as invalid, so anything going into a schema payload has
 // to be resolved here first. `new URL` also percent-encodes the spaces that
 // most of the product photo filenames contain.
+//
+// It does not touch `&`, which is legal in a path — but three catalog photos
+// are named "G&H ...", and a raw `&` is an unterminated entity in XML. That
+// made the whole sitemap unparseable, not just those rows, because XML parsers
+// abort at the first bad entity. Encoding it resolves to the identical file.
+// Confined to the pathname so `#fragment` and any future query string survive.
 export function absoluteUrl(path = "/"): string {
-  return new URL(path, SITE_URL).toString();
+  const url = new URL(path, SITE_URL);
+  url.pathname = url.pathname.replace(/&/g, "%26");
+  return url.toString();
 }
 
 export type BreadcrumbEntry = { name: string; path: string };
