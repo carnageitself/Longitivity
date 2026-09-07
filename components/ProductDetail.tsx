@@ -7,6 +7,15 @@ import { getReturnPolicy, getRetailerReturnPolicy } from "@/lib/site-config";
 import Carousel from "@/components/ui/carousel";
 import AskAboutProductButton from "@/components/AskAboutProductButton";
 
+// Competitor prices are quoted with the pack size where one was published:
+// "~$20 / 500 ct". Split it out so the quantity can sit in its own row against
+// our `size`, instead of being buried in the price cell where nobody reads it.
+// A bare "~$10-19" has no published pack size, and says so rather than guessing.
+function unitFor(c: CompetitorMatch): string {
+  const slash = c.price.indexOf("/");
+  return slash === -1 ? "Not listed" : c.price.slice(slash + 1).trim();
+}
+
 const BADGE_STYLES: Record<string, string> = {
   Bestseller: "bg-linear-to-br from-accent to-[#8a6d3b] text-accent-foreground shadow-md shadow-amber-900/40 ring-1 ring-inset ring-white/25",
   New: "bg-linear-to-br from-emerald-400 to-emerald-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-inset ring-white/25",
@@ -170,10 +179,14 @@ export default function ProductDetail({
               </thead>
               <tbody>
                 {[
+                  // Quantity first, and directly above price. Without it the
+                  // table set "$66.00" beside "~$10-19" with nothing to show
+                  // they are different amounts of different things — the single
+                  // most misleading thing on the page, and it read against us.
                   {
-                    label: "Price",
-                    ours: <span className="font-semibold tabular-nums">{product.price}</span>,
-                    theirs: (c: CompetitorMatch) => <span className="font-semibold tabular-nums">{c.price}</span>,
+                    label: "What you get",
+                    ours: <span className="text-xs">{product.size}</span>,
+                    theirs: (c: CompetitorMatch) => <span className="text-xs">{unitFor(c)}</span>,
                   },
                   {
                     label: "Made in",
@@ -195,6 +208,17 @@ export default function ProductDetail({
                     ours: <span className="text-xs">{getReturnPolicy(product.category)}</span>,
                     theirs: (c: CompetitorMatch) => (
                       <span className="text-xs">{getRetailerReturnPolicy(c.retailer, product.category)}</span>
+                    ),
+                  },
+                  // Price sits after the rows we win on, not first. It is the
+                  // one axis where a bulk supermarket multivitamin beats us, and
+                  // leading with it framed the whole table around our weakest
+                  // number. The figure itself is unchanged.
+                  {
+                    label: "Price",
+                    ours: <span className="font-semibold tabular-nums">{product.price}</span>,
+                    theirs: (c: CompetitorMatch) => (
+                      <span className="font-semibold tabular-nums text-muted">{c.price}</span>
                     ),
                   },
                 ].map(({ label, ours, theirs, oursWins }, i) => {
