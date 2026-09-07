@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Award, Check, ListChecks, Scale } from "lucide-react";
+import { ArrowLeft, Award, Check, ListChecks, Minus, Scale } from "lucide-react";
 import { CATEGORY_PLACEHOLDER_IMAGE, CATEGORY_VISUAL, catalog, type CatalogProduct } from "@/lib/catalog";
 import type { CompetitorMatch } from "@/lib/fullCompare";
 import { getReturnPolicy, getRetailerReturnPolicy } from "@/lib/site-config";
@@ -29,6 +29,13 @@ export default function ProductDetail({
   const visual = CATEGORY_VISUAL[product.category];
   const image = product.image ?? visual.image;
   const photoStyle = product.image ? product.photoStyle : visual.photoStyle;
+
+  // Costco's satisfaction guarantee carries no time limit except on
+  // electronics, so for anything but Water & Air Treatment they outlast our
+  // window and the return row is not ours to claim.
+  const outlastsEveryRetailer = !competitors.some(
+    (c) => c.retailer === "Costco" && product.category !== "Water & Air Treatment",
+  );
 
   return (
     <div className="mx-auto max-w-4xl px-6 pt-24 pb-16">
@@ -119,10 +126,15 @@ export default function ProductDetail({
       </div>
 
       <div className="mt-12">
-        <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold tracking-wide text-muted uppercase">
+        <h2 className="mb-1 flex items-center gap-2 text-sm font-semibold tracking-wide text-muted uppercase">
           <Scale size={15} />
-          How it compares
+          Why ours wins
         </h2>
+        <p className="mb-4 text-xs text-muted">
+          Read across any column to see how {product.name} beats that specific
+          alternative. Their prices are listed exactly as they are — check any of
+          them yourself.
+        </p>
 
         {competitors.length === 0 ? (
           <p className="text-sm text-muted">
@@ -136,9 +148,13 @@ export default function ProductDetail({
                   <th className="sticky left-0 z-10 w-24 bg-background p-4 text-left text-xs font-medium tracking-wide text-muted uppercase">
                     &nbsp;
                   </th>
+                  {/* Our column is the hero: filled accent badge, solid white
+                      name. Competitors are deliberately quieter so a skim reads
+                      ours as the answer and theirs as the alternatives. */}
                   <th className="border-l-2 border-accent bg-surface p-4 text-left align-top">
-                    <span className="mb-1 block w-fit rounded-full bg-accent px-2 py-0.5 text-[11px] font-medium text-accent-foreground">
-                      {product.category}
+                    <span className="mb-1 flex w-fit items-center gap-1 rounded-full bg-accent px-2 py-0.5 text-[11px] font-semibold text-accent-foreground">
+                      <Award size={11} />
+                      Our pick
                     </span>
                     <span className="block font-semibold">{product.name}</span>
                   </th>
@@ -147,7 +163,7 @@ export default function ProductDetail({
                       <span className="mb-1 block w-fit rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-muted">
                         {c.retailer}
                       </span>
-                      <span className="block font-medium">{c.name}</span>
+                      <span className="block font-medium text-muted">{c.name}</span>
                     </th>
                   ))}
                 </tr>
@@ -166,19 +182,38 @@ export default function ProductDetail({
                   },
                   {
                     label: "Return policy",
+                    // Against Amazon (1 month, opened hygiene items final sale)
+                    // and Walmart (3 months, opened items in-store only) the
+                    // guarantee is a clear win and should be marked as one.
+                    //
+                    // Against Costco it is not: their guarantee has no time
+                    // limit at all outside electronics, so it genuinely beats
+                    // our window. Ticking it there would be a plain false
+                    // claim, and a comparison table caught overclaiming once
+                    // forfeits the reader's trust on every other row.
+                    oursWins: outlastsEveryRetailer,
                     ours: <span className="text-xs">{getReturnPolicy(product.category)}</span>,
                     theirs: (c: CompetitorMatch) => (
                       <span className="text-xs">{getRetailerReturnPolicy(c.retailer, product.category)}</span>
                     ),
                   },
-                ].map(({ label, ours, theirs }, i) => {
+                ].map(({ label, ours, theirs, oursWins }, i) => {
                   const rowBg = i % 2 === 1 ? "bg-surface/50" : "";
                   return (
                     <tr key={label} className={`border-b border-border ${rowBg}`}>
                       <td className={`sticky left-0 z-10 bg-background p-4 text-xs font-medium tracking-wide text-muted uppercase ${rowBg}`}>
                         {label}
                       </td>
-                      <td className="border-l-2 border-accent bg-surface p-4">{ours}</td>
+                      <td className="border-l-2 border-accent bg-surface p-4">
+                        {oursWins ? (
+                          <span className="flex items-start gap-1.5">
+                            <Check size={13} className="mt-0.5 shrink-0 text-accent" />
+                            <span>{ours}</span>
+                          </span>
+                        ) : (
+                          ours
+                        )}
+                      </td>
                       {competitors.map((c) => (
                         <td key={c.name} className={`border-l border-border p-4 ${rowBg}`}>
                           {theirs(c)}
@@ -203,16 +238,24 @@ export default function ProductDetail({
                   </td>
                   {competitors.map((c) => (
                     <td key={c.name} className="border-l border-border p-4 align-top text-xs text-muted">
-                      {c.difference}
+                      {/* Ours is a ticked list of what you get; theirs is prose
+                          about what differs. Without a marker the two read as
+                          equivalent specs instead of a list versus a caveat. */}
+                      <span className="flex items-start gap-1.5">
+                        <Minus size={12} className="mt-0.5 shrink-0 opacity-60" />
+                        <span>{c.difference}</span>
+                      </span>
                     </td>
                   ))}
                 </tr>
-                {/* Read left-to-right: each competitor column states what this
-                    product does better than that specific competitor, so the
-                    "ours" cell is a pointer rather than a claim of its own. */}
+                {/* The text in each competitor column is OUR argument against
+                    that competitor, not a description of them. Sitting bare in
+                    their column it read like their sales pitch, which is the
+                    opposite of the point — hence the explicit "Beats <name>"
+                    lead-in and accent styling marking it as our voice. */}
                 <tr className="bg-accent/5">
                   <td className="sticky left-0 z-10 bg-background p-4 align-top text-xs font-medium tracking-wide text-accent uppercase">
-                    Our advantage
+                    Why ours wins
                   </td>
                   <td className="border-l-2 border-accent bg-surface p-4 align-top">
                     <span className="flex items-start gap-1.5 text-xs font-medium text-accent">
@@ -222,7 +265,11 @@ export default function ProductDetail({
                   </td>
                   {competitors.map((c) => (
                     <td key={c.name} className="border-l border-border p-4 align-top text-xs">
-                      {c.advantage}
+                      <span className="mb-1.5 flex items-center gap-1 font-semibold text-accent uppercase">
+                        <Check size={12} className="shrink-0" />
+                        Beats {c.name}
+                      </span>
+                      <span className="block text-foreground">{c.advantage}</span>
                     </td>
                   ))}
                 </tr>
