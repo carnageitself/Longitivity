@@ -631,9 +631,30 @@ export const fullCompare: FullComparison[] = [
       {
         name: "MAC Matte Lipstick",
         retailer: "Ulta",
-        price: "~$25",
+        price: "~$25 / 0.1 oz",
         difference: "The prestige-counter benchmark for matte lip colour: a bullet lipstick that sets to a flat matte, where Artistry's liquid-pigment base stays creamy.",
         advantage: "Within a dollar of MAC at the same counter tier, but the liquid-pigment base keeps long-wear colour comfortable instead of setting flat and dragging on the lip. Shades are picked with someone who can match you, and it is returnable for six months rather than thirty days.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-go-vibrant-lip-glow",
+    competitors: [
+      {
+        name: "MAC Lipglass High Shine Lip Gloss",
+        retailer: "Ulta",
+        price: "~$24 / 0.1 oz",
+        difference: "The long-standing prestige gloss benchmark, known for heavy shine and the thick, tacky texture that comes with it.",
+        advantage: "Twice the product in the tube at 5 g against 0.1 oz, a finish built to stay non-sticky rather than tacky, and a vitamin complex conditioning lips while it wears. The cap carries an LED light and mirror, which no gloss at this counter does.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "Dior Addict Lip Maximizer Plumping Gloss",
+        retailer: "Sephora",
+        price: "~$42 / 6 mL",
+        difference: "A luxury plumping gloss that works by irritating the lip slightly to swell it, so the effect fades as the tingle does.",
+        advantage: "Meaningfully cheaper than the Dior, and it holds colour for a stated 10 hours rather than resting on a plumping effect that wears off. Formulated with no mineral oil, parabens or phthalates under the Artistry Clean standard, and returnable for six months against Sephora's thirty days.",
         madeIn: "Not publicly confirmed",
       },
     ],
