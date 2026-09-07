@@ -7,9 +7,13 @@ import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
 // or QR code, not browsed to from the main site nav. Deliberately excluded
 // from the sitemap and de-indexed below for the same reason.
 export const metadata: Metadata = {
-  title: `Get in Touch | ${SITE_NAME}`,
+  // Bare title: the root layout template appends the brand, so spelling it out
+  // here produced "Get in Touch | Longitivity | Longitivity".
+  title: "Get in Touch",
   description: `Contact details, the full ${SITE_NAME} site, and a look at Artistry skincare — all in one place.`,
-  robots: { index: false, follow: false },
+  // Kept out of the index, but `follow` so the crawler still walks the links
+  // through to the main site instead of treating them as a dead end.
+  robots: { index: false, follow: true },
 };
 
 const PHONE_DISPLAY = "+1 (805) 212-8139";
@@ -21,7 +25,7 @@ export default function CardPage() {
       <div className="flex w-full max-w-md flex-col items-center gap-14 lg:max-w-2xl lg:gap-6">
         {/* Identity */}
         <div className="flex flex-col items-center gap-2 text-center">
-          <p className="text-2xl font-bold tracking-tight">{SITE_NAME}</p>
+          <h1 className="text-2xl font-bold tracking-tight">{SITE_NAME}</h1>
           <p className="text-sm text-muted">{SITE_TAGLINE}</p>
         </div>
 
