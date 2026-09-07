@@ -42,12 +42,20 @@ export default function CardPage() {
               // sees: it pins the start position so the browser cannot resume
               // a partially-played file from its media cache.
               src={`${encodeURI("/Artistry video.mp4")}#t=0`}
+              // The file's true dimensions. Without them the element has no
+              // height until metadata arrives, so the card collapsed and then
+              // snapped open, shoving the CTA down the page — the visible jump
+              // on load. Declaring them reserves the 16:9 box up front.
+              width={1024}
+              height={576}
               autoPlay
               muted
               loop
               playsInline
               disablePictureInPicture
-              className="pointer-events-none w-full"
+              // `block` kills the few px of inline-descender gap that would
+              // otherwise show as a seam inside the rounded border.
+              className="pointer-events-none block h-auto w-full"
             />
           </div>
           {/* Rewind on every entry to the page.
@@ -63,8 +71,17 @@ export default function CardPage() {
           <script
             dangerouslySetInnerHTML={{
               __html:
-                'addEventListener("pageshow",function(){var v=document.getElementById("artistry-loop");' +
-                "if(v){v.currentTime=0;var p=v.play();if(p)p.catch(function(){})}});",
+                'addEventListener("pageshow",function(e){' +
+                'var v=document.getElementById("artistry-loop");if(!v)return;' +
+                // Only rewind when it actually resumed mid-loop. A cold load is
+                // already at zero from autoplay + "#t=0", and seeking it again
+                // would yank back the frames just painted. `persisted` marks a
+                // bfcache restore; the currentTime check catches the browsers
+                // (some iOS Safari builds) that restore without setting it.
+                "if(!e.persisted&&v.currentTime<0.25)return;" +
+                // Seeking before metadata exists throws InvalidStateError.
+                "try{v.currentTime=0}catch(err){}" +
+                "var p=v.play();if(p&&p.catch)p.catch(function(){});});",
             }}
           />
           <Link
