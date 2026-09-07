@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CatalogBrowser from "@/components/CatalogBrowser";
 import JsonLd from "@/components/JsonLd";
 import { catalog } from "@/lib/catalog";
-import { CATEGORY_SEO, countIn } from "@/lib/categories";
 import { absoluteUrl, breadcrumbJsonLd, ORGANIZATION_ID } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site-config";
 
@@ -85,22 +83,6 @@ export default function ProductsPage() {
               hand-waving. Tap any product to see exactly what&apos;s inside
               before you commit.
             </p>
-
-            {/* Server-rendered links into the category landing pages. The
-                filter buttons below are client state and produce no crawlable
-                URL, so without these the collection pages would be orphaned. */}
-            <nav aria-label="Product categories" className="mt-8 flex flex-wrap gap-3">
-              {CATEGORY_SEO.map((entry) => (
-                <Link
-                  key={entry.slug}
-                  href={`/collections/${entry.slug}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-surface"
-                >
-                  {entry.category}
-                  <span className="text-xs text-muted">{countIn(entry.category)}</span>
-                </Link>
-              ))}
-            </nav>
           </div>
         </section>
 
