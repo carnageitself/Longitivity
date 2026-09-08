@@ -82,7 +82,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
       {
         question: "How much is the Artistry Skin Nutrition Defying Serum?",
         answer:
-          "$85.00. The Hydrating Gel Cream is $45.00, the Go Vibrant Mascara is $28.00 and the Go Vibrant Cream Lipstick is $26.00. A few items, including the Illuminating CC Cream and Exact Fit Powder Foundation, are priced on request because no stable public figure exists for them.",
+          "$85.00. The Hydrating Gel Cream is $45.00, the Illuminating CC Cream is $38.00, the Exact Fit Powder Foundation is $32.50, the Light Up Liquid Lip Glow is $29.00, the Go Vibrant Mascara is $28.00 and the Go Vibrant Cream Lipstick is $26.00.",
       },
       {
         question: "Can I return skincare or makeup after opening it?",
