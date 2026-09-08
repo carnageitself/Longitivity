@@ -618,8 +618,10 @@ export const catalog: CatalogProduct[] = [
     hook: "The cap has an LED light and mirror built in, so touch-ups don't depend on finding decent lighting.",
     badge: "New",
     madeIn: "USA",
-    image: "/Artistry Desert Rose lip gloss.jpg",
-    photoStyle: "card",
+    image: "/Artistry Desert Rose lip gloss.png",
+    // Cut-out with a real alpha channel, so it sits straight on the dark page
+    // rather than needing the light plate the white-background JPG required.
+    photoStyle: "transparent",
   },
   {
     slug: "artistry-men-balancing-hydrator",
