@@ -639,7 +639,7 @@ export const fullCompare: FullComparison[] = [
     ],
   },
   {
-    slug: "artistry-go-vibrant-lip-glow",
+    slug: "artistry-go-vibrant-lip-glow-desert-rose",
     competitors: [
       {
         name: "MAC Lipglass High Shine Lip Gloss",

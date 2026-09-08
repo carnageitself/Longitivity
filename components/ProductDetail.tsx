@@ -31,9 +31,12 @@ const BADGE_STYLES: Record<string, string> = {
 
 export default function ProductDetail({
   product,
+  variantNav,
   competitors,
 }: {
   product: CatalogProduct;
+  /** Shade / flavour switcher, passed in so this stays a presentational component. */
+  variantNav?: React.ReactNode;
   competitors: CompetitorMatch[];
 }) {
   const sameCategory = catalog.filter((p) => p.category === product.category && p.slug !== product.slug);
@@ -125,6 +128,10 @@ export default function ProductDetail({
 
       <p className="mt-6 text-lg">{product.hook}</p>
       <p className="mt-3 text-muted">{product.description}</p>
+
+      {/* Sits directly under the copy, where a shopper looks for the shade or
+          flavour picker before anything else on the page. */}
+      {variantNav}
 
       <div className="mt-12">
         <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold tracking-wide text-muted uppercase">

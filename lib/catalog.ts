@@ -29,6 +29,15 @@ export type CatalogProduct = {
   // "transparent": photo already has a cut-out/alpha background, drop straight on the page.
   // "card": photo has an opaque (usually white) background, so it needs a light plate behind it.
   photoStyle?: "transparent" | "card";
+  // Same product in a different shade or flavour. Everything sharing a group id
+  // renders a switcher on each of its pages, so someone who lands on Root Beer
+  // can reach Tropical without going back to the catalog. Grouped by sub-line
+  // rather than by category: the core Energy Drink flavours are one formula in
+  // twelve flavours, whereas Energy + Burn is a different product.
+  variantGroup?: string;
+  // The part that distinguishes this one within its group ("Tropical",
+  // "Desert Rose"). Used as the switcher's label.
+  variantLabel?: string;
 };
 
 export const CATEGORY_INFO: Record<CatalogCategory, { blurb: string }> = {
@@ -601,10 +610,10 @@ export const catalog: CatalogProduct[] = [
     photoStyle: "card",
   },
   {
-    slug: "artistry-go-vibrant-lip-glow",
-    name: "Artistry Go Vibrant Light Up Liquid Lip Glow",
+    slug: "artistry-go-vibrant-lip-glow-desert-rose",
+    name: "Artistry Go Vibrant Light Up Liquid Lip Glow - Desert Rose",
     category: "Artistry",
-    size: "5 g / 0.18 oz, 4 shades",
+    size: "5 g / 0.18 oz",
     price: "$29.00",
     priceStatus: "confirmed",
     ingredients: [
@@ -612,16 +621,82 @@ export const catalog: CatalogProduct[] = [
       "No mineral oil, parabens or phthalates, under the Artistry Clean standard that screens out 1,700+ excluded ingredients",
       "Non-sticky glow finish rated for 10-hour wear",
       "Built-in LED light and mirror in the cap, for reapplying without finding a bathroom",
-      "Shades: Desert Rose 102, Kiss Me Cranberry 103, Choco Bean 104, Fuchsia Bloom 105",
+      "Desert Rose: a muted rose-brown that reads neutral in daylight",
     ],
-    description: "Long-wear liquid lip gloss with a glow finish, in four shades.",
-    hook: "The cap has an LED light and mirror built in, so touch-ups don't depend on finding decent lighting.",
+    description: "Desert Rose, a muted rose-brown in the long-wear Go Vibrant lip glow.",
+    hook: "The everyday shade of the four: rose-brown, neutral enough to wear to work without thinking about it.",
     badge: "New",
     madeIn: "USA",
     image: "/Artistry Desert Rose lip gloss.png",
-    // Cut-out with a real alpha channel, so it sits straight on the dark page
-    // rather than needing the light plate the white-background JPG required.
     photoStyle: "transparent",
+    variantGroup: "artistry-lip-glow",
+    variantLabel: "Desert Rose",
+  },
+  {
+    slug: "artistry-go-vibrant-lip-glow-cranberry",
+    name: "Artistry Go Vibrant Light Up Liquid Lip Glow - Kiss Me Cranberry",
+    category: "Artistry",
+    size: "5 g / 0.18 oz",
+    price: "$29.00",
+    priceStatus: "confirmed",
+    ingredients: [
+      "Vitamin complex (H, C, B, E and E derivatives): conditions lips while the color wears",
+      "No mineral oil, parabens or phthalates, under the Artistry Clean standard that screens out 1,700+ excluded ingredients",
+      "Non-sticky glow finish rated for 10-hour wear",
+      "Built-in LED light and mirror in the cap, for reapplying without finding a bathroom",
+      "Kiss Me Cranberry: a deep berry red with cool undertones",
+    ],
+    description: "Kiss Me Cranberry, a deep cool-toned berry in the long-wear Go Vibrant lip glow.",
+    hook: "The deepest of the four: a cool berry red that holds its colour through a dinner without touch-ups.",
+    madeIn: "USA",
+    image: "/Artistry cranberry lip gloss.png",
+    photoStyle: "transparent",
+    variantGroup: "artistry-lip-glow",
+    variantLabel: "Kiss Me Cranberry",
+  },
+  {
+    slug: "artistry-go-vibrant-lip-glow-choco-bean",
+    name: "Artistry Go Vibrant Light Up Liquid Lip Glow - Choco Bean",
+    category: "Artistry",
+    size: "5 g / 0.18 oz",
+    price: "$29.00",
+    priceStatus: "confirmed",
+    ingredients: [
+      "Vitamin complex (H, C, B, E and E derivatives): conditions lips while the color wears",
+      "No mineral oil, parabens or phthalates, under the Artistry Clean standard that screens out 1,700+ excluded ingredients",
+      "Non-sticky glow finish rated for 10-hour wear",
+      "Built-in LED light and mirror in the cap, for reapplying without finding a bathroom",
+      "Choco Bean: a warm chocolate brown",
+    ],
+    description: "Choco Bean, a warm chocolate brown in the long-wear Go Vibrant lip glow.",
+    hook: "The warm brown in the range, and the one that suits deeper skin tones without washing out.",
+    madeIn: "USA",
+    image: "/Artistry Choco Bean lip gloss.png",
+    photoStyle: "transparent",
+    variantGroup: "artistry-lip-glow",
+    variantLabel: "Choco Bean",
+  },
+  {
+    slug: "artistry-go-vibrant-lip-glow-fuchsia-bloom",
+    name: "Artistry Go Vibrant Light Up Liquid Lip Glow - Fuchsia Bloom",
+    category: "Artistry",
+    size: "5 g / 0.18 oz",
+    price: "$29.00",
+    priceStatus: "confirmed",
+    ingredients: [
+      "Vitamin complex (H, C, B, E and E derivatives): conditions lips while the color wears",
+      "No mineral oil, parabens or phthalates, under the Artistry Clean standard that screens out 1,700+ excluded ingredients",
+      "Non-sticky glow finish rated for 10-hour wear",
+      "Built-in LED light and mirror in the cap, for reapplying without finding a bathroom",
+      "Fuchsia Bloom: a bright blue-toned pink",
+    ],
+    description: "Fuchsia Bloom, a bright blue-toned pink in the long-wear Go Vibrant lip glow.",
+    hook: "The brightest of the four: a blue-toned fuchsia that makes teeth look whiter by contrast.",
+    madeIn: "USA",
+    image: "/Artistry Fuchsla Bloom lip gloss.png",
+    photoStyle: "transparent",
+    variantGroup: "artistry-lip-glow",
+    variantLabel: "Fuchsia Bloom",
   },
   {
     slug: "artistry-men-balancing-hydrator",
@@ -804,6 +879,8 @@ export const catalog: CatalogProduct[] = [
     badge: "Bestseller",
     videoId: "MI0n6j8yCak",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Classic",
     image: "/XS classic.jpg",
     photoStyle: "card",
   },
@@ -818,6 +895,8 @@ export const catalog: CatalogProduct[] = [
     description: "Tropical fruit flavored energy drink, sugar-free, 15 calories per can.",
     hook: "Same energy formula as Classic, in a tropical-fruit flavor for people who find Classic too plain.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Tropical",
     image: "/XS tropical.jpg",
     photoStyle: "card",
   },
@@ -832,6 +911,8 @@ export const catalog: CatalogProduct[] = [
     description: "Cherry-cola flavored energy drink, sugar-free, 15 calories per can.",
     hook: "Tastes like a cherry cola float: real cherry juice concentrate does the flavor work.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Black Cherry Cola",
     image: "/XS black cherry.jpg",
     photoStyle: "card",
   },
@@ -846,6 +927,8 @@ export const catalog: CatalogProduct[] = [
     description: "Citrus flavored energy drink, sugar-free, 15 calories per can.",
     hook: "A brighter, orange-citrus take on the classic formula for people who find Classic too plain.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Citrus",
     image: "/XS citrus.jpg",
     photoStyle: "card",
   },
@@ -860,6 +943,8 @@ export const catalog: CatalogProduct[] = [
     description: "Limited-edition lemon flavored energy drink, sugar-free, sold in its own cartoon-mascot can art.",
     hook: "Same core formula as Classic, in a limited-edition lemon flavor and can design.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Electric Lemon",
     image: "/XS electric lemon.jpg",
     photoStyle: "card",
   },
@@ -874,6 +959,8 @@ export const catalog: CatalogProduct[] = [
     description: "Orange (naranja) flavored energy drink, sugar-free, 15 calories per can.",
     hook: "XS's orange flavor, labeled naranja on the can rather than translated to English.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Naranja",
     image: "/XS naranja.jpg",
     photoStyle: "card",
   },
@@ -888,6 +975,8 @@ export const catalog: CatalogProduct[] = [
     description: "Root beer flavored energy drink, sugar-free, 15 calories per can.",
     hook: "A root-beer-float flavor most energy drink brands don't bother making.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Root Beer",
     image: "/XS root beer.jpg",
     photoStyle: "card",
   },
@@ -902,6 +991,8 @@ export const catalog: CatalogProduct[] = [
     description: "Summit flavored energy drink, sugar-free, 15 calories per can.",
     hook: "One of the less common XS flavors, sold under its own name rather than a fruit descriptor.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Summit",
     image: "/XS summit.jpg",
     photoStyle: "card",
   },
@@ -916,6 +1007,8 @@ export const catalog: CatalogProduct[] = [
     description: "Tamarindo (tamarind) flavored energy drink, sugar-free, 15 calories per can.",
     hook: "A tamarind flavor aimed at the same audience as Naranja: uncommon in mainstream energy drinks.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Tamarindo",
     image: "/XS tamrindo.jpg",
     photoStyle: "card",
   },
@@ -930,6 +1023,8 @@ export const catalog: CatalogProduct[] = [
     description: "Watermelon lemonade flavored energy drink, sugar-free, 15 calories per can.",
     hook: "Watermelon and lemonade in one can, sweeter and more citrus-forward than the fruit-only flavors.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Watermelon Lemonade",
     image: "/XS watermelon.jpg",
     photoStyle: "card",
   },
@@ -944,6 +1039,8 @@ export const catalog: CatalogProduct[] = [
     description: "Wild berry flavored energy drink, sugar-free, 15 calories per can.",
     hook: "A mixed-berry flavor, one of the more universally-liked options in the lineup.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Wild Berry",
     image: "/XS wild berry.jpg",
     photoStyle: "card",
   },
@@ -963,6 +1060,8 @@ export const catalog: CatalogProduct[] = [
     description: "Juice-based sparkling energy drink made with real fruit juice, mango-pineapple-guava flavor.",
     hook: "280% of a day's vitamin C in one can, from a real-juice blend: most energy drinks skip that entirely.",
     madeIn: "USA",
+    variantGroup: "xs-sparkling-juiced",
+    variantLabel: "Mango Pineapple Guava",
     image: "/XS sparkling mango pineapple guava.jpg",
     photoStyle: "card",
   },
@@ -982,6 +1081,8 @@ export const catalog: CatalogProduct[] = [
     description: "Juice-based sparkling energy drink made with real fruit juice, pink grapefruit flavor.",
     hook: "The tartest option in the Sparkling Juiced Energy line, built on the same real-juice, high-vitamin-C formula as the rest of it.",
     madeIn: "USA",
+    variantGroup: "xs-sparkling-juiced",
+    variantLabel: "Pink Grapefruit",
     image: "/XS sparkling pink grapefruit.jpg",
     photoStyle: "card",
   },
@@ -1001,6 +1102,8 @@ export const catalog: CatalogProduct[] = [
     hook: "Adds 50 mg of EGCG from green tea on top of the usual energy blend: a metabolism angle most energy drinks skip.",
     badge: "New",
     madeIn: "USA",
+    variantGroup: "xs-energy-burn",
+    variantLabel: "Kiwi Strawberry",
     image: "/XS burn kiwi strawberry.jpg",
     photoStyle: "card",
   },
@@ -1019,6 +1122,8 @@ export const catalog: CatalogProduct[] = [
     description: "Metabolism-support energy drink line built around green tea extract, blue raspberry flavor.",
     hook: "Same EGCG-and-caffeine metabolism angle as Kiwi Strawberry, in a blue raspberry flavor.",
     madeIn: "USA",
+    variantGroup: "xs-energy-burn",
+    variantLabel: "Blue Razz",
     image: "/XS burn blue razz.jpg",
     photoStyle: "card",
   },
@@ -1039,6 +1144,8 @@ export const catalog: CatalogProduct[] = [
     hook: "Built around rhodiola and natural caffeine for a focus angle, sweetened with stevia instead of the sucralose blend the rest of the lineup uses.",
     badge: "New",
     madeIn: "USA",
+    variantGroup: "xs-elite-focus",
+    variantLabel: "Peach Mango",
     image: "/XS elite peach mango.jpg",
     photoStyle: "card",
   },
@@ -1053,6 +1160,8 @@ export const catalog: CatalogProduct[] = [
     description: "Cranberry-grape flavored energy drink, sugar-free, 15 calories per can.",
     hook: "The only flavor in the lineup that also comes in a caffeine-free version.",
     madeIn: "USA",
+    variantGroup: "xs-energy-drink",
+    variantLabel: "Cranberry-Grape",
     image: "/XS cranberry.jpg",
     photoStyle: "card",
   },
@@ -1345,3 +1454,16 @@ export const catalog: CatalogProduct[] = [
     photoStyle: "card",
   },
 ];
+
+/**
+ * Other products sharing this one's variant group, in catalog order.
+ *
+ * Empty for anything ungrouped, and empty for a group of one, so callers can
+ * render nothing without special-casing.
+ */
+export function variantsOf(product: CatalogProduct): CatalogProduct[] {
+  if (!product.variantGroup) return [];
+  return catalog.filter(
+    (p) => p.variantGroup === product.variantGroup && p.slug !== product.slug,
+  );
+}

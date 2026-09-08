@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductDetail from "@/components/ProductDetail";
+import VariantNav from "@/components/VariantNav";
 import JsonLd from "@/components/JsonLd";
 import { catalog, type CatalogProduct } from "@/lib/catalog";
 import { fullCompare } from "@/lib/fullCompare";
@@ -163,7 +164,17 @@ export default async function ProductPage({
   const product = catalog.find((p) => p.slug === slug);
   if (!product) notFound();
 
-  const competitors = fullCompare.find((c) => c.slug === slug)?.competitors ?? [];
+  // Shades and flavours share one formula, so they share the comparison. Fall
+  // back to any sibling in the variant group rather than showing "no comparison
+  // available" on three of four lip gloss shades.
+  const ownComparison = fullCompare.find((c) => c.slug === slug)?.competitors;
+  const groupComparison = product.variantGroup
+    ? catalog
+        .filter((p) => p.variantGroup === product.variantGroup)
+        .map((p) => fullCompare.find((c) => c.slug === p.slug)?.competitors)
+        .find((c) => c && c.length > 0)
+    : undefined;
+  const competitors = ownComparison?.length ? ownComparison : (groupComparison ?? []);
   const price = parsePrice(product);
 
   const url = absoluteUrl(`/products/${product.slug}`);
@@ -251,7 +262,7 @@ export default async function ProductPage({
             </li>
           </ol>
         </nav>
-        <ProductDetail product={product} competitors={competitors} />
+        <ProductDetail product={product} competitors={competitors} variantNav={<VariantNav product={product} />} />
       </main>
       <Footer />
     </>
