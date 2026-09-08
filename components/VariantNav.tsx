@@ -26,31 +26,35 @@ export default function VariantNav({ product }: { product: CatalogProduct }) {
       </h2>
 
       {withPhotos ? (
+        // Fixed-width tiles in a wrapping row. The label box reserves two lines
+        // whether or not it needs them, so a shade like "Kiss Me Cranberry"
+        // wrapping does not make its tile taller than the rest, and every
+        // bottle sits on the same baseline.
         <ul className="mt-4 flex flex-wrap gap-3">
           {all.map((p) => {
             const isCurrent = p.slug === product.slug;
             return (
-              <li key={p.slug}>
+              <li key={p.slug} className="w-30">
                 <Link
                   href={`/products/${p.slug}`}
                   aria-current={isCurrent ? "page" : undefined}
-                  className={`flex w-24 flex-col items-center gap-2 rounded-xl border p-2 transition-colors ${
+                  className={`flex h-full w-full flex-col items-center rounded-xl border p-3 transition-colors ${
                     isCurrent
                       ? "border-accent bg-surface"
                       : "border-border hover:border-accent/60 hover:bg-surface"
                   }`}
                 >
-                  <span className="relative h-16 w-full">
+                  <span className="relative h-20 w-full shrink-0">
                     <Image
                       src={p.image!}
                       alt={p.variantLabel ?? p.name}
                       fill
-                      sizes="96px"
+                      sizes="120px"
                       className="object-contain"
                     />
                   </span>
                   <span
-                    className={`text-center text-[11px] leading-tight ${
+                    className={`mt-3 flex min-h-10 items-center text-center text-[11px] leading-tight text-balance ${
                       isCurrent ? "font-medium text-foreground" : "text-muted"
                     }`}
                   >
