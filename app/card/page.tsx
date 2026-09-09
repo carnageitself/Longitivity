@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Mail, Phone, UserPlus } from "lucide-react";
+import { Mail, UserPlus } from "lucide-react";
 import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
 
 // Standalone digital business card: meant to be handed out as a direct link
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-const PHONE_HREF = `tel:${CONTACT.phone}`;
+// The number is deliberately not shown on the page. It still travels in the
+// vCard, so it reaches anyone who taps "Save my contact" rather than being
+// posted in plain text for a scraper to lift.
 
 export default function CardPage() {
   return (
@@ -101,14 +103,6 @@ export default function CardPage() {
             <Mail size={18} className="shrink-0 text-accent" />
             {CONTACT.email}
           </a>
-          <a
-            href={PHONE_HREF}
-            className="flex items-center gap-3 rounded-2xl border border-border px-5 py-4 text-sm font-medium transition-colors hover:bg-surface"
-          >
-            <Phone size={18} className="shrink-0 text-accent" />
-            {CONTACT.phoneDisplay}
-          </a>
-
           {/* A QR code carries one payload, so scanning it can either open this
               page or save a contact, never both. This is the other half: the
               scan lands here, one tap hands the phone a .vcf. Plain anchor, no
