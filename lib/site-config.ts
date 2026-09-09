@@ -7,11 +7,9 @@ export const SITE_TAGLINE = "Curated Wellness & Home Essentials";
 
 export const CONTACT = {
   email: "contact@longitivity.com",
-  // E.164 for tel: links and the vCard, which both need the unpunctuated form;
-  // `phoneDisplay` is the version people actually read. Previously hardcoded in
-  // app/card/page.tsx, which meant the vCard could drift from the page.
-  phone: "+18052128139",
-  phoneDisplay: "+1 (805) 212-8139",
+  // No phone number here on purpose: it is shown nowhere on the site and left
+  // out of the vCard, so keeping it in config would only leave it sitting in
+  // the repo for no one to use.
   // Whose name lands in the phonebook when someone saves the card. The person,
   // not the brand: the vCard files this as the name and SITE_NAME as the
   // organisation, so the entry reads "Yash" with "Longitivity" beneath it.

@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-// The number is deliberately not shown on the page. It still travels in the
-// vCard, so it reaches anyone who taps "Save my contact" rather than being
-// posted in plain text for a scraper to lift.
+// No phone number anywhere: not on the page and not in the vCard either. This
+// endpoint is as public as the page, so carrying it there would have moved the
+// number rather than removed it. Email is the way in.
 
 export default function CardPage() {
   return (
@@ -107,7 +107,7 @@ export default function CardPage() {
           {/* Says what the tap actually does. "Save my contact" alone asks for
               a commitment without naming the payoff. */}
           <p className="text-center text-xs text-muted">
-            One tap. My number, email and the site, straight into your phone.
+            One tap. My email and the site, straight into your phone.
           </p>
         </div>
 

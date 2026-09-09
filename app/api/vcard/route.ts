@@ -29,7 +29,9 @@ export function GET() {
     `N:;${esc(name)};;;`,
     `FN:${esc(name)}`,
     `ORG:${esc(SITE_NAME)}`,
-    `TEL;TYPE=CELL,VOICE:${CONTACT.phone}`,
+    // No TEL by design. The number is not published anywhere on the site, and
+    // this endpoint is as public as the page is, so putting it here would just
+    // move it rather than remove it.
     `EMAIL;TYPE=INTERNET:${CONTACT.email}`,
     // Saving the contact also files the site, so the link survives in their
     // phonebook long after the QR code is out of sight.
