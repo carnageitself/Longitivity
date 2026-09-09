@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import { promoMarks } from "@/lib/promotions";
 import JsonLd from "@/components/JsonLd";
 import { CATEGORY_VISUAL } from "@/lib/catalog";
 import {
@@ -63,6 +64,7 @@ export default async function CollectionPage({
   // that visual rule here, but still link the rest in text so every product
   // page has an internal link pointing at it from its own category.
   const withPhoto = products.filter((p) => p.image ?? CATEGORY_VISUAL[p.category].image);
+  const marks = promoMarks();
   const withoutPhoto = products.filter((p) => !(p.image ?? CATEGORY_VISUAL[p.category].image));
 
   const collectionJsonLd = {
@@ -134,7 +136,11 @@ export default async function CollectionPage({
         <section className="mx-auto max-w-7xl px-6 py-14">
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {withPhoto.map((product) => (
-              <ProductCard key={product.slug} product={product} />
+              <ProductCard
+                key={product.slug}
+                product={product}
+                promo={marks[product.slug]}
+              />
             ))}
           </div>
 

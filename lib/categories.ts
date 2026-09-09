@@ -42,7 +42,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     h1: "Nutrilite Vitamins & Supplements",
     description: `Browse ${NUTRILITE_COUNT} Nutrilite supplements including Double X, Omega, probiotics and daily packs, with full ingredient lists and prices checked against Amazon and Walmart.`,
     intro:
-      "Nutrilite is the part of this catalog people research hardest, and it should be. A daily supplement is something you buy every month for years, so the two questions worth answering up front are what is actually in it and whether the price holds up. Every product below opens to a complete ingredient panel, with no proprietary blends hiding behind a trademark, alongside a side-by-side price check against comparable products at Amazon, Walmart and Costco.",
+      "You will take this every morning for years, so it has to be something you trust. Every ingredient is listed in full, with no proprietary blends hiding behind a trademark, and the price checked against Amazon, Walmart and Costco before you have to ask.",
     faqs: [
       {
         question: "Where are Nutrilite supplements made?",
@@ -72,7 +72,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     h1: "Artistry Skincare & Cosmetics",
     description: `Artistry serums, moisturisers, foundation, mascara and lipstick: ${ARTISTRY_COUNT} products with full ingredient lists, real prices and a 6-month satisfaction guarantee.`,
     intro:
-      "Artistry is prestige skincare, priced like the brands at the department store counter. The difference: it's sold through a person, not a shelf, so there's no swatching in store. What you get instead is the full ingredient list before you buy, and six months to know it's right for your skin.",
+      "Prestige skincare and colour, without the department-store markup. You get the full ingredient list before you buy, and six months to decide it was right for your skin.",
     faqs: [
       {
         question: "Is Artistry sold in stores like Sephora or Ulta?",
@@ -102,7 +102,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     h1: "XS Energy Drinks",
     description: `All ${XS_COUNT} XS Energy flavors, from Classic and Tropical to Root Beer, Sparkling Juiced, Energy + Burn and Elite Focus, sold by the case, with full ingredient panels.`,
     intro:
-      "XS is built around a low-sugar formula with a higher caffeine load than most mainstream energy drinks, and it is sold by the case rather than the single can. A standard 12-pack of 12 fl oz cans runs $37.00, which works out to roughly $3.08 a can, which is worth doing the arithmetic on, because case pricing is where energy drinks are usually either a bargain or quietly expensive. Full ingredient and nutrition panels are on each flavor's page.",
+      "Zero sugar, 114 mg of caffeine, fifteen calories a can. Sold by the case so you are never caught without a cold one, with the full nutrition panel on every flavour's own page.",
     faqs: [
       {
         question: "What flavors does XS Energy come in?",
@@ -133,7 +133,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     h1: "Hair, Oral & Body Care",
     description: `Satinique shampoo and conditioner, Glister toothpaste and oral rinse, and g&h body wash and deodorant: ${PERSONAL_COUNT} everyday essentials with full ingredient lists.`,
     intro:
-      "This is the repeat-purchase corner of the catalog: shampoo, toothpaste, deodorant, body wash. Because you buy these on a cycle rather than once, the per-use cost matters more than the sticker price, and several of them are concentrated. Glister's oral rinse in particular goes considerably further than the bottle size suggests. Satinique covers hair, Glister covers oral care and g&h covers body care.",
+      "The things you reload without thinking: shampoo, toothpaste, deodorant, body wash. Most are concentrated, so what looks dearer on the shelf usually costs less by the time the bottle is empty.",
     faqs: [
       {
         question: "How much is Glister toothpaste?",
@@ -163,7 +163,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     h1: "Home Cleaning & Laundry",
     description: `${HOME_COUNT} concentrated home care products, from Dish Drops and kitchen cleaner to laundry detergent, fabric softener and dishwasher tablets, priced per real use.`,
     intro:
-      "Almost everything in this section is concentrated, which is the whole argument for it and also the reason a straight price comparison misleads. A $17.00 litre of kitchen cleaner that dilutes several times over is not competing with a $4.00 spray bottle of ready-to-use cleaner on sticker price; it is competing on cost per bottle you actually fill. Each product page gives the dilution and the ingredient list so you can run that number rather than guess at it.",
+      "Concentrated, so one bottle refills many. Judge these on the cost per bottle you actually fill rather than the sticker price, and every page gives you the dilution to work it out.",
     faqs: [
       {
         question: "Why are these cleaners more expensive than supermarket brands?",
@@ -197,7 +197,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     description:
       "eSpring under-counter water treatment ($1,299) and Atmosphere Sky air purifiers ($1,710), plus HEPA and carbon replacement filters and real running costs.",
     intro:
-      "These are the two genuine capital purchases in the catalog, and they are the ones where the replacement filter cost matters as much as the unit price. The eSpring under-counter system is $1,299.00 with e3 carbon replacement filters at $254.00; the Atmosphere Sky is $1,710.00, with a $192.00 HEPA filter and a $140.00 carbon odour filter. Budget the consumables before you buy the unit, because that is the number most comparison shopping leaves out.",
+      "The two purchases here you will live with for years. Unit and filter costs are both listed up front, because the running cost is the number most comparisons quietly leave out.",
     faqs: [
       {
         question: "How much does an eSpring water filter cost to run?",

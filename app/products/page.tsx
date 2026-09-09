@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import CatalogBrowser from "@/components/CatalogBrowser";
 import JsonLd from "@/components/JsonLd";
 import { catalog } from "@/lib/catalog";
+import { promoMarks } from "@/lib/promotions";
 import { absoluteUrl, breadcrumbJsonLd, ORGANIZATION_ID } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site-config";
 
@@ -65,6 +66,8 @@ const breadcrumbs = breadcrumbJsonLd([
 ]);
 
 export default function ProductsPage() {
+  const marks = promoMarks();
+
   return (
     <>
       <JsonLd data={[jsonLd, breadcrumbs]} />
@@ -88,7 +91,7 @@ export default function ProductsPage() {
 
         <section className="mx-auto max-w-7xl px-6 py-14">
           <Suspense fallback={null}>
-            <CatalogBrowser />
+            <CatalogBrowser promoMarks={marks} />
           </Suspense>
         </section>
       </main>

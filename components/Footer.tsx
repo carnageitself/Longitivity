@@ -25,6 +25,7 @@ const NAV_COLUMNS: { heading: string; links: { href: string; label: string }[] }
     heading: "Shop",
     links: [
       { href: "/products", label: "All Products" },
+      { href: "/promotions", label: "This Month's Offers" },
       { href: "/for-you", label: "For You" },
     ],
   },

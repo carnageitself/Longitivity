@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Award, Check, ListChecks, Minus, Scale } from "lucide-react";
+import { promoMarks } from "@/lib/promotions";
+import PromoTag from "@/components/PromoTag";
 import { CATEGORY_PLACEHOLDER_IMAGE, CATEGORY_VISUAL, catalog, type CatalogProduct } from "@/lib/catalog";
 import type { CompetitorMatch } from "@/lib/fullCompare";
 import { getReturnPolicy, getRetailerReturnPolicy } from "@/lib/site-config";
@@ -48,6 +50,9 @@ export default function ProductDetail({
   const visual = CATEGORY_VISUAL[product.category];
   const image = product.image ?? visual.image;
   const photoStyle = product.image ? product.photoStyle : visual.photoStyle;
+  // Server component, so reading the date here is safe: there is no second
+  // render on the client that could disagree about what day it is.
+  const promo = promoMarks()[product.slug];
 
   // Costco's satisfaction guarantee carries no time limit except on
   // electronics, so for anything but Water & Air Treatment they outlast our
@@ -119,9 +124,26 @@ export default function ProductDetail({
         </div>
 
         <div className="shrink-0 sm:text-right">
-          <span className="text-2xl font-semibold tracking-tight">{product.price}</span>
-          {product.priceStatus === "on-request" && (
-            <p className="text-xs text-muted">not publicly listed, ask for current price</p>
+          {promo ? (
+            <>
+              <PromoTag label={promo.label} />
+              <p className="mt-2 flex items-baseline gap-2 sm:justify-end">
+                <span className="text-2xl font-semibold tracking-tight text-accent">
+                  {promo.now}
+                </span>
+                <span className="text-base text-muted line-through">{promo.was}</span>
+              </p>
+              {/* The deadline is the reason to act now, and it is the one thing
+                  a tag on its own does not say. */}
+              <p className="mt-1 text-xs text-muted">Offer ends {promo.endsOn}</p>
+            </>
+          ) : (
+            <>
+              <span className="text-2xl font-semibold tracking-tight">{product.price}</span>
+              {product.priceStatus === "on-request" && (
+                <p className="text-xs text-muted">not publicly listed, ask for current price</p>
+              )}
+            </>
           )}
         </div>
       </div>

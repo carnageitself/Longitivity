@@ -13,6 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl("/"), lastModified, changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/products"), lastModified, changeFrequency: "weekly", priority: 0.9 },
+    // Daily: the offers on this page turn over with the calendar month, so it
+    // is the one static route whose content genuinely changes without a deploy.
+    { url: absoluteUrl("/promotions"), lastModified, changeFrequency: "daily", priority: 0.8 },
     { url: absoluteUrl("/for-you"), lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: absoluteUrl("/partners"), lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: absoluteUrl("/opportunity"), lastModified, changeFrequency: "monthly", priority: 0.6 },

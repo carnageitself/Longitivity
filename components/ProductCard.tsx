@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Sparkle } from "lucide-react";
 import { CATEGORY_GLOW, CATEGORY_VISUAL, type CatalogProduct } from "@/lib/catalog";
+import { type PromoMark } from "@/lib/promotions";
+import PromoTag from "@/components/PromoTag";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const BADGE_STYLES: Record<string, string> = {
@@ -10,7 +12,14 @@ const BADGE_STYLES: Record<string, string> = {
   "Staff Pick": "bg-amber-500 text-black",
 };
 
-export default function ProductCard({ product }: { product: CatalogProduct }) {
+export default function ProductCard({
+  product,
+  // Passed down from the server rather than worked out here: see promoMarks.
+  promo,
+}: {
+  product: CatalogProduct;
+  promo?: PromoMark;
+}) {
   const visual = CATEGORY_VISUAL[product.category];
   const glow = CATEGORY_GLOW[product.category];
   const Icon = visual.icon;
@@ -56,6 +65,8 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
           ) : (
             <Icon size={40} className="relative z-10 text-foreground/70" strokeWidth={1.25} />
           )}
+          {/* Top left, so it never collides with a Bestseller or New badge. */}
+          {promo && <PromoTag label={promo.label} className="absolute top-3 left-3" />}
           {product.badge && (
             <span
               className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${BADGE_STYLES[product.badge]}`}
@@ -79,10 +90,25 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
           </p>
 
           <div className="mt-auto flex items-end justify-between gap-3 pt-5">
+            {/* The tag alone would be ambiguous: a "15% off" flag sitting next
+                to an undiscounted price leaves a shopper unsure whether the
+                figure shown is before or after. Showing both removes the
+                doubt. */}
             <div>
-              <span className="text-lg font-semibold tracking-tight">{product.price}</span>
-              {product.priceStatus === "on-request" && (
-                <p className="text-[11px] text-muted">ask for current price</p>
+              {promo ? (
+                <>
+                  <span className="text-lg font-semibold tracking-tight text-accent">
+                    {promo.now}
+                  </span>
+                  <span className="ml-2 text-sm text-muted line-through">{promo.was}</span>
+                </>
+              ) : (
+                <>
+                  <span className="text-lg font-semibold tracking-tight">{product.price}</span>
+                  {product.priceStatus === "on-request" && (
+                    <p className="text-[11px] text-muted">ask for current price</p>
+                  )}
+                </>
               )}
             </div>
             <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-accent opacity-0 transition-opacity group-hover:opacity-100">

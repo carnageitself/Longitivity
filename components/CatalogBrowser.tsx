@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { catalog, CATEGORY_INFO, CATEGORY_VISUAL, type CatalogCategory } from "@/lib/catalog";
 import ProductCard from "@/components/ProductCard";
+import { type PromoMark } from "@/lib/promotions";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
 
 const CATEGORIES = Object.keys(CATEGORY_INFO) as CatalogCategory[];
@@ -25,7 +26,13 @@ function isCatalogCategory(value: string | null): value is CatalogCategory {
   return CATEGORIES.includes(value as CatalogCategory);
 }
 
-export default function CatalogBrowser() {
+export default function CatalogBrowser({
+  // Built on the server and passed in: this component is a client component,
+  // and working the date out here could disagree with the prerendered HTML.
+  promoMarks = {},
+}: {
+  promoMarks?: Record<string, PromoMark>;
+}) {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
   const [activeCategory, setActiveCategory] = useState<CatalogCategory | "All">(
@@ -105,7 +112,7 @@ export default function CatalogBrowser() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 className="h-full"
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} promo={promoMarks[product.slug]} />
               </motion.div>
             ))}
           </AnimatePresence>

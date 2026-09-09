@@ -6,9 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SITE_NAME } from "@/lib/site-config";
 import SamplesButton from "@/components/SamplesButton";
+import PromoBanner from "@/components/PromoBanner";
 
 const LINKS = [
   { href: "/products", label: "Products" },
+  { href: "/promotions", label: "Offers" },
   { href: "/for-you", label: "For You" },
   { href: "/partners", label: "Partners" },
   { href: "/contact", label: "Contact" },
@@ -17,6 +19,11 @@ const LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // The offer bar sits in normal flow directly above this header, so it moves
+  // page content down on its own. This header is fixed, though, which means
+  // flow changes do not move it: it has to offset itself by the bar's height
+  // while the bar is there, and drop back to the top once it is dismissed.
+  const [promoOpen, setPromoOpen] = useState(true);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -41,13 +48,20 @@ export default function Navbar() {
   }, [menuOpen]);
 
   return (
-    <header
-      className={`fixed top-0 right-0 left-0 z-50 transition-colors duration-300 ${
-        scrolled || menuOpen
-          ? "border-b border-border/80 bg-background/80 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
+    <>
+      {promoOpen && <PromoBanner onClose={() => setPromoOpen(false)} />}
+      <header
+        className={`fixed right-0 left-0 z-50 transition-[top,color,background-color,border-color] duration-300 ${
+          // Mirrors the bar's own h-9 sm:h-10. Kept as static classes rather
+          // than a measured value so the offset is correct on first paint,
+          // before any JavaScript has run.
+          promoOpen ? "top-9 sm:top-10" : "top-0"
+        } ${
+          scrolled || menuOpen
+            ? "border-b border-border/80 bg-background/80 backdrop-blur-md"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
       <nav className="mx-auto flex h-16 max-w-[1800px] items-center justify-between px-6 sm:px-12 lg:px-20">
         <Link href="/#top" className="text-xl font-bold tracking-tight sm:text-2xl" onClick={() => setMenuOpen(false)}>
           {SITE_NAME}
@@ -109,6 +123,7 @@ export default function Navbar() {
           </motion.ul>
         )}
       </AnimatePresence>
-    </header>
+      </header>
+    </>
   );
 }
