@@ -110,9 +110,9 @@ export default function CardPage() {
               content type, which is what opens its Add Contact sheet. */}
           <a
             href="/api/vcard"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-accent bg-accent/10 px-5 py-4 text-sm font-semibold text-accent transition-colors hover:bg-accent/20"
+            className="flex items-center gap-3 rounded-2xl border border-border px-5 py-4 text-sm font-medium transition-colors hover:bg-surface"
           >
-            <UserPlus size={18} className="shrink-0" />
+            <UserPlus size={18} className="shrink-0 text-accent" />
             Save my contact
           </a>
         </div>
