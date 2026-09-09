@@ -127,25 +127,32 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <LegalP>
-          Three services process data on our behalf. They are bound to use it only to provide
-          their service, and each publishes its own privacy terms:
+          A small number of third-party providers process data on our behalf so the site can
+          function. Each is contractually limited to providing its service and is not permitted to
+          use your details for its own purposes:
         </LegalP>
         <LegalList
           items={[
             <>
-              <span className="text-foreground">Supabase</span> stores form submissions in a
-              database with access restricted to this site&apos;s server.
+              <span className="text-foreground">A managed database provider</span>, which stores
+              form submissions with access restricted to this site&apos;s own server.
             </>,
             <>
-              <span className="text-foreground">Resend</span> delivers the notification and
-              confirmation emails, which means it handles your address and the message body.
+              <span className="text-foreground">An email delivery provider</span>, which handles
+              your address and message in order to send the notification and confirmation emails.
             </>,
             <>
-              <span className="text-foreground">Vercel</span> hosts the site and keeps short-lived
-              server logs, which include IP addresses as a normal part of serving web traffic.
+              <span className="text-foreground">A hosting provider</span>, which serves the site
+              and keeps short-lived server logs. Those logs include IP addresses, as a normal part
+              of serving web traffic.
             </>,
           ]}
         />
+        <LegalP>
+          All three are established providers based in the United States. If you need to know
+          which specific companies these are before sending us anything, ask at {mail} and we will
+          tell you.
+        </LegalP>
       </>
     ),
   },
