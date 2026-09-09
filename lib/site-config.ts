@@ -12,10 +12,10 @@ export const CONTACT = {
   // app/card/page.tsx, which meant the vCard could drift from the page.
   phone: "+18052128139",
   phoneDisplay: "+1 (805) 212-8139",
-  // Whose name lands in the phonebook when someone saves the card. A personal
-  // name reads better on a business card than a brand, so override this once
-  // you've decided how you want to be listed.
-  vcardName: SITE_NAME,
+  // Whose name lands in the phonebook when someone saves the card. The person,
+  // not the brand: the vCard files this as the name and SITE_NAME as the
+  // organisation, so the entry reads "Yash" with "Longitivity" beneath it.
+  vcardName: "Yash",
 };
 
 // Categories that count as opened personal-care/health/consumable items under
