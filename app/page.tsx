@@ -4,6 +4,7 @@ import TrustBar from "@/components/TrustBar";
 import ScrollShowcase from "@/components/ScrollShowcase";
 import { PointerHighlight } from "@/components/ui/pointer-highlight";
 import FeaturedProducts from "@/components/FeaturedProducts";
+import { promoMarks } from "@/lib/promotions";
 import ArtistrySpotlight from "@/components/ArtistrySpotlight";
 import ArtistryNYFWCta from "@/components/ArtistryNYFWCta";
 import ProductCategories from "@/components/ProductCategories";
@@ -34,7 +35,7 @@ export default function Home() {
         </div>
 
         <ScrollShowcase />
-        <FeaturedProducts />
+        <FeaturedProducts promoMarks={promoMarks()} />
         <ArtistrySpotlight />
         <ProductCategories />
         <ArtistryNYFWCta />

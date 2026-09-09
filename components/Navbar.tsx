@@ -6,7 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SITE_NAME } from "@/lib/site-config";
 import SamplesButton from "@/components/SamplesButton";
+import { useSessionFlag } from "@/lib/sessionFlag";
 import PromoBanner from "@/components/PromoBanner";
+import StudentOfferModal from "@/components/StudentOfferModal";
+
+const PROMO_DISMISSED = "offer-bar-dismissed";
 
 const LINKS = [
   { href: "/products", label: "Products" },
@@ -23,7 +27,11 @@ export default function Navbar() {
   // page content down on its own. This header is fixed, though, which means
   // flow changes do not move it: it has to offset itself by the bar's height
   // while the bar is there, and drop back to the top once it is dismissed.
-  const [promoOpen, setPromoOpen] = useState(true);
+  // Dismissal has to outlive this component. Every page renders its own
+  // Navbar, so navigating remounts it, and plain state would bring the bar
+  // back on the next page - which reads as the close button not working.
+  const [promoDismissed, dismissPromo] = useSessionFlag(PROMO_DISMISSED);
+  const promoOpen = !promoDismissed;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -49,7 +57,11 @@ export default function Navbar() {
 
   return (
     <>
-      {promoOpen && <PromoBanner onClose={() => setPromoOpen(false)} />}
+      {/* Mounted here rather than in the root layout for the same reason the
+          offer bar is: /card renders no Navbar, and a timed pop-up over
+          someone's digital business card would be wrong. */}
+      <StudentOfferModal />
+      {promoOpen && <PromoBanner onClose={dismissPromo} />}
       <header
         className={`fixed right-0 left-0 z-50 transition-[top,color,background-color,border-color] duration-300 ${
           // Mirrors the bar's own h-9 sm:h-10. Kept as static classes rather

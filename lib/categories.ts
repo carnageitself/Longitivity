@@ -112,7 +112,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
       {
         question: "How much is a case of XS Energy?",
         answer:
-          "Most core flavors are $37.00 for a case of twelve 12 fl oz cans, or about $3.08 per can. Electric Lemon and the Sparkling Juiced flavors are $35.00, Energy + Burn is $42.00 and Elite Focus is $44.00.",
+          "Every flavor except one is $44.00 for a case of twelve 12 fl oz cans, or about $3.67 a can. Energy + Burn is $48.25.",
       },
       {
         question: "Is XS Energy sugar free?",

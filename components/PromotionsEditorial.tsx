@@ -204,10 +204,18 @@ function Chapter({ promo, index }: { promo: Promotion; index: number }) {
                         </span>
                       </span>
                     ) : (
-                      <span className="whitespace-nowrap">
-                        <span className="text-muted">from </span>
-                        {summary.lowest}
-                      </span>
+                      // Both ends, with the list prices underneath rather than
+                      // inline: four figures on one line in a third of a split
+                      // column is unreadable. "to" rather than a dash, which
+                      // this page avoids.
+                      <>
+                        <span className="whitespace-nowrap">
+                          {summary.nowLow} to {summary.nowHigh}
+                        </span>
+                        <span className="mt-1 block text-xs whitespace-nowrap text-muted line-through">
+                          {summary.wasLow} to {summary.wasHigh}
+                        </span>
+                      </>
                     )}
                   </dd>
                 </div>
@@ -248,7 +256,13 @@ function Chapter({ promo, index }: { promo: Promotion; index: number }) {
 
         {promo.comparison && (
           <div className="mt-20 sm:mt-24">
-            <Comparison comparison={promo.comparison} brand={promo.brand} />
+            <Comparison
+              comparison={promo.comparison}
+              brand={promo.brand}
+              // Only a range priced at one figure has a single offer price
+              // to show; a spread has nothing meaningful to put in a cell.
+              offerPrice={summary?.kind === "uniform" ? summary.now : undefined}
+            />
           </div>
         )}
 
@@ -358,11 +372,14 @@ function Gallery({ promo, count }: { promo: Promotion; count: number }) {
 function Comparison({
   comparison,
   brand,
+  offerPrice,
 }: {
   comparison: NonNullable<Promotion["comparison"]>;
   brand: string;
+  /** What the item costs under the running offer, for the price column. */
+  offerPrice?: string;
 }) {
-  const { basis, columns, rivals, ours, edge } = comparison;
+  const { basis, columns, rivals, ours, edge, priceColumn } = comparison;
 
   return (
     <div className="reveal-up">
@@ -429,7 +446,14 @@ function Comparison({
                 key={columns[i] ?? i}
                 className="py-4 pr-4 text-xs font-medium text-accent last:pr-0 sm:text-sm"
               >
-                {cell}
+                {i === priceColumn && offerPrice ? (
+                  <span className="whitespace-nowrap">
+                    {offerPrice}
+                    <span className="ml-1.5 text-muted line-through">{cell}</span>
+                  </span>
+                ) : (
+                  cell
+                )}
               </td>
             ))}
           </tr>

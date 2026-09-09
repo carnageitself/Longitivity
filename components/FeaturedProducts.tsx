@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import { catalog, CATEGORY_GLOW, CATEGORY_VISUAL } from "@/lib/catalog";
+import { type PromoMark } from "@/lib/promotions";
+import PromoTag from "@/components/PromoTag";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const BADGE_STYLES: Record<string, string> = {
@@ -26,7 +28,14 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
-export default function FeaturedProducts() {
+export default function FeaturedProducts({
+  // Built on the server and passed in, for the same reason the catalog
+  // browser takes it as a prop: this is a client component, and deciding
+  // here what day it is can disagree with the prerendered HTML.
+  promoMarks = {},
+}: {
+  promoMarks?: Record<string, PromoMark>;
+}) {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
       <motion.div
@@ -69,6 +78,7 @@ export default function FeaturedProducts() {
           const Icon = visual.icon;
           const image = product.image ?? visual.image;
           const photoStyle = product.image ? product.photoStyle : visual.photoStyle;
+          const promo = promoMarks[product.slug];
 
           return (
             <motion.div key={product.slug} variants={item}>
@@ -111,6 +121,9 @@ export default function FeaturedProducts() {
                       <Icon size={48} className="relative z-10 text-foreground/70" strokeWidth={1.25} />
                     )}
 
+                    {promo && (
+                      <PromoTag label={promo.label} className="absolute top-3 left-3" />
+                    )}
                     {product.badge && (
                       <span
                         className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${BADGE_STYLES[product.badge]}`}
@@ -129,9 +142,22 @@ export default function FeaturedProducts() {
 
                     <div className="mt-auto flex items-end justify-between gap-3 pt-5">
                       <div>
-                        <span className="text-lg font-semibold tracking-tight">{product.price}</span>
-                        {product.priceStatus === "on-request" && (
-                          <p className="text-[11px] text-muted">ask for current price</p>
+                        {promo ? (
+                          <>
+                            <span className="text-lg font-semibold tracking-tight text-accent">
+                              {promo.now}
+                            </span>
+                            <span className="ml-2 text-sm text-muted line-through">
+                              {promo.was}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-lg font-semibold tracking-tight">{product.price}</span>
+                            {product.priceStatus === "on-request" && (
+                              <p className="text-[11px] text-muted">ask for current price</p>
+                            )}
+                          </>
                         )}
                       </div>
                       <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-accent opacity-0 transition-opacity group-hover:opacity-100">

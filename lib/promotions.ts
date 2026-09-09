@@ -15,8 +15,8 @@ export type PromotionScope =
 // How much comes off, applied to every product in scope.
 //
 // Both kinds are needed side by side: a percentage scales sensibly across a
-// range whose prices differ (the XS cases run $35-$44), whereas a flat amount
-// is the clearer promise on a range that is all one price.
+// range whose prices differ (the XS cases are not all one figure), whereas a
+// flat amount is the clearer promise on a range that is.
 export type PromotionDiscount =
   | { type: "percent"; percentOff: number }
   | { type: "amount"; amountOff: number };
@@ -83,6 +83,16 @@ export type Promotion = {
      */
     rivals: Array<{ name: string; product?: string; cells: string[] }>;
     ours: { name: string; product?: string; cells: string[] };
+    /**
+     * Index of the column holding a price, where there is one.
+     *
+     * Our own cell there is authored as the list price so it lines up
+     * like-for-like against the rivals' list prices. Set this and the table
+     * additionally shows what the item costs under the running offer, with the
+     * list price struck beside it. Without that, this row read as the one place
+     * on a promotions page where the discount had not been applied.
+     */
+    priceColumn?: number;
     /** The "so what", in one line. */
     edge: string;
   };
@@ -345,14 +355,17 @@ export function discountLabel(discount: PromotionDiscount): string {
  * How the promotion prices out as one line in a spec row.
  *
  * A range whose items are all one price can state the move plainly. A range
- * spanning several prices cannot - quoting one "was" figure for the XS cases
- * would be wrong for most of them - so it leads with the lowest price in the
- * range instead. "From $29.75" is both the honest reading and the one that
- * invites someone in, where a full span asks them to do arithmetic.
+ * spanning several prices cannot, since quoting one "was" figure for the XS
+ * cases would be wrong for most of them, so it gives both ends of what things
+ * now cost together with both ends of what they cost before.
+ *
+ * It used to say only "from $29.75". That reads well but it is not a price:
+ * with the per-flavour list removed from the page there was nothing left
+ * telling anyone what a case actually comes to.
  */
 export type PromoSummary =
   | { kind: "uniform"; was: string; now: string }
-  | { kind: "from"; lowest: string };
+  | { kind: "spread"; wasLow: string; wasHigh: string; nowLow: string; nowHigh: string };
 
 export function promoSummary(promo: Promotion): PromoSummary | null {
   const prices = productsInPromotion(promo)
@@ -365,8 +378,15 @@ export function promoSummary(promo: Promotion): PromoSummary | null {
     return { kind: "uniform", was: prices[0].was, now: prices[0].now };
   }
 
+  const was = prices.map((price) => parsePrice(price.was) ?? 0);
   const now = prices.map((price) => parsePrice(price.now) ?? 0);
-  return { kind: "from", lowest: formatUsd(Math.min(...now)) };
+  return {
+    kind: "spread",
+    wasLow: formatUsd(Math.min(...was)),
+    wasHigh: formatUsd(Math.max(...was)),
+    nowLow: formatUsd(Math.min(...now)),
+    nowHigh: formatUsd(Math.max(...now)),
+  };
 }
 
 export type PromotionItemGroup = {
@@ -471,6 +491,7 @@ export const PROMOTIONS: Promotion[] = [
         product: "Go Vibrant Light Up Liquid Lip Glow",
         cells: ["$29", "Wand, LED light and mirror"],
       },
+      priceColumn: 0,
       // Everything after the price is a statement about our own product, not a
       // claim about theirs. Saying "they have no avocado oil" would be a claim
       // about someone else's formula that we cannot stand behind; saying what
