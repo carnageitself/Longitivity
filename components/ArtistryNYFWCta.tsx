@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import SamplesButton from "@/components/SamplesButton";
+import ShineLink from "@/components/ui/shine-link";
 
 export default function ArtistryNYFWCta() {
   return (
@@ -29,11 +29,10 @@ export default function ArtistryNYFWCta() {
         </div>
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-8 pb-10 text-center sm:pb-14">
-          <SamplesButton
-            size="lg"
-            category="Artistry"
-            label="Request free samples"
-          />
+          {/* Points at the offers page rather than a specific promotion's
+              anchor: the Artistry offer on there is month-scoped, so a
+              hardcoded #id would dead-link as soon as it rotates out. */}
+          <ShineLink href="/promotions" label="Check ongoing offers!" size="lg" />
         </div>
       </motion.div>
     </section>

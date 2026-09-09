@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowLeft, Award, Check, ListChecks, Minus, Scale } from "lucide-react";
 import { promoMarks } from "@/lib/promotions";
 import PromoTag from "@/components/PromoTag";
+import { STUDENT_CATALOG_LINE } from "@/lib/studentOffer";
 import { CATEGORY_PLACEHOLDER_IMAGE, CATEGORY_VISUAL, catalog, type CatalogProduct } from "@/lib/catalog";
 import type { CompetitorMatch } from "@/lib/fullCompare";
 import { getReturnPolicy, getRetailerReturnPolicy } from "@/lib/site-config";
@@ -145,6 +146,9 @@ export default function ProductDetail({
               )}
             </>
           )}
+          {/* Stated where someone is actually weighing the price, not buried
+              in a policy page. Applies on top of any offer above it. */}
+          <p className="mt-2 text-xs text-muted">{STUDENT_CATALOG_LINE}</p>
         </div>
       </div>
 

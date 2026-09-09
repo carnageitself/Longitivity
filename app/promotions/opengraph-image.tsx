@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { SITE_NAME } from "@/lib/site-config";
-import { OG_SIZE, OgFrame, loadOgFonts } from "@/lib/og";
+import { OG_SIZE, OgFrame, loadOgFonts, loadOgLogo } from "@/lib/og";
+import { STUDENT_OFFER_BADGE } from "@/lib/studentOffer";
 import { currentMonth, monthLabel, promotionsForMonth } from "@/lib/promotions";
 
 export const size = OG_SIZE;
@@ -22,15 +23,22 @@ export default async function Image() {
       ? promotions.map((promo) => promo.headline).join(" · ")
       : "Offers change month to month. Every product otherwise at its standard price.";
 
+  const [fonts, logoSrc] = await Promise.all([loadOgFonts(), loadOgLogo()]);
+
   return new ImageResponse(
     (
       <OgFrame
         siteName={SITE_NAME}
+        logoSrc={logoSrc}
         eyebrow={monthLabel(year, month)}
         title="Yours for less, this month."
         subtitle={subtitle}
+        // The standing offer belongs on the offers card specifically: it is not
+        // in PROMOTIONS (it has no month), so without this the one card about
+        // discounts would be the one card not mentioning it.
+        badge={STUDENT_OFFER_BADGE}
       />
     ),
-    { ...size, fonts: await loadOgFonts() },
+    { ...size, fonts },
   );
 }

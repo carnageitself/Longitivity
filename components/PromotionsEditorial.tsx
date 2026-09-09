@@ -37,7 +37,14 @@ import {
  * Server-rendered throughout, with the site's own CSS-only `reveal-up` for the
  * scroll entrance so no JavaScript is needed to see the page.
  */
-export default function PromotionsEditorial({ promotions }: { promotions: Promotion[] }) {
+export default function PromotionsEditorial({
+  promotions,
+  faqs = [],
+}: {
+  promotions: Promotion[];
+  /** Rendered as well as marked up: FAQ rich results require visible text. */
+  faqs?: { question: string; answer: string }[];
+}) {
   if (promotions.length === 0) return <EmptyState />;
 
   return (
@@ -46,8 +53,47 @@ export default function PromotionsEditorial({ promotions }: { promotions: Promot
       {promotions.map((promo, i) => (
         <Chapter key={promo.id} promo={promo} index={i + 1} />
       ))}
+      {faqs.length > 0 && <Questions faqs={faqs} />}
       <Closing />
     </>
+  );
+}
+
+/* --------------------------------- questions --------------------------------- */
+
+/**
+ * The practical questions, set as a plain hairline list.
+ *
+ * Carries the FAQPage markup emitted by the page, and Google only credits that
+ * where the same text is on the page, so this is not decoration. It is also the
+ * only place a crawler can find the student session offer, which otherwise
+ * lives entirely inside a client-side dialog.
+ */
+function Questions({ faqs }: { faqs: { question: string; answer: string }[] }) {
+  return (
+    <section className="border-b border-border px-6" aria-labelledby="promo-faq-heading">
+      <div className="mx-auto max-w-3xl py-20 sm:py-24">
+        <h2
+          id="promo-faq-heading"
+          className="text-[11px] font-medium tracking-[0.25em] text-muted uppercase"
+        >
+          Before you ask
+        </h2>
+
+        <dl className="mt-10 border-t border-border">
+          {faqs.map((faq) => (
+            <div key={faq.question} className="border-b border-border py-7">
+              <dt className="font-serif text-xl font-medium tracking-tight sm:text-2xl">
+                {faq.question}
+              </dt>
+              <dd className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
   );
 }
 
@@ -197,7 +243,7 @@ function Chapter({ promo, index }: { promo: Promotion; index: number }) {
                   </dt>
                   <dd className="mt-2 font-serif text-xl">
                     {summary.kind === "uniform" ? (
-                      <span className="whitespace-nowrap">
+                      <span className="sm:whitespace-nowrap">
                         {summary.now}
                         <span className="ml-2 align-middle text-sm text-muted line-through">
                           {summary.was}
@@ -207,12 +253,15 @@ function Chapter({ promo, index }: { promo: Promotion; index: number }) {
                       // Both ends, with the list prices underneath rather than
                       // inline: four figures on one line in a third of a split
                       // column is unreadable. "to" rather than a dash, which
-                      // this page avoids.
+                      // this page avoids. Only forced onto one line from sm:
+                      // up - at the narrowest 2-column phone width, a range
+                      // like "$37.40 to $41.01" is wider than the column and
+                      // was pushing the whole page into horizontal overflow.
                       <>
-                        <span className="whitespace-nowrap">
+                        <span className="sm:whitespace-nowrap">
                           {summary.nowLow} to {summary.nowHigh}
                         </span>
-                        <span className="mt-1 block text-xs whitespace-nowrap text-muted line-through">
+                        <span className="mt-1 block text-xs text-muted line-through sm:whitespace-nowrap">
                           {summary.wasLow} to {summary.wasHigh}
                         </span>
                       </>
@@ -406,8 +455,14 @@ function Comparison({
           </tr>
         </thead>
         <tbody>
-          {rivals.map((rival) => (
-            <tr key={rival.name} className="border-b border-border/70 align-top">
+          {/* Keyed on brand *and* product: Estée Lauder appears twice, once for
+              the glosstick and once for the lip oil, so the brand alone is not
+              unique and React warned about duplicate keys. */}
+          {rivals.map((rival, rowIndex) => (
+            <tr
+              key={`${rival.name}-${rival.product ?? rowIndex}`}
+              className="border-b border-border/70 align-top"
+            >
               <th scope="row" className="py-3.5 pr-4 font-normal">
                 <span className="block text-xs text-foreground/80 sm:text-sm">
                   {rival.name}

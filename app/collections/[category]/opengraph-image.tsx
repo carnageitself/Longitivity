@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { CATEGORY_VISUAL } from "@/lib/catalog";
 import { CATEGORY_SEO, CATEGORY_SEO_BY_SLUG, productsIn } from "@/lib/categories";
-import { OG_SIZE, OgFrame, OgPhotoPanel, loadOgFonts } from "@/lib/og";
+import { OG_SIZE, OgFrame, OgPhotoPanel, loadOgFonts, loadOgLogo } from "@/lib/og";
 import { loadOgPhoto } from "@/lib/ogPhoto";
 import { SITE_NAME } from "@/lib/site-config";
 
@@ -19,11 +19,11 @@ export default async function CollectionOgImage({
 }) {
   const { category } = await params;
   const entry = CATEGORY_SEO_BY_SLUG.get(category);
-  const fonts = await loadOgFonts();
+  const [fonts, logoSrc] = await Promise.all([loadOgFonts(), loadOgLogo()]);
 
   if (!entry) {
     return new ImageResponse(
-      <OgFrame siteName={SITE_NAME} eyebrow="Collection" title="Not found" />,
+      <OgFrame siteName={SITE_NAME} logoSrc={logoSrc} eyebrow="Collection" title="Not found" />,
       { ...size, fonts },
     );
   }
@@ -48,6 +48,7 @@ export default async function CollectionOgImage({
     (
       <OgFrame
         siteName={SITE_NAME}
+        logoSrc={logoSrc}
         eyebrow={entry.category}
         title={entry.h1}
         subtitle={`${products.length} products, every one with a full ingredient list and an honest price comparison.`}

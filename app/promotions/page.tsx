@@ -13,8 +13,9 @@ import {
   promotionsForMonth,
   spellCount,
 } from "@/lib/promotions";
-import { absoluteUrl, breadcrumbJsonLd, ORGANIZATION_ID } from "@/lib/seo";
+import { absoluteUrl, breadcrumbJsonLd, faqJsonLd, ORGANIZATION_ID } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site-config";
+import { STUDENT_OFFER_SUMMARY } from "@/lib/studentOffer";
 
 // The page is built around "what month is it", so a fully static build would
 // keep serving the month it was deployed in until the next deploy. An hourly
@@ -23,7 +24,7 @@ import { SITE_NAME } from "@/lib/site-config";
 export const revalidate = 3600;
 
 const DESCRIPTION =
-  "Save 15% on every Artistry Go Vibrant light up lip glow shade and 15% on the entire XS energy drink range this month. Every price shown up front, no codes, no minimum order.";
+  "Save 15% on every Artistry Go Vibrant lip glow shade and on the entire XS energy drink range this month. Every price shown up front. No codes, no minimum order.";
 
 export const metadata: Metadata = {
   // Bare title: the root layout's template appends "| Longitivity".
@@ -63,10 +64,11 @@ export default function PromotionsPage() {
   // would set it, where "2 favourites" reads like a filter result.
   const countWord = spellCount(promotions.length);
   const headlineCount = countWord.charAt(0).toUpperCase() + countWord.slice(1);
-  const productCount = promotions.reduce(
-    (total, promo) => total + productsInPromotion(promo).length,
-    0,
-  );
+  // Unique slugs, because two offers can cover the same product and a plain
+  // sum would count it twice.
+  const productCount = new Set(
+    promotions.flatMap((promo) => productsInPromotion(promo).map((p) => p.slug)),
+  ).size;
 
   // Each discounted item is emitted as an Offer with its promotional price and
   // the date the offer stops being valid, which is what lets a rich result show
@@ -124,9 +126,62 @@ export default function PromotionsPage() {
     null,
   );
 
+  // Answers to what people actually ask before buying, built from the live
+  // promotions so the copy cannot drift from the offers above it.
+  //
+  // Two reasons this is here rather than only in the chapters: FAQPage markup
+  // is eligible for its own rich result, and Google requires the text to be
+  // visible on the page, so this section is rendered as well as marked up. It
+  // is also the only crawlable home for the student session offer, which
+  // otherwise exists purely inside a JavaScript dialog.
+  const uniqueDiscounts = [...new Set(promotions.map((p) => discountLabel(p.discount)))];
+  const brandList = promotions.map((p) => p.brand).join(" and ");
+
+  const faqs = promotions.length
+    ? [
+        {
+          question: "Do I need a discount code?",
+          answer:
+            "No. Every price shown on this page is the price you pay. There is no code to enter, no minimum order, and nothing added at checkout.",
+        },
+        {
+          question: `When do these prices end?`,
+          answer: `${
+            promotions.length === 1 ? "The offer runs" : "Every offer runs"
+          } through ${closes ? formatLongDay(closes) : "the end of the month"} ${year}. After that the ranges return to their standard prices.`,
+        },
+        {
+          question: "Does the discount cover the whole range?",
+          // Where every range is on the same discount, say it once. Listing
+          // "15% off" per brand reads as though they might differ, and
+          // lower-casing the range names to fit the sentence turned proper
+          // nouns into what looked like a typo.
+          answer:
+            uniqueDiscounts.length === 1
+              ? `Yes. All ${productCount} products across ${brandList} are included at ${uniqueDiscounts[0]}. Nothing is held back.`
+              : `Yes. All ${productCount} products are included: ${promotions
+                  .map((promo) => `${promo.brand} at ${discountLabel(promo.discount)}`)
+                  .join(" and ")}. Nothing is held back.`,
+        },
+        {
+          question: "Is there an offer for students?",
+          // Standing offer, not one of this month's, so the copy comes from
+          // lib/studentOffer.ts rather than being restated here.
+          answer: `${STUDENT_OFFER_SUMMARY} It stacks with this month's range discounts, and sessions can be booked on the scheduling page.`,
+        },
+        {
+          question: "Can I combine this with another offer?",
+          answer:
+            "One discount per item. The monthly discount is not combinable with bundle pricing, and prices listed as estimates are confirmed at order time.",
+        },
+      ]
+    : [];
+
   return (
     <>
-      <JsonLd data={[jsonLd, breadcrumbs]} />
+      <JsonLd
+        data={faqs.length ? [jsonLd, breadcrumbs, faqJsonLd(faqs)] : [jsonLd, breadcrumbs]}
+      />
       <Navbar />
       <main className="flex-1">
         {/* Masthead. Type-only over an ambient gold wash: the two chapters
@@ -218,7 +273,7 @@ export default function PromotionsPage() {
           </div>
         </section>
 
-        <PromotionsEditorial promotions={promotions} />
+        <PromotionsEditorial promotions={promotions} faqs={faqs} />
       </main>
       <Footer />
     </>

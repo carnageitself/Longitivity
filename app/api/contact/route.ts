@@ -18,10 +18,10 @@ type ContactPayload = {
 // can be pointed at a different inbox without touching site-config.
 const NOTIFY_EMAIL = process.env.LEAD_NOTIFY_EMAIL || CONTACT.email;
 
-// Resend's shared sandbox sender: works without a verified domain, but only
-// delivers to the email address on the Resend account itself. Verify a
-// domain and set RESEND_FROM_EMAIL for real delivery to NOTIFY_EMAIL.
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Longitivity Leads <onboarding@resend.dev>";
+// The sending domain is verified with Resend, so the default sender is the
+// real address rather than Resend's shared onboarding@resend.dev sandbox,
+// which only ever delivered to the account owner's own inbox.
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || `Longitivity Leads <${CONTACT.email}>`;
 
 function buildEmailBody(lead: ContactPayload): string {
   const productNames = Array.isArray(lead.products)

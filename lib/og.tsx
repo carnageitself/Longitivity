@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import sharp from "sharp";
 
 // Shared design tokens and layout for every generated share card, so the OG
 // images stay in step with the site instead of drifting into their own look.
@@ -33,6 +34,33 @@ export async function loadOgFonts() {
 }
 
 export const BRAND_LINE = "Nutrilite · Artistry · Satinique · Glister · XS · eSpring";
+
+const LOGO_FILE = "Longitivity logo transparent.png";
+
+/**
+ * The brand mark, inlined as a data URI for Satori's <img src>.
+ *
+ * Trimmed before resizing: the source is a 500px square with the monogram
+ * filling only about half of it, so mounted untrimmed at lockup size the mark
+ * would render at roughly half the height of the wordmark beside it. trim()
+ * takes the transparent margin off and lets the glyph fill the box it is given.
+ *
+ * Returns null rather than throwing: a missing logo should cost the card its
+ * mark, not fail the build.
+ */
+export async function loadOgLogo(size = 128): Promise<string | null> {
+  try {
+    const buf = await readFile(join(process.cwd(), "public", LOGO_FILE));
+    const png = await sharp(buf)
+      .trim()
+      .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png({ compressionLevel: 9 })
+      .toBuffer();
+    return `data:image/png;base64,${png.toString("base64")}`;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * The product shot on the right of a card.
@@ -97,6 +125,8 @@ export function OgFrame({
   subtitle,
   footer = BRAND_LINE,
   siteName,
+  logoSrc,
+  badge,
   right,
 }: {
   eyebrow: string;
@@ -104,6 +134,10 @@ export function OgFrame({
   subtitle?: string;
   footer?: string;
   siteName: string;
+  /** Data URI from loadOgLogo(). Omitted, the lockup is the wordmark alone. */
+  logoSrc?: string | null;
+  /** Standing offer or similar, as a gold pill under the subtitle. */
+  badge?: string;
   right?: React.ReactNode;
 }) {
   return (
@@ -171,27 +205,40 @@ export function OgFrame({
           padding: "72px 76px",
         }}
       >
-        {/* Wordmark over the gold gradient rule from BrandSparkles */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-          <div
-            style={{
-              fontSize: 27,
-              fontWeight: 400,
-              color: OG.foreground,
-              letterSpacing: -0.6,
-            }}
-          >
-            {siteName}
+        {/* Brand lockup: monogram, then the wordmark over the gold gradient
+            rule from BrandSparkles */}
+        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          {logoSrc && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={logoSrc}
+              alt=""
+              width={52}
+              height={52}
+              style={{ objectFit: "contain", width: 52, height: 52 }}
+            />
+          )}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+            <div
+              style={{
+                fontSize: 27,
+                fontWeight: 400,
+                color: OG.foreground,
+                letterSpacing: -0.6,
+              }}
+            >
+              {siteName}
+            </div>
+            <div
+              style={{
+                marginTop: 7,
+                width: 148,
+                height: 1,
+                backgroundImage: `linear-gradient(90deg, transparent, ${OG.accent}, transparent)`,
+                display: "flex",
+              }}
+            />
           </div>
-          <div
-            style={{
-              marginTop: 7,
-              width: 148,
-              height: 1,
-              backgroundImage: `linear-gradient(90deg, transparent, ${OG.accent}, transparent)`,
-              display: "flex",
-            }}
-          />
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 52 }}>
@@ -247,6 +294,38 @@ export function OgFrame({
                 }}
               >
                 {subtitle}
+              </div>
+            )}
+
+            {badge && (
+              <div
+                style={{
+                  marginTop: 24,
+                  // alignSelf keeps the pill hugging its text instead of
+                  // stretching the full width of the column.
+                  alignSelf: "flex-start",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 13,
+                  padding: "11px 22px",
+                  borderRadius: 999,
+                  border: `1px solid rgba(${OG.accentRgb}, 0.5)`,
+                  backgroundColor: `rgba(${OG.accentRgb}, 0.1)`,
+                  fontSize: 21,
+                  color: OG.accent,
+                  letterSpacing: 0.2,
+                }}
+              >
+                <div
+                  style={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: 999,
+                    backgroundColor: OG.accent,
+                    display: "flex",
+                  }}
+                />
+                {badge}
               </div>
             )}
           </div>

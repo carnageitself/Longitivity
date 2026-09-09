@@ -6,10 +6,16 @@ import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
-import { getAvailableDays, toDateKey, slotsForDate, slotKey, formatSlotForEmail } from "@/lib/scheduling";
+import { getAvailableDays, toDateKey, slotsForDate, slotKey, formatSlotForEmail,
+  SESSION_TYPES,
+  isSessionType,
+  type SessionTypeValue,
+} from "@/lib/scheduling";
 
 type Status = "idle" | "submitting" | "success" | "error";
-type FieldErrors = Partial<Record<"firstName" | "lastName" | "email" | "phone" | "location", string>>;
+type FieldErrors = Partial<
+  Record<"firstName" | "lastName" | "email" | "phone" | "location" | "sessionType", string>
+>;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Only cares that a US number is in there somewhere, regardless of how it's
@@ -25,7 +31,10 @@ function isValidCityName(raw: string): boolean {
   return /^[A-Za-z][A-Za-z\s.,'-]{1,}$/.test(raw.trim());
 }
 
-function validateBookingForm(data: FormData): FieldErrors {
+function validateBookingForm(
+  data: FormData,
+  sessionType: SessionTypeValue | null,
+): FieldErrors {
   const errors: FieldErrors = {};
   const firstName = String(data.get("firstName") ?? "").trim();
   const lastName = String(data.get("lastName") ?? "").trim();
@@ -38,6 +47,7 @@ function validateBookingForm(data: FormData): FieldErrors {
   if (!email || !EMAIL_PATTERN.test(email)) errors.email = "Enter a valid email address.";
   if (!phone || !isValidUsPhone(phone)) errors.phone = "Enter a valid US phone number.";
   if (!location || !isValidCityName(location)) errors.location = "Enter a valid city.";
+  if (!sessionType) errors.sessionType = "Choose what you would like to cover.";
 
   return errors;
 }
@@ -58,6 +68,12 @@ function FieldError({ message }: { message?: string }) {
 export default function ScheduleBooking() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
+  // Arriving from the student offer dialog (/schedule?type=skin-care) should
+  // land with the right session already chosen rather than asking again.
+  const typeParam = searchParams.get("type");
+  const [sessionType, setSessionType] = useState<SessionTypeValue | null>(
+    isSessionType(typeParam) ? typeParam : null,
+  );
 
   const days = useMemo(() => getAvailableDays(), []);
   const bookableDates = useMemo(() => new Set(days.map((d) => d.date)), [days]);
@@ -104,7 +120,7 @@ export default function ScheduleBooking() {
       return;
     }
 
-    const errors = validateBookingForm(data);
+    const errors = validateBookingForm(data, sessionType);
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
@@ -126,6 +142,7 @@ export default function ScheduleBooking() {
           date: selectedDate,
           time: selectedTime,
           category,
+          sessionType,
         }),
       });
 
@@ -228,7 +245,7 @@ export default function ScheduleBooking() {
         <div className="p-6 lg:p-8">
           <p className="mb-5 flex items-center gap-2.5 text-sm font-medium text-foreground">
             <StepNumber n={3} />
-            Your contact details
+            Your details
           </p>
 
           <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
@@ -243,6 +260,48 @@ export default function ScheduleBooking() {
                 Interested in: <span className="text-accent">{category}</span>
               </p>
             )}
+
+            {/* Asked first: it frames everything after it, and it is the one
+                thing that tells whoever takes the booking how to prepare.
+                Buttons rather than a dropdown, matching the time slots above,
+                so all three read at a glance on a phone.
+
+                Set as a segmented control: one fixed height, small caps, and
+                nowrap on short labels, so the three sit level instead of one
+                growing a second line and towering over the others. */}
+            <fieldset className="flex flex-col gap-1.5">
+              <legend className="mb-1.5 text-sm font-medium text-foreground">
+                What would you like to cover?
+              </legend>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                {SESSION_TYPES.map((type) => {
+                  const selected = sessionType === type.value;
+                  return (
+                    <button
+                      key={type.value}
+                      type="button"
+                      aria-pressed={selected}
+                      // The full phrase for anyone using a screen reader, since
+                      // "Business" on its own says little out of context.
+                      aria-label={type.label}
+                      onClick={() => {
+                        setSessionType(type.value);
+                        setFieldErrors((prev) => ({ ...prev, sessionType: undefined }));
+                        if (status === "error") setStatus("idle");
+                      }}
+                      className={`flex h-11 items-center justify-center rounded-lg border px-2 text-[11px] font-medium tracking-[0.12em] whitespace-nowrap uppercase transition-colors ${
+                        selected
+                          ? "border-accent bg-accent/10 text-foreground"
+                          : "border-border bg-background text-muted hover:bg-background/60 hover:text-foreground"
+                      }`}
+                    >
+                      {type.short}
+                    </button>
+                  );
+                })}
+              </div>
+              <FieldError message={fieldErrors.sessionType} />
+            </fieldset>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">

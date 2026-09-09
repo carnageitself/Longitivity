@@ -6,7 +6,9 @@ export const SITE_NAME = "Longitivity";
 export const SITE_TAGLINE = "Curated Wellness & Home Essentials";
 
 export const CONTACT = {
-  email: "contact@longitivity.com",
+  // Sending domain is verified with Resend, so this doubles as the From
+  // address for both API routes rather than only the reply-to.
+  email: "contact@atlantisutility.com",
   // No phone number here on purpose: it is shown nowhere on the site and left
   // out of the vCard, so keeping it in config would only leave it sitting in
   // the repo for no one to use.

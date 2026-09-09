@@ -145,3 +145,42 @@ export function formatSlotForEmail(date: string, time: string): string {
   });
   return `${dateLabel} at ${slot?.label ?? time}`;
 }
+
+/**
+ * What a booking is actually for.
+ *
+ * Shared so the form, the API route and the notification email all name these
+ * the same way. Values are slugs because they travel in a URL - the student
+ * offer dialog links to /schedule?type=skin-care so the right one is already
+ * chosen when someone lands - while the labels are what a person reads.
+ *
+ * Distinct from the `category` query param, which carries the product someone
+ * was looking at when they clicked through ("Interested in: Artistry"). That
+ * says what they were browsing; this says what they want to do.
+ */
+/**
+ * `label` is the canonical name: it is what gets stored on the booking and
+ * what both confirmation emails read back ("Your skin care session is
+ * confirmed for..."), so it has to be a complete phrase.
+ *
+ * `short` is only for the chooser on the form, where three equal columns leave
+ * roughly 140px each. "Business opportunity" wrapped to a second line there
+ * while the other two did not, which left one control taller than its
+ * neighbours - so the control uses these and the data keeps the full label.
+ */
+export const SESSION_TYPES = [
+  { value: "skin-care", label: "Skin care session", short: "Skin care" },
+  { value: "product-demo", label: "Product demo", short: "Product demo" },
+  { value: "business-opportunity", label: "Business opportunity", short: "Business" },
+] as const;
+
+export type SessionTypeValue = (typeof SESSION_TYPES)[number]["value"];
+
+export function isSessionType(value: unknown): value is SessionTypeValue {
+  return SESSION_TYPES.some((type) => type.value === value);
+}
+
+/** Slug to the label a human reads, or null for anything unrecognised. */
+export function sessionTypeLabel(value: unknown): string | null {
+  return SESSION_TYPES.find((type) => type.value === value)?.label ?? null;
+}

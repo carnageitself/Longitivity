@@ -15,6 +15,13 @@ import type { Metadata } from "next";
 
 // The Organization/WebSite graph this page used to declare now lives in the
 // root layout, so every route carries it instead of just the homepage.
+// These pages carry the "15% off" tags and discounted prices, which are worked
+// out from today's date at render time. Without a revalidate they are built
+// once and served unchanged, so an offer that ended on the 30th would keep
+// advertising itself - to shoppers and to Googlebot - until the next deploy.
+// Hourly matches /promotions, so every surface turns over together.
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };

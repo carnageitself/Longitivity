@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { catalog, CATEGORY_VISUAL } from "@/lib/catalog";
-import { OG_SIZE, OgFrame, OgPhotoPanel, loadOgFonts } from "@/lib/og";
+import { OG_SIZE, OgFrame, OgPhotoPanel, loadOgFonts, loadOgLogo } from "@/lib/og";
 import { loadOgPhoto } from "@/lib/ogPhoto";
 import { SITE_NAME } from "@/lib/site-config";
 
@@ -18,17 +18,19 @@ export default async function ProductOgImage({
 }) {
   const { slug } = await params;
   const product = catalog.find((p) => p.slug === slug);
+  const [fonts, logoSrc] = await Promise.all([loadOgFonts(), loadOgLogo()]);
 
   if (!product) {
     return new ImageResponse(
       (
         <OgFrame
           siteName={SITE_NAME}
+          logoSrc={logoSrc}
           eyebrow="Product"
           title="Product not found"
         />
       ),
-      { ...size, fonts: await loadOgFonts() },
+      { ...size, fonts },
     );
   }
 
@@ -48,6 +50,7 @@ export default async function ProductOgImage({
     (
       <OgFrame
         siteName={SITE_NAME}
+        logoSrc={logoSrc}
         eyebrow={product.category}
         title={product.name}
         subtitle={product.hook}
@@ -59,6 +62,6 @@ export default async function ProductOgImage({
         }
       />
     ),
-    { ...size, fonts: await loadOgFonts() },
+    { ...size, fonts },
   );
 }

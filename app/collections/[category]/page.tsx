@@ -16,6 +16,13 @@ import {
 import { absoluteUrl, breadcrumbJsonLd, faqJsonLd, ORGANIZATION_ID } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/site-config";
 
+// These pages carry the "15% off" tags and discounted prices, which are worked
+// out from today's date at render time. Without a revalidate they are built
+// once and served unchanged, so an offer that ended on the 30th would keep
+// advertising itself - to shoppers and to Googlebot - until the next deploy.
+// Hourly matches /promotions, so every surface turns over together.
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return CATEGORY_SEO.map((entry) => ({ category: entry.slug }));
 }

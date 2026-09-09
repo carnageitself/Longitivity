@@ -100,7 +100,7 @@ export const CATEGORY_SEO: CategorySeo[] = [
     category: "XS",
     title: "XS Energy Drinks: Every Flavor & Case Price",
     h1: "XS Energy Drinks",
-    description: `All ${XS_COUNT} XS Energy flavors, from Classic and Tropical to Root Beer, Sparkling Juiced, Energy + Burn and Elite Focus, sold by the case, with full ingredient panels.`,
+    description: `All ${XS_COUNT} XS Energy flavors, from Classic and Tropical to Root Beer, Sparkling Juiced, Energy + Burn and Elite Focus, by the case, with ingredient panels.`,
     intro:
       "Zero sugar, 114 mg of caffeine, fifteen calories a can. Sold by the case so you are never caught without a cold one, with the full nutrition panel on every flavour's own page.",
     faqs: [

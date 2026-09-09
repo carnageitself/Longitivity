@@ -10,17 +10,29 @@ import { catalog, type CatalogProduct } from "@/lib/catalog";
 import { fullCompare } from "@/lib/fullCompare";
 import { categoryPath, CATEGORY_SEO_BY_NAME } from "@/lib/categories";
 import { absoluteUrl, breadcrumbJsonLd, ORGANIZATION_ID } from "@/lib/seo";
+import { promoMarks, type PromoMark } from "@/lib/promotions";
 import { SITE_NAME } from "@/lib/site-config";
 
 export function generateStaticParams() {
   return catalog.map((product) => ({ slug: product.slug }));
 }
 
+// The Offer price and the on-page tag both come from today's date, so this
+// page cannot be built once and left. Without a revalidate, structured data
+// would go on asserting a sale price after the sale ended, which is exactly
+// the mismatch that costs a rich result.
+export const revalidate = 3600;
+
 // "$86.00" -> 86, "Ask for current price" -> undefined. Structured data
 // should only ever assert a price we can actually stand behind.
 function parsePrice(product: CatalogProduct): number | undefined {
   if (product.priceStatus === "on-request") return undefined;
   const value = Number(product.price.replace(/[^0-9.]/g, ""));
+  return Number.isFinite(value) && value > 0 ? value : undefined;
+}
+
+function toNumber(price: string): number | undefined {
+  const value = Number(price.replace(/[^0-9.]/g, ""));
   return Number.isFinite(value) && value > 0 ? value : undefined;
 }
 
@@ -71,14 +83,19 @@ function titleFor(product: CatalogProduct): string | { absolute: string } {
 // SERP snippet unused. This pads each one out with the facts people are
 // actually searching on - price, size, origin - rather than a boilerplate tail
 // repeated across all 69 pages, then clamps on a word boundary.
-function metaDescription(product: CatalogProduct): string {
+function metaDescription(product: CatalogProduct, promo?: PromoMark): string {
   const parts: string[] = [product.description.trim().replace(/\s+/g, " ")];
   if (!/[.!?]$/.test(parts[0])) parts[0] += ".";
 
+  // Quote whatever the page itself is showing. A snippet advertising the list
+  // price while the page displays a lower one reads as bait, and Google checks
+  // the two against each other.
   parts.push(
     product.priceStatus === "on-request"
       ? `${product.size}, price on request.`
-      : `${product.price} for ${product.size}.`,
+      : promo
+        ? `${promo.now} for ${product.size}, ${promo.label} until ${promo.endsOn}.`
+        : `${product.price} for ${product.size}.`,
   );
 
   if (product.madeIn && product.madeIn !== "Not publicly confirmed") {
@@ -111,6 +128,19 @@ function priceValidUntil(): string {
   return d.toISOString().split("T")[0];
 }
 
+/** "30 September" plus this year, as the YYYY-MM-DD schema.org wants. */
+function promoEndsIso(promo: PromoMark): string {
+  const [day, monthName] = promo.endsOn.split(" ");
+  const month = MONTHS.indexOf(monthName) + 1;
+  if (!month) return priceValidUntil();
+  return `${new Date().getFullYear()}-${String(month).padStart(2, "0")}-${day.padStart(2, "0")}`;
+}
+
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
 export async function generateMetadata({
   params,
 }: {
@@ -129,7 +159,7 @@ export async function generateMetadata({
   // it and go back to sharing the bare product JPG, which is the wrong aspect
   // ratio and shows a white box on every dark-themed social client.
 
-  const description = metaDescription(product);
+  const description = metaDescription(product, promoMarks()[product.slug]);
 
   return {
     title,
@@ -175,7 +205,12 @@ export default async function ProductPage({
         .find((c) => c && c.length > 0)
     : undefined;
   const competitors = ownComparison?.length ? ownComparison : (groupComparison ?? []);
-  const price = parsePrice(product);
+  const promo = promoMarks()[product.slug];
+  // The Offer has to state the price on the page. Asserting the list
+  // price while the page shows a discounted one is the mismatch Google
+  // suppresses rich results over.
+  const listPrice = parsePrice(product);
+  const price = promo ? (toNumber(promo.now) ?? listPrice) : listPrice;
 
   const url = absoluteUrl(`/products/${product.slug}`);
 
@@ -203,7 +238,9 @@ export default async function ProductPage({
             url,
             priceCurrency: "USD",
             price,
-            priceValidUntil: priceValidUntil(),
+            // A promoted item genuinely reverts on a known date, so quote
+            // that rather than the rolling one-year marker.
+            priceValidUntil: promo ? promoEndsIso(promo) : priceValidUntil(),
             itemCondition: "https://schema.org/NewCondition",
             availability: "https://schema.org/InStock",
             seller: { "@id": ORGANIZATION_ID },

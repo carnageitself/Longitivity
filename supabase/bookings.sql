@@ -13,6 +13,10 @@ create table if not exists public.bookings (
   slot_date date not null,
   slot_time text not null,
   category text,
+  -- What the booking is for: "Skin care session", "Product demo",
+  -- "Business opportunity". Nullable, so a booking is never lost to a
+  -- missing label.
+  session_type text,
   status text not null default 'confirmed',
   -- Prevents two people from ever holding the same slot: the second insert
   -- fails with a unique_violation (23505), which the API route turns into a
@@ -27,3 +31,8 @@ create table if not exists public.bookings (
 -- (exposed in the browser bundle) gets zero access to this table, even for
 -- reads.
 alter table public.bookings enable row level security;
+
+-- Already have this table from an earlier deploy? The session_type column was
+-- added later, so run this once before deploying the booking form that sets it:
+--
+--   alter table public.bookings add column if not exists session_type text;

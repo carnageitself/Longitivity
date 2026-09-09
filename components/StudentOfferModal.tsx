@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useSessionFlag } from "@/lib/sessionFlag";
+import { STUDENT_OFFER } from "@/lib/studentOffer";
 
 const DELAY_MS = 15_000;
 /** Marks the visit, so the countdown survives moving between pages. */
@@ -139,18 +140,22 @@ export default function StudentOfferModal() {
                 id="student-offer-title"
                 className="mt-5 font-serif text-3xl font-medium tracking-tight sm:text-4xl"
               >
-                Half off your first skin care session.
+                {STUDENT_OFFER.sessionDiscount} off your first skin care
+                session.
               </h2>
 
               <p className="mt-4 text-sm leading-relaxed text-muted">
-                Bring a student ID and take 50% off a one-to-one skin care
-                consultation: your skin type, your routine, and which Artistry
-                products are actually worth your money. Nothing to buy at the
-                end of it.
+                Bring a student ID and take {STUDENT_OFFER.sessionDiscount} off
+                a one-to-one skin care consultation: your skin type, your
+                routine, and which Artistry products are actually worth your
+                money. You also get {STUDENT_OFFER.catalogDiscount} off
+                anything in the catalog. Nothing to buy at the end of it.
               </p>
 
               <Link
-                href="/schedule"
+                // Pre-selects the skin care session on the booking form, so the
+                // offer someone just accepted is already chosen when they land.
+                href={STUDENT_OFFER.bookingHref}
                 onClick={dismiss}
                 className="shine-cta mt-8 inline-flex w-full items-center justify-center rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
               >
