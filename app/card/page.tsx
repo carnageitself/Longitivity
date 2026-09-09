@@ -85,6 +85,34 @@ export default function CardPage() {
                 "var p=v.play();if(p&&p.catch)p.catch(function(){});});",
             }}
           />
+          {/* The primary action, directly under the video and ahead of the
+              link to the site.
+
+              A QR code carries one payload, so scanning it can either open this
+              page or save a contact, never both. This is the other half: the
+              scan lands here, one tap hands the phone a .vcf. Plain anchor, no
+              download attribute - iOS ignores it and acts on the response's
+              content type, which is what opens its Add Contact sheet.
+
+              Solid white rather than the gold gradient below it: on a black
+              page that is the highest-contrast element available, so it wins
+              the eye without two loud buttons competing. */}
+          <a
+            href="/api/vcard"
+            className="flex items-center justify-center gap-2 rounded-2xl bg-foreground px-6 py-5 text-sm font-semibold tracking-wide text-background transition-opacity hover:opacity-90"
+          >
+            <UserPlus size={18} className="shrink-0" />
+            Save my contact
+          </a>
+          {/* Says what the tap actually does. "Save my contact" alone asks for
+              a commitment without naming the payoff. */}
+          <p className="text-center text-xs text-muted">
+            One tap. My number, email and the site, straight into your phone.
+          </p>
+        </div>
+
+        {/* Secondary actions */}
+        <div className="flex w-full flex-col gap-3">
           <Link
             href="/"
             className="shine-cta flex items-center justify-center gap-2 rounded-2xl bg-linear-to-br from-accent to-[#8a6d3b] px-6 py-5 text-center text-sm leading-snug font-medium tracking-wide text-accent-foreground shadow-md shadow-amber-900/40 ring-1 ring-inset ring-white/25 transition-opacity hover:opacity-90"
@@ -92,28 +120,12 @@ export default function CardPage() {
             Care about your health?
             <br className="sm:hidden" /> Lemme hook you up!
           </Link>
-        </div>
-
-        {/* Contact */}
-        <div className="flex w-full flex-col gap-3">
           <a
             href={`mailto:${CONTACT.email}`}
             className="flex items-center gap-3 rounded-2xl border border-border px-5 py-4 text-sm font-medium transition-colors hover:bg-surface"
           >
             <Mail size={18} className="shrink-0 text-accent" />
             {CONTACT.email}
-          </a>
-          {/* A QR code carries one payload, so scanning it can either open this
-              page or save a contact, never both. This is the other half: the
-              scan lands here, one tap hands the phone a .vcf. Plain anchor, no
-              download attribute - iOS ignores it and acts on the response's
-              content type, which is what opens its Add Contact sheet. */}
-          <a
-            href="/api/vcard"
-            className="flex items-center gap-3 rounded-2xl border border-border px-5 py-4 text-sm font-medium transition-colors hover:bg-surface"
-          >
-            <UserPlus size={18} className="shrink-0 text-accent" />
-            Save my contact
           </a>
         </div>
 
