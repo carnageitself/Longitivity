@@ -7,6 +7,15 @@ export const SITE_TAGLINE = "Curated Wellness & Home Essentials";
 
 export const CONTACT = {
   email: "contact@longitivity.com",
+  // E.164 for tel: links and the vCard, which both need the unpunctuated form;
+  // `phoneDisplay` is the version people actually read. Previously hardcoded in
+  // app/card/page.tsx, which meant the vCard could drift from the page.
+  phone: "+18052128139",
+  phoneDisplay: "+1 (805) 212-8139",
+  // Whose name lands in the phonebook when someone saves the card. A personal
+  // name reads better on a business card than a brand, so override this once
+  // you've decided how you want to be listed.
+  vcardName: SITE_NAME,
 };
 
 // Categories that count as opened personal-care/health/consumable items under

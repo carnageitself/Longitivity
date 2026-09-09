@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, UserPlus } from "lucide-react";
 import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
 
 // Standalone digital business card: meant to be handed out as a direct link
@@ -16,8 +16,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-const PHONE_DISPLAY = "+1 (805) 212-8139";
-const PHONE_HREF = "tel:+18052128139";
+const PHONE_HREF = `tel:${CONTACT.phone}`;
 
 export default function CardPage() {
   return (
@@ -107,7 +106,20 @@ export default function CardPage() {
             className="flex items-center gap-3 rounded-2xl border border-border px-5 py-4 text-sm font-medium transition-colors hover:bg-surface"
           >
             <Phone size={18} className="shrink-0 text-accent" />
-            {PHONE_DISPLAY}
+            {CONTACT.phoneDisplay}
+          </a>
+
+          {/* A QR code carries one payload, so scanning it can either open this
+              page or save a contact, never both. This is the other half: the
+              scan lands here, one tap hands the phone a .vcf. Plain anchor, no
+              download attribute - iOS ignores it and acts on the response's
+              content type, which is what opens its Add Contact sheet. */}
+          <a
+            href="/api/vcard"
+            className="flex items-center justify-center gap-2 rounded-2xl border border-accent bg-accent/10 px-5 py-4 text-sm font-semibold text-accent transition-colors hover:bg-accent/20"
+          >
+            <UserPlus size={18} className="shrink-0" />
+            Save my contact
           </a>
         </div>
 
