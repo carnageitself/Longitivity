@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import BrandSparkles from "@/components/BrandSparkles";
 import { SITE_NAME, SITE_TAGLINE, CONTACT } from "@/lib/site-config";
 import { CATEGORY_SEO } from "@/lib/categories";
+import { STUDENT_OFFER, STUDENT_OFFER_SUMMARY } from "@/lib/studentOffer";
 
 // Every category landing page, linked from every page on the site. Sitewide
 // footer links are what keep these one hop from anywhere a crawler lands.
@@ -90,19 +91,53 @@ export default function Footer() {
                   className="flex items-center gap-2 text-sm text-muted transition-colors hover:text-foreground"
                 >
                   <Mail size={14} className="shrink-0 text-accent" />
-                  <span className="break-all">{CONTACT.email}</span>
+                  {/* Breaks after the @ rather than anywhere: break-all alone
+                      split the domain mid-word ("atlantisutility.c / om") once
+                      the address got longer than the column. */}
+                  <span className="break-words">
+                    {CONTACT.email.split("@")[0]}@<wbr />
+                    {CONTACT.email.split("@")[1]}
+                  </span>
                 </a>
               </li>
             </ul>
+
+            {/* The student offer runs continuously rather than monthly, so it
+                belongs in the site furniture rather than on the offers page,
+                where everything else is dated. */}
+            <p className="mt-6 text-xs leading-relaxed text-muted">
+              {STUDENT_OFFER_SUMMARY}{" "}
+              <Link
+                href={STUDENT_OFFER.bookingHref}
+                className="text-accent underline decoration-accent/40 underline-offset-2 transition-colors hover:decoration-accent"
+              >
+                Book a session
+              </Link>
+            </p>
           </div>
         </div>
       </div>
 
       <div className="border-t border-border">
-        <div className="mx-6 flex flex-col items-center gap-4 py-8 sm:mx-12 sm:flex-row lg:mx-20">
+        <div className="mx-6 flex flex-col items-center gap-4 py-8 sm:mx-12 sm:flex-row sm:justify-between lg:mx-20">
           <p className="text-xs text-muted">
             © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
           </p>
+          {/* Opposite the copyright, which is where people look for these. */}
+          <nav aria-label="Legal" className="flex items-center gap-5">
+            <Link
+              href="/privacy"
+              className="text-xs text-muted transition-colors hover:text-foreground"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-xs text-muted transition-colors hover:text-foreground"
+            >
+              Terms
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>

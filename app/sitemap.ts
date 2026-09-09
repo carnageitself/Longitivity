@@ -21,6 +21,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl("/opportunity"), lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: absoluteUrl("/schedule"), lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: absoluteUrl("/contact"), lastModified, changeFrequency: "monthly", priority: 0.5 },
+    // Low priority but worth indexing: a findable privacy policy is part of
+    // what CalOPPA asks for, and both pages get linked from every footer.
+    { url: absoluteUrl("/privacy"), lastModified, changeFrequency: "yearly", priority: 0.2 },
+    { url: absoluteUrl("/terms"), lastModified, changeFrequency: "yearly", priority: 0.2 },
   ];
 
   // Category landing pages sit above individual products: they are the pages
