@@ -10,9 +10,31 @@ import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-van
 
 const CATEGORIES = Object.keys(CATEGORY_INFO) as CatalogCategory[];
 
+// Display order for the grid, distinct from the alphabetic-ish CATEGORY_INFO
+// order used for the filter chips. Personal Care isn't one brand, so its three
+// sub-brands (g&h, Glister, Satinique) each get their own slot rather than
+// showing as a single block.
+function displayPriority(product: (typeof catalog)[number]): number {
+  const name = product.name.toLowerCase();
+  if (product.category === "Artistry") return 0;
+  if (product.category === "XS") return 1;
+  if (product.category === "Personal Care" && name.startsWith("g&h")) return 2;
+  if (product.category === "Home Care") return 3;
+  if (product.category === "Water & Air Treatment") return 4;
+  if (product.category === "Nutrilite") return 5;
+  if (product.category === "Personal Care" && name.startsWith("glister")) return 6;
+  if (product.category === "Personal Care" && name.startsWith("satinique")) return 7;
+  return 8;
+}
+
 // Skip anything with no real photo (own image or the category fallback) so
 // the catalog only shows products with actual photography, not icon cards.
-const CATALOG_WITH_IMAGE = catalog.filter((p) => p.image ?? CATEGORY_VISUAL[p.category].image);
+// Array.prototype.sort is stable per spec, so products in the same priority
+// bucket keep the catalog's own relative order.
+const CATALOG_WITH_IMAGE = catalog
+  .filter((p) => p.image ?? CATEGORY_VISUAL[p.category].image)
+  .slice()
+  .sort((a, b) => displayPriority(a) - displayPriority(b));
 
 const SEARCH_PLACEHOLDERS = [
   "Search Nutrilite vitamins...",
