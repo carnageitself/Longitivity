@@ -22,7 +22,6 @@ export type CatalogProduct = {
   description: string;
   hook: string;
   badge?: "Bestseller" | "New" | "Staff Pick";
-  videoId?: string; // YouTube video ID for embed
   madeIn: string; // country of manufacture/origin
   // Real product photo for this specific item, overriding the category-level image.
   image?: string;
@@ -172,7 +171,6 @@ export const catalog: CatalogProduct[] = [
     description: "Flagship daily multivitamin, mineral & phytonutrient supplement: 3 tablets, twice a day.",
     hook: "The best-known product in this lineup worldwide: grown on our own certified organic farms, not sourced from an anonymous supplement factory.",
     badge: "Bestseller",
-    videoId: "bKagFfxwZtw",
     madeIn: "USA",
     image: "/Nutralite double X.jpg",
     photoStyle: "card",
@@ -538,7 +536,6 @@ export const catalog: CatalogProduct[] = [
     ],
     description: "Anti-aging facial serum targeting fine lines, pores, and skin elasticity.",
     hook: "Built around ashwagandha and holy basil extracts: ingredients most drugstore serums have never touched.",
-    videoId: "wrCgBjvd5eU",
     madeIn: "USA",
     image: "/Artistry Defying Serum.jpg",
     photoStyle: "card",
@@ -749,7 +746,6 @@ export const catalog: CatalogProduct[] = [
     ],
     description: "Moisturizing shampoo for dry, unruly hair.",
     hook: "Built around a sunflower-seed water complex you won't find in a drugstore shampoo aisle.",
-    videoId: "jB-GeJZ30EQ",
     madeIn: "USA",
     image: "/Satnique Moisture Shampoo.png",
     photoStyle: "transparent",
@@ -786,7 +782,6 @@ export const catalog: CatalogProduct[] = [
     ],
     description: "Anticavity fluoride toothpaste that cleans, helps whiten, and freshens breath.",
     hook: "Its fluoride content is on file with the FDA's own public drug listing database: not just on the box.",
-    videoId: "1yAZfkYcQpA",
     madeIn: "USA",
     image: "/Glister Multi action Toothpaste.jpg",
     photoStyle: "card",
@@ -877,7 +872,6 @@ export const catalog: CatalogProduct[] = [
     description: "The original XS flavor: sugar-free, 15 calories per can.",
     hook: "114 mg of caffeine and zero sugar: built to hit without the crash that follows a sugary energy drink.",
     badge: "Bestseller",
-    videoId: "MI0n6j8yCak",
     madeIn: "USA",
     variantGroup: "xs-energy-drink",
     variantLabel: "Classic",
@@ -1376,7 +1370,6 @@ export const catalog: CatalogProduct[] = [
     description: "Full under-counter home water treatment and purification system.",
     hook: "Filters down to 0.2 microns while leaving the beneficial minerals in your water untouched.",
     badge: "Bestseller",
-    videoId: "p5hZ4YAAU9M",
     madeIn: "USA",
     image: "/espring under the counter.jpg",
     photoStyle: "card",
@@ -1419,7 +1412,6 @@ export const catalog: CatalogProduct[] = [
     ],
     description: "Smart whole-room air purifier system with app control.",
     hook: "Four independent certifications behind it: AHAM, ECARF, Allergy UK, and ENERGY STAR: the performance is audited, not just printed on the box.",
-    videoId: "4kPqoatVQAc",
     badge: "New",
     madeIn: "USA",
     image: "/Atmosphere air treatment system.jpg",
