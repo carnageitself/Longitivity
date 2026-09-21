@@ -6,9 +6,10 @@ export const SITE_NAME = "Longitivity";
 export const SITE_TAGLINE = "Curated Wellness & Home Essentials";
 
 export const CONTACT = {
-  // Sending domain is verified with Resend, so this doubles as the From
-  // address for both API routes rather than only the reply-to.
-  email: "contact@atlantisutility.com",
+  // This doubles as the From address for both API routes, not just the
+  // reply-to, so its domain has to stay verified under Resend > Domains.
+  // Change the domain here and the sends fail until the new one is verified.
+  email: "contact@longitivity.com",
   // No phone number here on purpose: it is shown nowhere on the site and left
   // out of the vCard, so keeping it in config would only leave it sitting in
   // the repo for no one to use.

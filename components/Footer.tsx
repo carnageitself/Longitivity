@@ -92,7 +92,7 @@ export default function Footer() {
                 >
                   <Mail size={14} className="shrink-0 text-accent" />
                   {/* Breaks after the @ rather than anywhere: break-all alone
-                      split the domain mid-word ("atlantisutility.c / om") once
+                      split the domain mid-word ("longitivity.c / om") once
                       the address got longer than the column. */}
                   <span className="break-words">
                     {CONTACT.email.split("@")[0]}@<wbr />
