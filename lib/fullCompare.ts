@@ -659,6 +659,73 @@ export const fullCompare: FullComparison[] = [
       },
     ],
   },
+  // The other three Light Up Lip Glow shades. Same formula, same tube, same
+  // competitors: only the shade being matched against changes. Kept as full
+  // entries rather than aliased to Desert Rose so a shade can be re-pitched on
+  // its own if its nearest competitor shade ever moves.
+  {
+    slug: "artistry-go-vibrant-lip-glow-cranberry",
+    competitors: [
+      {
+        name: "MAC Lipglass High Shine Lip Gloss",
+        retailer: "Ulta",
+        price: "~$24 / 0.1 oz",
+        difference: "The long-standing prestige gloss benchmark, known for heavy shine and the thick, tacky texture that comes with it.",
+        advantage: "Twice the product in the tube at 5 g against 0.1 oz, a deep berry that stays non-sticky rather than tacky, and a vitamin complex conditioning lips while it wears. The cap carries an LED light and mirror, which no gloss at this counter does.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "Dior Addict Lip Maximizer Plumping Gloss",
+        retailer: "Sephora",
+        price: "~$42 / 6 mL",
+        difference: "A luxury plumping gloss that works by irritating the lip slightly to swell it, so the effect fades as the tingle does.",
+        advantage: "Meaningfully cheaper than the Dior, and it holds its berry for a stated 10 hours rather than resting on a plumping effect that wears off. Formulated with no mineral oil, parabens or phthalates under the Artistry Clean standard, and returnable for six months against Sephora's thirty days.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-go-vibrant-lip-glow-choco-bean",
+    competitors: [
+      {
+        name: "MAC Lipglass High Shine Lip Gloss",
+        retailer: "Ulta",
+        price: "~$24 / 0.1 oz",
+        difference: "The long-standing prestige gloss benchmark, known for heavy shine and the thick, tacky texture that comes with it.",
+        advantage: "Twice the product in the tube at 5 g against 0.1 oz, a warm brown that stays non-sticky rather than tacky, and a vitamin complex conditioning lips while it wears. The cap carries an LED light and mirror, which no gloss at this counter does.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "Dior Addict Lip Maximizer Plumping Gloss",
+        retailer: "Sephora",
+        price: "~$42 / 6 mL",
+        difference: "A luxury plumping gloss that works by irritating the lip slightly to swell it, so the effect fades as the tingle does.",
+        advantage: "Meaningfully cheaper than the Dior, and it holds its brown for a stated 10 hours rather than resting on a plumping effect that wears off. Formulated with no mineral oil, parabens or phthalates under the Artistry Clean standard, and returnable for six months against Sephora's thirty days.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-go-vibrant-lip-glow-fuchsia-bloom",
+    competitors: [
+      {
+        name: "MAC Lipglass High Shine Lip Gloss",
+        retailer: "Ulta",
+        price: "~$24 / 0.1 oz",
+        difference: "The long-standing prestige gloss benchmark, known for heavy shine and the thick, tacky texture that comes with it.",
+        advantage: "Twice the product in the tube at 5 g against 0.1 oz, a bright fuchsia that stays non-sticky rather than tacky, and a vitamin complex conditioning lips while it wears. The cap carries an LED light and mirror, which no gloss at this counter does.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "Dior Addict Lip Maximizer Plumping Gloss",
+        retailer: "Sephora",
+        price: "~$42 / 6 mL",
+        difference: "A luxury plumping gloss that works by irritating the lip slightly to swell it, so the effect fades as the tingle does.",
+        advantage: "Meaningfully cheaper than the Dior, and it holds its fuchsia for a stated 10 hours rather than resting on a plumping effect that wears off. Formulated with no mineral oil, parabens or phthalates under the Artistry Clean standard, and returnable for six months against Sephora's thirty days.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
   {
     slug: "artistry-men-balancing-hydrator",
     competitors: [
@@ -697,6 +764,111 @@ export const fullCompare: FullComparison[] = [
         price: "~$45",
         difference: "The prestige-counter reference for powder foundation, known for a very wide shade range and a flat full-coverage matte.",
         advantage: "Carries SPF 20 in the powder itself, and its talc, kaolin and pearl base blurs pores to a softer light-diffusing finish rather than a flat matte. Shade matching happens with a person who can send samples first, against a thirty-day window at the counter.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-longxevity-soft-cream",
+    competitors: [
+      {
+        name: "Estée Lauder Revitalizing Supreme+ Youth Power Creme",
+        retailer: "Ulta",
+        price: "~$218 jar + refill set",
+        difference: "The mainstream prestige refillable: a peptide-and-ferment formula in a jar that also takes a refill pod.",
+        advantage: "Built on a plant-based stem-cell blend of cardiolipin, gardenia, olive leaf, glycogen and argan, with over 30 actives, and it comes in two textures on one formula so the same cream suits oilier skin in summer and drier skin in winter.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "La Mer Crème de la Mer",
+        retailer: "Nordstrom",
+        price: "Not publicly confirmed",
+        difference: "The long-standing reference point for a luxury moisturizer, built on its fermented Miracle Broth, in a jar with no refill option.",
+        advantage: "Refillable by design, so the jar is bought once rather than every time, and its actives are published by name instead of sitting behind a single proprietary broth.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-longxevity-rich-cream",
+    competitors: [
+      {
+        name: "Estée Lauder Revitalizing Supreme+ Youth Power Creme",
+        retailer: "Ulta",
+        price: "~$218 jar + refill set",
+        difference: "The mainstream prestige refillable: a peptide-and-ferment formula sold in one texture only.",
+        advantage: "The same actives as the Soft Cream in a heavier, butterier texture, so the choice between summer and winter skin does not mean changing formula. Built on a plant-based stem-cell blend with over 30 actives, in a refillable jar.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "La Mer Crème de la Mer",
+        retailer: "Nordstrom",
+        price: "Not publicly confirmed",
+        difference: "The long-standing reference for a rich luxury moisturizer, built on its fermented Miracle Broth, in a jar with no refill option.",
+        advantage: "Refillable by design, so the jar is bought once rather than every time, and the actives are published by name instead of sitting behind a single proprietary broth.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-longxevity-soft-cream-refill",
+    competitors: [
+      {
+        name: "Estée Lauder Revitalizing Supreme+ refill",
+        retailer: "Macy's",
+        price: "~$165 / 1.7 oz",
+        difference: "Also a refill pod for a prestige jar, carrying Estée Lauder's own peptide-and-ferment formula.",
+        advantage: "The same LongXevity formula as the full jar with nothing left out, at $370 against the jar's $411, on a plant-based stem-cell blend rather than a ferment, and free of mineral oil, parabens, phthalates, sulfates, alcohol, cyclic silicones and hydroquinone.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "La Mer Crème de la Mer",
+        retailer: "Nordstrom",
+        price: "Not publicly confirmed",
+        difference: "Sold only as a complete jar: there is no refill pod in the range, so each repurchase includes the packaging again.",
+        advantage: "A refill exists at all, and it takes $41 off every repeat purchase rather than paying full price for a new jar and lid each time.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-longxevity-eye-cream",
+    competitors: [
+      {
+        name: "Estée Lauder Advanced Night Repair Eye Supercharged Gel-Creme",
+        retailer: "Ulta",
+        price: "~$76 / 0.5 oz",
+        difference: "A gel-creme aimed at the same concerns, which the brand says takes about two weeks to visibly soften dark circles.",
+        advantage: "Clinically shown to improve the look of dark circles in one week rather than two, on the same plant-based stem-cell blend as the LongXevity creams, from an airless pump that meters the dose and keeps the formula from sitting open to the air.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "La Mer The Eye Concentrate",
+        retailer: "Nordstrom",
+        price: "~$235 / 15 mL",
+        difference: "One of the most expensive eye treatments on sale, built on the Miracle Broth and applied with a metal roller from an open jar.",
+        advantage: "Actives published by name rather than a single proprietary broth, a one-week dark-circle result, and a 15 g refill at $208 so every repeat purchase costs less than the first.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "artistry-longxevity-eye-cream-refill",
+    competitors: [
+      {
+        name: "La Mer The Eye Concentrate",
+        retailer: "Nordstrom",
+        price: "~$235 / 15 mL",
+        difference: "Sold only as a complete jar with its metal applicator, so each repurchase pays for the packaging again.",
+        advantage: "A 15 g refill at $208 against the $231 bottle, reusing the airless pump you already own: the same formula, $23 less, every time.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "Estée Lauder Advanced Night Repair Eye Supercharged Gel-Creme",
+        retailer: "Ulta",
+        price: "~$76 / 0.5 oz",
+        difference: "A gel-creme in a standard jar with no refill in the range, taking about two weeks to visibly soften dark circles.",
+        advantage: "Refillable at all, and the formula behind it is clinically shown to improve dark circles in one week rather than two, on the same stem-cell blend as the LongXevity creams.",
         madeIn: "Not publicly confirmed",
       },
     ],
@@ -1435,6 +1607,77 @@ export const fullCompare: FullComparison[] = [
       },
     ],
   },
+  {
+    slug: "sa8-laundry-detergent",
+    competitors: [
+      {
+        name: "Tide Simply Liquid, Free & Sensitive",
+        retailer: "Walmart",
+        price: "~$8.24 / 117 fl oz (89 loads)",
+        difference: "The default liquid in most American laundry rooms, sold at standard dilution: 117 fl oz covers 89 loads.",
+        advantage: "Triple-concentrated, so a comparable 135 fl oz bottle covers 133 loads instead of 89, and it carries EPA Safer Choice recognition with no phosphates or chlorine.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "Persil ProClean",
+        retailer: "Walmart",
+        price: "Not publicly confirmed",
+        difference: "Rated the strongest of the mainstream liquids on stain removal, also sold at standard dilution.",
+        advantage: "Pairs enzymes with surfactants in a triple-concentrated dose, and it is EPA Safer Choice recognized and biodegradable with no phosphates or chlorine.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "prewash-spray",
+    competitors: [
+      {
+        name: "Shout Advanced Ultra Concentrated Gel",
+        retailer: "Walmart",
+        price: "~$3.49-4.29 / 8.7 oz",
+        difference: "A concentrated gel with a built-in brush, worked into each stain by hand before the wash.",
+        advantage: "An aerosol you spray and leave: it lifts grease without scrubbing or soaking, covers a far larger area per application, and is CFC-free with plant-derived, biodegradable actives.",
+        madeIn: "Not publicly confirmed",
+      },
+      {
+        name: "Spray 'n Wash Pre-Treat",
+        retailer: "Walmart",
+        price: "~$2.98 / 22 fl oz",
+        difference: "A pump-spray pre-treat sold in the largest bottle in this aisle.",
+        advantage: "An aerosol rather than a pump, so it lays an even film across a whole stain instead of a wet patch, on plant-derived biodegradable actives with no CFCs.",
+        madeIn: "Not publicly confirmed",
+      },
+    ],
+  },
+  {
+    slug: "loc-multi-purpose-cleaner",
+    competitors: [
+      {
+        name: "Simple Green All-Purpose Concentrate",
+        retailer: "Walmart",
+        price: "~$10 / 128 fl oz",
+        difference: "Also a concentrate, in a much larger bottle, aimed mainly at garage, tool and outdoor cleaning.",
+        advantage: "Dilutes 30 mL into 5 L of water and is rated for floors, counters, glass and most washable surfaces from the one bottle, biodegradable with no phosphates, harsh acids or chlorine.",
+        madeIn: "USA",
+      },
+      {
+        name: "Mrs. Meyer's Clean Day Multi-Surface Concentrate",
+        retailer: "Amazon",
+        price: "~$14.19",
+        difference: "Another plant-derived concentrate, sold largely on its scent range, diluted at roughly a capful per gallon.",
+        advantage: "Built as one cleaner for floors, counters and glass alike rather than a scent line, biodegradable with no phosphates, harsh acids or chlorine.",
+        madeIn: "USA",
+      },
+      {
+        name: "Method All-Purpose Cleaner",
+        retailer: "Amazon",
+        price: "~$7.10 / 28 fl oz",
+        difference: "Sold ready to use rather than as a concentrate, so the bottle is mostly water by volume.",
+        advantage: "A concentrate: 30 mL makes 5 L, so a single 1 L bottle replaces a long run of ready-to-use sprays and the plastic that comes with them.",
+        madeIn: "USA",
+      },
+    ],
+  },
 
   // ---------- Water & Air Treatment ----------
   {
@@ -1489,6 +1732,27 @@ export const fullCompare: FullComparison[] = [
         difference: "A popular smart purifier with app control, but its filtration is rated to the standard 0.3 micron HEPA benchmark and it carries no allergy-body certification.",
         advantage: "Rated to 0.0024 microns with AHAM-certified CADR behind the number, plus ECARF and Allergy UK allergy certification, ENERGY STAR efficiency, a 5-year warranty, and a washable pre-filter rather than a consumable one.",
         madeIn: "China",
+      },
+    ],
+  },
+  {
+    slug: "atmosphere-mini",
+    competitors: [
+      {
+        name: "Levoit Core 300S",
+        retailer: "Amazon",
+        price: "~$99-199",
+        difference: "The most widely recommended small-room purifier, rated for about 219 sq ft at five air changes an hour and filtered to the standard 0.3 micron HEPA benchmark.",
+        advantage: "Filtration rated to 0.0024 microns rather than the 0.3 micron benchmark, 300+ contaminants addressed, and a single 3-in-1 cartridge so there is one part to reorder instead of a stack of stages.",
+        madeIn: "China",
+      },
+      {
+        name: "Coway AP-1512HH Mighty",
+        retailer: "Amazon",
+        price: "~$229",
+        difference: "AHAM certified for 361 sq ft at 4.8 air changes an hour with a 233 cfm smoke CADR, so it is rated for a larger room than the Mini.",
+        advantage: "Rated far finer at 0.0024 microns, with its pre-filter, carbon and HEPA stages combined into one cartridge rather than separate parts to track, and app control over Bluetooth or WiFi for filter life and air quality.",
+        madeIn: "China (assembly; designed in South Korea)",
       },
     ],
   },
