@@ -449,19 +449,19 @@ export function totalSaving(promo: Promotion): string | null {
 // passes into a previous month, so nothing has to be deleted by hand.
 export const PROMOTIONS: Promotion[] = [
   {
-    id: "artistry-lip-glow-september",
+    id: "artistry-lip-glow-october",
     name: "Go Vibrant Light Up Liquid Lip Glow",
     brand: "Artistry",
     // 15 percent, not 15 dollars: a flat $15 against a $29.00 shade is a 51.7%
     // cut, which is not what this promotion is.
     discount: { type: "percent", percentOff: 15 },
-    start: "2026-09-01",
-    end: "2026-09-30",
+    start: "2026-10-01",
+    end: "2026-10-31",
     headline: "15% off all four lip glow shades",
     blurb:
       "It walked New York Fashion Week, and now it can live in your coat pocket. The glow goes on cushiony, holds its colour for a full ten hours and never turns sticky, while a vitamin complex quietly conditions your lips underneath. Then there is the cap: an LED light and a mirror built right in, so you can reapply in the back of a taxi and still get it right. Four shades, from the rose-brown you will wear to everything to a fuchsia that makes people look twice.",
     terms:
-      "Applies to all four shades, while September stock lasts. One discount per item: not combinable with bundle pricing.",
+      "Applies to all four shades, while October stock lasts. One discount per item: not combinable with bundle pricing.",
     scope: { type: "variantGroup", value: "artistry-lip-glow" },
     image: {
       src: "/Product-Artistry.png",
@@ -502,12 +502,12 @@ export const PROMOTIONS: Promotion[] = [
     cta: { href: "/collections/artistry", label: "Choose your shade" },
   },
   {
-    id: "xs-energy-september",
+    id: "xs-energy-october",
     name: "The Complete Energy Range",
     brand: "XS",
     discount: { type: "percent", percentOff: 15 },
-    start: "2026-09-01",
-    end: "2026-09-30",
+    start: "2026-10-01",
+    end: "2026-10-31",
     headline: "15% off the entire XS range",
     blurb:
       "The three o'clock slump does not stand a chance. 114 mg of caffeine, zero sugar and fifteen calories a can, so you get the lift and skip the crash that always follows something sweet. Twelve flavours in the core line alone, plus Sparkling Juiced, Energy + Burn and Elite Focus, every one by the case of twelve so you are never caught without a cold one in the fridge. This month the whole range is in, not just the favourites.",
